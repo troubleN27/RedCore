@@ -4,7 +4,7 @@ import { messages } from './messages';
 
 /**
  * Переводчик вне React: письма, SMS, PDF, AI и MCP. Те же словари и ICU, что и на сайте;
- * ключи типизированы полным путём: t('emails.otp.subject', { code }).
+ * ключи типизированы полным путём: t('sms.otp', { code }).
  */
 export function getTranslator(locale: Locale) {
   return createTranslator({ locale, messages: messages[locale], timeZone });

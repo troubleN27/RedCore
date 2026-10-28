@@ -207,7 +207,6 @@ export async function startPayment(
     currency,
     amountMinor,
     lineItems,
-    email: order.contactEmail,
     locale: order.locale as 'ru' | 'uz',
     returnUrl: `${options.siteUrl}/${order.locale}/orders/${order.number}?token=${order.accessToken}`,
     expiresAt,

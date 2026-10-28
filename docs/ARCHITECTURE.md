@@ -18,11 +18,11 @@
    MCP Client ══ InMemory ══▶│
    └─────────────────────────▶ packages/services
                                каталог · поиск · сборки · checkout · платежи · консоль · FPS ·
-                               MCP-ключи · AI-данные · уведомления (почта/SMS/Telegram)
+                               MCP-ключи · AI-данные · уведомления (SMS/Telegram)
                                  ▼                           ▼
                    packages/domain (без IO)           packages/db (Drizzle)
                    совместимость · БП · FPS ·         Neon Postgres (или PGlite локально)
-                   подбор · 3D-раскладка · деньги ·   внешние: Stripe · Gemini · Resend ·
+                   подбор · 3D-раскладка · деньги ·   внешние: Stripe · Gemini ·
                    статусы заказа · анализ баланса    Upstash · R2 · Telegram
 ```
 
@@ -38,19 +38,19 @@
 - **Права — у инструмента.** MCP-сервер собирается с actor и scopes; модель или внешний клиент
   не могут их расширить. Запись от AI/MCP — только черновики с подтверждением человеком.
 - **Работает без интеграций.** Каждая внешняя служба за интерфейсом с мок-реализацией:
-  `PaymentGateway` (Stripe/мок), почта/SMS/Telegram → `dev_outbox`, `LlmGateway`
+  `PaymentGateway` (Stripe/мок), SMS/Telegram → `dev_outbox`, `LlmGateway`
   (Gemini/детерминированный режим), PGlite вместо Neon.
 
 ## Ключевые потоки
 
-| Поток        | Путь                                                                                                                                      |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Каталог      | RSC + пререндер; правки в консоли → `revalidatePath` с группой маршрутов `(shop)`                                                         |
-| Конфигуратор | store (Zustand) → `checkBuild` в браузере → 3D-раскладка `layoutBuild` → сцена R3F                                                        |
-| Заказ        | `placeOrder` (транзакция, резерв `SELECT … FOR UPDATE`) → Stripe Checkout Session → вебхук → «оплачен» → `after()`: письмо, SMS, Telegram |
-| Возврат      | консоль → `requestRefund` (idempotency key) → вебхук `charge.refunded` → «возвращён» → Telegram                                           |
-| AI           | `/api/ai/chat` → лимиты → оркестратор → агент ⇄ MCP in-memory → SSE-события → `ai_runs`, `ai_tool_calls`                                  |
-| MCP          | `/api/mcp` → проверка ключа → сервер со scopes ключа → журнал вызовов                                                                     |
+| Поток        | Путь                                                                                                                              |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| Каталог      | RSC + пререндер; правки в консоли → `revalidatePath` с группой маршрутов `(shop)`                                                 |
+| Конфигуратор | store (Zustand) → `checkBuild` в браузере → 3D-раскладка `layoutBuild` → сцена R3F                                                |
+| Заказ        | `placeOrder` (транзакция, резерв `SELECT … FOR UPDATE`) → Stripe Checkout Session → вебхук → «оплачен» → `after()`: SMS, Telegram |
+| Возврат      | консоль → `requestRefund` (idempotency key) → вебхук `charge.refunded` → «возвращён» → Telegram                                   |
+| AI           | `/api/ai/chat` → лимиты → оркестратор → агент ⇄ MCP in-memory → SSE-события → `ai_runs`, `ai_tool_calls`                          |
+| MCP          | `/api/mcp` → проверка ключа → сервер со scopes ключа → журнал вызовов                                                             |
 
 ## Безопасность
 

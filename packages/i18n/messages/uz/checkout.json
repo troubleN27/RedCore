@@ -11,9 +11,7 @@
   "contact": {
     "name": "Ism va familiya",
     "phone": "Telefon",
-    "phoneHint": "Buyurtmani tasdiqlash uchun qoʻngʻiroq qilamiz",
-    "email": "Pochta",
-    "emailHint": "Chek va buyurtma holatlarini yuboramiz (ixtiyoriy)"
+    "phoneHint": "Buyurtmani tasdiqlash uchun qoʻngʻiroq qilamiz"
   },
   "delivery": {
     "zone": "Yetkazib berish hududi",

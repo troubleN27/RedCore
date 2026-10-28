@@ -19,8 +19,6 @@ export async function generateMetadata({
   return { title: t('title'), robots: { index: false } };
 }
 
-const TEMP_EMAIL = /@phone\.redcore\.local$/;
-
 export default async function CheckoutPage({ params }: PageProps<'/[locale]/checkout'>) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
@@ -29,7 +27,7 @@ export default async function CheckoutPage({ params }: PageProps<'/[locale]/chec
     getSession(),
   ]);
   const user = session?.user as
-    { id: string; name: string; email: string; phoneNumber?: string | null } | undefined;
+    { id: string; name: string; phoneNumber?: string | null } | undefined;
 
   const addresses: SavedAddress[] = user
     ? (await listAddresses(await getDb(), user.id)).map(({ address: a, zoneCode, zoneName }) => ({
@@ -56,7 +54,6 @@ export default async function CheckoutPage({ params }: PageProps<'/[locale]/chec
             ? {
                 name: user.name,
                 phone: user.phoneNumber ?? null,
-                email: TEMP_EMAIL.test(user.email) ? null : user.email,
               }
             : null
         }

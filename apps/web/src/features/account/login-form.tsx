@@ -1,30 +1,20 @@
 'use client';
 
 import { normalizeUzPhone } from '@redcore/domain';
-import { InboxIcon, MailIcon, SmartphoneIcon } from 'lucide-react';
+import { InboxIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState, useTransition } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Link, useRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 
-type Channel = 'phone' | 'email';
 type ErrorKey =
-  | 'invalidPhone'
-  | 'invalidEmail'
-  | 'invalidCode'
-  | 'tooManyAttempts'
-  | 'expired'
-  | 'rateLimited'
-  | 'generic';
+  'invalidPhone' | 'invalidCode' | 'tooManyAttempts' | 'expired' | 'rateLimited' | 'generic';
 
 const RESEND_SECONDS = 60;
-const CHANNELS = ['phone', 'email'] as const;
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function errorKey(error: { status?: number; code?: string } | null): ErrorKey {
   if (!error) return 'generic';
@@ -47,8 +37,7 @@ function errorKey(error: { status?: number; code?: string } | null): ErrorKey {
 export function LoginForm({ next, showDevInbox }: { next: string; showDevInbox: boolean }) {
   const t = useTranslations('auth');
   const router = useRouter();
-  const [channel, setChannel] = useState<Channel>('phone');
-  const [target, setTarget] = useState('');
+  const [phone, setPhone] = useState('');
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [code, setCode] = useState('');
   const [error, setError] = useState<ErrorKey | null>(null);
@@ -61,24 +50,15 @@ export function LoginForm({ next, showDevInbox }: { next: string; showDevInbox: 
     return () => clearTimeout(timer);
   }, [cooldown]);
 
-  function normalizedTarget(): string | null {
-    if (channel === 'phone') return normalizeUzPhone(target);
-    const email = target.trim().toLowerCase();
-    return EMAIL_RE.test(email) ? email : null;
-  }
-
   function sendCode() {
-    const value = normalizedTarget();
+    const value = normalizeUzPhone(phone);
     if (!value) {
-      setError(channel === 'phone' ? 'invalidPhone' : 'invalidEmail');
+      setError('invalidPhone');
       return;
     }
     setError(null);
     startTransition(async () => {
-      const result =
-        channel === 'phone'
-          ? await authClient.phoneNumber.sendOtp({ phoneNumber: value })
-          : await authClient.emailOtp.sendVerificationOtp({ email: value, type: 'sign-in' });
+      const result = await authClient.phoneNumber.sendOtp({ phoneNumber: value });
       if (result.error) {
         setError(errorKey(result.error));
         return;
@@ -97,10 +77,7 @@ export function LoginForm({ next, showDevInbox }: { next: string; showDevInbox: 
     }
     setError(null);
     startTransition(async () => {
-      const result =
-        channel === 'phone'
-          ? await authClient.phoneNumber.verify({ phoneNumber: sentTo, code })
-          : await authClient.signIn.emailOtp({ email: sentTo, otp: code });
+      const result = await authClient.phoneNumber.verify({ phoneNumber: sentTo, code });
       if (result.error) {
         setError(errorKey(result.error));
         return;
@@ -111,60 +88,35 @@ export function LoginForm({ next, showDevInbox }: { next: string; showDevInbox: 
     });
   }
 
-  function switchChannel(value: string) {
-    setChannel(value as Channel);
-    setTarget('');
-    setSentTo(null);
-    setError(null);
-  }
-
   const errorText = error ? t(`errors.${error}`) : null;
 
   return (
     <div className="space-y-5" data-testid="login-form">
-      <Tabs value={channel} onValueChange={switchChannel}>
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="phone" disabled={Boolean(sentTo)}>
-            <SmartphoneIcon />
-            {t('tabs.phone')}
-          </TabsTrigger>
-          <TabsTrigger value="email" disabled={Boolean(sentTo)}>
-            <MailIcon />
-            {t('tabs.email')}
-          </TabsTrigger>
-        </TabsList>
-        {CHANNELS.map((value) => (
-          <TabsContent key={value} value={value} className="pt-4">
-            {!sentTo ? (
-              <form
-                className="space-y-3"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  sendCode();
-                }}
-              >
-                <Label htmlFor={`login-${value}`}>
-                  {value === 'phone' ? t('phoneLabel') : t('emailLabel')}
-                </Label>
-                <Input
-                  id={`login-${value}`}
-                  type={value === 'phone' ? 'tel' : 'email'}
-                  inputMode={value === 'phone' ? 'tel' : 'email'}
-                  autoComplete={value === 'phone' ? 'tel' : 'email'}
-                  placeholder={value === 'phone' ? t('phonePlaceholder') : t('emailPlaceholder')}
-                  value={target}
-                  onChange={(e) => setTarget(e.target.value)}
-                  aria-invalid={Boolean(error)}
-                  autoFocus
-                />
-                <Button type="submit" className="w-full" disabled={pending} data-testid="send-code">
-                  {pending ? t('sending') : t('sendCode')}
-                </Button>
-              </form>
-            ) : null}
-          </TabsContent>
-        ))}
-      </Tabs>
+      {!sentTo && (
+        <form
+          className="space-y-3"
+          onSubmit={(e) => {
+            e.preventDefault();
+            sendCode();
+          }}
+        >
+          <Label htmlFor="login-phone">{t('phoneLabel')}</Label>
+          <Input
+            id="login-phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder={t('phonePlaceholder')}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            aria-invalid={Boolean(error)}
+            autoFocus
+          />
+          <Button type="submit" className="w-full" disabled={pending} data-testid="send-code">
+            {pending ? t('sending') : t('sendCode')}
+          </Button>
+        </form>
+      )}
 
       {sentTo && (
         <form className="space-y-3" onSubmit={verify}>

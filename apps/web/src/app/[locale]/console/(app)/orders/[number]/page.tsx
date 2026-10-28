@@ -120,7 +120,6 @@ export default async function ConsoleOrderPage({
           <Panel title={t('customer')}>
             <p className="text-sm">{order.contactName}</p>
             <p className="text-sm text-steel-300">{order.contactPhone}</p>
-            {order.contactEmail && <p className="text-sm text-steel-300">{order.contactEmail}</p>}
           </Panel>
           <Panel title={t('delivery')}>
             <p className="text-sm">{zone.name[locale]}</p>

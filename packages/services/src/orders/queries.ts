@@ -13,8 +13,7 @@ import { formatPrice, isLocale, type Locale } from '@redcore/i18n';
 import { getTranslator } from '@redcore/i18n/translator';
 import { asc, desc, eq, sql } from 'drizzle-orm';
 import { timingSafeEqual } from 'node:crypto';
-import { orderEmail, type OrderEmailKind } from '../notify/templates';
-import { sendEmail, sendSms } from '../notify/notify';
+import { sendSms } from '../notify/notify';
 import type { OrderEvent } from './payments';
 
 export async function getOrderByNumber(db: Database, number: string) {
@@ -102,7 +101,7 @@ export async function claimGuestOrders(
 }
 
 /**
- * Письмо и SMS о событии заказа на языке заказа. Ошибка провайдера не должна
+ * SMS о событии заказа на языке заказа. Ошибка провайдера не должна
  * откатывать оплату — поэтому вызывается после транзакции, в after().
  */
 export async function notifyOrder(
@@ -111,55 +110,27 @@ export async function notifyOrder(
   event: { kind: 'created'; card: boolean } | OrderEvent,
   siteUrl: string,
 ): Promise<void> {
-  // Письма и SMS — только о создании, оплате и отмене; статусы и возвраты идут в Telegram
-  if (event.kind === 'status' || event.kind === 'refunded') return;
+  // SMS — только о создании и оплате; остальные статусы и возвраты идут в Telegram
+  if (event.kind !== 'created' && event.kind !== 'paid') return;
   const [order] = await db.select().from(orders).where(eq(orders.id, orderId));
   if (!order) return;
   const locale: Locale = isLocale(order.locale) ? order.locale : 'ru';
   const url = `${siteUrl}/${locale}/orders/${order.number}?token=${order.accessToken}`;
   const t = getTranslator(locale);
 
-  if (order.contactEmail) {
-    const items = await db.select().from(orderItems).where(eq(orderItems.orderId, orderId));
-    const kind: OrderEmailKind =
-      event.kind === 'created'
-        ? event
-        : event.kind === 'paid'
-          ? { kind: 'paid' }
-          : { kind: 'cancelled', reason: event.reason };
-    await sendEmail(
-      db,
-      orderEmail(
-        {
-          locale,
-          to: order.contactEmail,
-          name: order.contactName,
-          number: order.number,
-          url,
-          items: items.map((i) => ({ name: i.name, qty: i.qty, totalUzs: i.priceUzs * i.qty })),
-          subtotalUzs: order.subtotalUzs,
-          discountUzs: order.discountUzs,
-          deliveryUzs: order.deliveryUzs,
-          servicesUzs: order.servicesUzs,
-          totalUzs: order.totalUzs,
-        },
-        kind,
-      ),
-    );
-  }
   if (event.kind === 'created') {
     await sendSms(db, {
       to: order.contactPhone,
-      text: t('emails.order.sms.created', {
+      text: t('sms.orderCreated', {
         number: order.number,
         amount: formatPrice(order.totalUzs, locale),
         url,
       }),
     });
-  } else if (event.kind === 'paid') {
+  } else {
     await sendSms(db, {
       to: order.contactPhone,
-      text: t('emails.order.sms.paid', { number: order.number }),
+      text: t('sms.orderPaid', { number: order.number }),
     });
   }
 }

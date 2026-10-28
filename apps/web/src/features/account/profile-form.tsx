@@ -13,7 +13,7 @@ import { authClient } from '@/lib/auth-client';
 export function ProfileForm({
   initial,
 }: {
-  initial: { name: string; email: string | null; phone: string | null; locale: string };
+  initial: { name: string; phone: string | null; locale: string };
 }) {
   const t = useTranslations('account.profile');
   const router = useRouter();
@@ -51,16 +51,6 @@ export function ProfileForm({
       <div className="space-y-1.5">
         <Label htmlFor="pf-phone">{t('phone')}</Label>
         <Input id="pf-phone" value={initial.phone ?? ''} readOnly disabled />
-      </div>
-      <div className="space-y-1.5">
-        <Label htmlFor="pf-email">{t('email')}</Label>
-        <Input
-          id="pf-email"
-          value={initial.email ?? ''}
-          placeholder={t('emailTemp')}
-          readOnly
-          disabled
-        />
       </div>
       <div className="space-y-1.5">
         <Label htmlFor="pf-lang">{t('language')}</Label>

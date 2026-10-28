@@ -117,7 +117,6 @@ export const orders = pgTable(
     checkoutAttemptId: text().notNull(),
     contactName: text().notNull(),
     contactPhone: text().notNull(),
-    contactEmail: text(),
     locale: text().notNull(),
     status: orderStatusEnum().notNull(),
     paymentStatus: paymentStatusEnum().notNull().default('unpaid'),
@@ -335,7 +334,7 @@ export const stripeEvents = pgTable('stripe_events', {
   processedAt: timestamp({ withTimezone: true }),
 });
 
-// ── Dev-ящик: письма и SMS в режиме без провайдеров ──
+// ── Dev-ящик: SMS и Telegram в режиме без провайдеров ──
 
 export const devOutbox = pgTable(
   'dev_outbox',
@@ -343,9 +342,7 @@ export const devOutbox = pgTable(
     id: uuid().primaryKey().defaultRandom(),
     channel: text().notNull(),
     to: text().notNull(),
-    subject: text(),
     text: text().notNull(),
-    html: text(),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [index('dev_outbox_time_idx').on(t.createdAt)],

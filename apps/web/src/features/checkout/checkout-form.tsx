@@ -91,7 +91,7 @@ export function CheckoutForm({
   addresses,
   paymentProvider,
 }: {
-  user: { name: string; phone: string | null; email: string | null } | null;
+  user: { name: string; phone: string | null } | null;
   addresses: SavedAddress[];
   paymentProvider: 'stripe' | 'mock' | null;
 }) {
@@ -105,7 +105,6 @@ export function CheckoutForm({
 
   const [name, setName] = useState(user?.name && !user.name.startsWith('+') ? user.name : '');
   const [phone, setPhone] = useState(user?.phone ?? '');
-  const [email, setEmail] = useState(user?.email ?? '');
   const defaultAddress = addresses[0];
   const [addressId, setAddressId] = useState<string | 'new'>(defaultAddress?.id ?? 'new');
   const [address, setAddress] = useState<AddressFields>(emptyAddress);
@@ -129,7 +128,6 @@ export function CheckoutForm({
   const errors = {
     name: name.trim().length < 2 ? t('required') : null,
     phone: normalizedPhone ? null : t('required'),
-    email: email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? t('required') : null,
     city: needsAddress && !saved && address.city.trim().length < 2 ? t('required') : null,
     street: needsAddress && !saved && address.street.trim().length < 2 ? t('required') : null,
     house: needsAddress && !saved && !address.house.trim() ? t('required') : null,
@@ -165,7 +163,7 @@ export function CheckoutForm({
       const result = await placeOrderAction(locale, {
         checkoutAttemptId: attemptId,
         items: cartLines(cart),
-        contact: { name, phone, email },
+        contact: { name, phone },
         zoneCode: zone.code,
         address: needsAddress ? chosen : undefined,
         serviceKeys: data.selectedServices,
@@ -242,22 +240,6 @@ export function CheckoutForm({
                 aria-invalid={Boolean(show('phone'))}
               />
             </Field>
-            <div className="sm:col-span-2">
-              <Field
-                id="co-email"
-                label={t('contact.email')}
-                hint={t('contact.emailHint')}
-                error={show('email')}
-              >
-                <Input
-                  id="co-email"
-                  type="email"
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Field>
-            </div>
           </div>
         </Section>
 

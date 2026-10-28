@@ -51,7 +51,6 @@ export async function seedDatabase(db: SeedDb, rate = seedRate()): Promise<SeedS
           name: 'RedCore',
           city: { ru: 'Ташкент', uz: 'Toshkent' },
           phone: '+998 71 200 00 00',
-          email: 'hello@redcore.uz',
           hours: { open: '10:00', close: '20:00' },
         },
       },

@@ -303,11 +303,7 @@ export async function setUserBannedAction(userId: string, banned: boolean) {
   });
 }
 
-export async function updateSettingsAction(input: {
-  usdUzsRate: number;
-  phone: string;
-  email: string;
-}) {
+export async function updateSettingsAction(input: { usdUzsRate: number; phone: string }) {
   return run('settings', 'settings.update', 'settings', async () => {
     const data = await updateStoreSettings(await getDb(), input);
     return { id: 'store', diff: data };

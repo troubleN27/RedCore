@@ -267,11 +267,6 @@ export const placeOrderSchema = z.object({
   contact: z.object({
     name: z.string().trim().min(2).max(80),
     phone: phoneSchema,
-    email: z
-      .email()
-      .max(120)
-      .optional()
-      .or(z.literal('').transform(() => undefined)),
   }),
   zoneCode: z.string().min(1),
   address: z
@@ -426,7 +421,6 @@ export async function placeOrder(
           checkoutAttemptId: input.checkoutAttemptId,
           contactName: input.contact.name,
           contactPhone: input.contact.phone,
-          contactEmail: input.contact.email ?? null,
           locale: options.locale,
           status: options.draft ? 'draft' : 'created',
           paymentStatus: 'unpaid',

@@ -218,18 +218,13 @@ export function UserControls({
   );
 }
 
-export function SettingsForm({
-  initial,
-}: {
-  initial: { usdUzsRate: number; phone: string; email: string };
-}) {
+export function SettingsForm({ initial }: { initial: { usdUzsRate: number; phone: string } }) {
   const t = useTranslations('console.settings');
   const tc = useTranslations('console.common');
   const { pending, run } = useConsoleAction();
   const [v, setV] = useState({
     usdUzsRate: String(initial.usdUzsRate),
     phone: initial.phone,
-    email: initial.email,
   });
   return (
     <form
@@ -241,7 +236,6 @@ export function SettingsForm({
           updateSettingsAction({
             usdUzsRate: Number(v.usdUzsRate.replace(',', '.')),
             phone: v.phone,
-            email: v.email,
           }),
         );
       }}
@@ -262,15 +256,6 @@ export function SettingsForm({
           id="st-phone"
           value={v.phone}
           onChange={(e) => setV({ ...v, phone: e.target.value })}
-        />
-      </div>
-      <div className="space-y-1">
-        <Label htmlFor="st-email">{t('email')}</Label>
-        <Input
-          id="st-email"
-          type="email"
-          value={v.email}
-          onChange={(e) => setV({ ...v, email: e.target.value })}
         />
       </div>
       <div>

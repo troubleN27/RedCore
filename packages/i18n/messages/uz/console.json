@@ -334,7 +334,6 @@
     "rateHint": "Dollarda yechish rejimi uchun (PAYMENT_CHARGE_CURRENCY=usd)",
     "store": "Doʻkon",
     "phone": "Telefon",
-    "email": "Pochta",
     "zones": "Yetkazib berish hududlari",
     "zoneCols": {
       "name": "Hudud",

@@ -29,7 +29,6 @@ export default async function AccountPage({ params }: PageProps<'/[locale]/accou
       <ProfileForm
         initial={{
           name: user.name.startsWith('+') ? '' : user.name,
-          email: user.email.endsWith('@phone.redcore.local') ? null : user.email,
           phone: user.phoneNumber ?? null,
           locale: user.locale ?? locale,
         }}

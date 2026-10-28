@@ -334,7 +334,6 @@
     "rateHint": "Для режима списания в долларах (PAYMENT_CHARGE_CURRENCY=usd)",
     "store": "Магазин",
     "phone": "Телефон",
-    "email": "Почта",
     "zones": "Зоны доставки",
     "zoneCols": {
       "name": "Зона",

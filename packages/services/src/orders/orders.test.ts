@@ -69,7 +69,7 @@ function orderInput(over: Partial<PlaceOrderInput> = {}): PlaceOrderInput {
   return {
     checkoutAttemptId: randomUUID(),
     items: [{ slug: cpu.slug, qty: 1 }],
-    contact: { name: 'Азиз Каримов', phone: '+998 90 123 45 67', email: 'aziz@example.com' },
+    contact: { name: 'Азиз Каримов', phone: '+998 90 123 45 67' },
     zoneCode: 'pickup',
     paymentMethod: 'cod',
     ...over,
@@ -395,15 +395,14 @@ describe('доступ, уведомления, аккаунт', () => {
     expect(canViewOrder(view, { role: 'manager' })).toBe(true);
   });
 
-  it('письмо и SMS о заказе попадают в dev-ящик на языке заказа', async () => {
+  it('SMS о заказе попадает в dev-ящик на языке заказа', async () => {
     const placed = await placeOrder(db, ru, orderInput(), { locale: 'uz', cardEnabled: true });
     await db.delete(devOutbox);
     await notifyOrder(db, placed.orderId, { kind: 'created', card: false }, SITE);
     const sent = await db.select().from(devOutbox);
-    expect(sent.map((m) => m.channel).sort()).toEqual(['email', 'sms']);
-    const email = sent.find((m) => m.channel === 'email')!;
-    expect(email.subject).toBe(`${placed.number}-buyurtma rasmiylashtirildi`);
-    expect(email.html).toContain(`/uz/orders/${placed.number}?token=`);
+    expect(sent.map((m) => m.channel)).toEqual(['sms']);
+    expect(sent[0]!.text).toContain(`${placed.number}-buyurtma rasmiylashtirildi`);
+    expect(sent[0]!.text).toContain(`/uz/orders/${placed.number}?token=`);
   });
 
   it('слияние корзин и адреса пользователя', async () => {

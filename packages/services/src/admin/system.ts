@@ -88,26 +88,22 @@ export async function setUserBanned(
 export interface StoreSettings {
   usdUzsRate: number;
   phone: string;
-  email: string;
 }
 
 export async function getStoreSettings(db: Database): Promise<StoreSettings> {
   const rows = await db.select().from(settings);
   const pricing = rows.find((r) => r.key === 'pricing')?.value as
     { usdUzsRate?: number } | undefined;
-  const store = rows.find((r) => r.key === 'store')?.value as
-    { phone?: string; email?: string } | undefined;
+  const store = rows.find((r) => r.key === 'store')?.value as { phone?: string } | undefined;
   return {
     usdUzsRate: pricing?.usdUzsRate ?? 0,
     phone: store?.phone ?? '',
-    email: store?.email ?? '',
   };
 }
 
 const settingsSchema = z.object({
   usdUzsRate: z.number().min(1000).max(100_000),
   phone: z.string().trim().min(5).max(40),
-  email: z.email(),
 });
 
 export async function updateStoreSettings(db: Database, input: z.input<typeof settingsSchema>) {
@@ -120,7 +116,7 @@ export async function updateStoreSettings(db: Database, input: z.input<typeof se
   const now = new Date();
   for (const [key, value] of [
     ['pricing', { ...pricing, usdUzsRate: parsed.data.usdUzsRate, rateSource: 'manual' }],
-    ['store', { ...store, phone: parsed.data.phone, email: parsed.data.email }],
+    ['store', { ...store, phone: parsed.data.phone }],
   ] as const) {
     await db
       .insert(settings)

@@ -14,7 +14,6 @@ export interface CheckoutSessionRequest {
   currency: 'uzs' | 'usd';
   amountMinor: number;
   lineItems: { name: string; amountMinor: number }[];
-  email?: string | null;
   locale: 'ru' | 'uz';
   returnUrl: string;
   expiresAt: Date;
@@ -63,7 +62,6 @@ export function createStripeGateway(secretKey: string, webhookSecret: string): P
               product_data: { name: item.name },
             },
           })),
-          customer_email: req.email ?? undefined,
           // Узбекского в интерфейсе Stripe нет — форма на русском, всё вокруг неё на uz
           locale: 'ru',
           return_url: `${req.returnUrl}${req.returnUrl.includes('?') ? '&' : '?'}session_id={CHECKOUT_SESSION_ID}`,

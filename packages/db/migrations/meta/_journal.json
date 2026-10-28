@@ -64,6 +64,13 @@
       "when": 1793189491061,
       "tag": "0008_telegram",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1793223416185,
+      "tag": "0009_remove_email",
+      "breakpoints": true
     }
   ]
 }

@@ -10,13 +10,12 @@ import {
 } from '@redcore/db';
 import { normalizeUzPhone } from '@redcore/domain';
 import { isLocale, type Locale } from '@redcore/i18n';
-import { claimGuestOrders, otpEmail, otpSms, sendEmail, sendSms } from '@redcore/services';
+import { claimGuestOrders, otpSms, sendSms } from '@redcore/services';
 import { eq } from 'drizzle-orm';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { nextCookies } from 'better-auth/next-js';
 import { admin } from 'better-auth/plugins/admin';
-import { emailOTP } from 'better-auth/plugins/email-otp';
 import { phoneNumber } from 'better-auth/plugins/phone-number';
 import { twoFactor } from 'better-auth/plugins/two-factor';
 import { headers } from 'next/headers';
@@ -40,7 +39,7 @@ function authSecret(): string {
   return DEV_SECRET;
 }
 
-/** Язык писем и SMS — из cookie выбора языка (на странице входа она всегда есть). */
+/** Язык SMS — из cookie выбора языка (на странице входа она всегда есть). */
 function localeFromRequest(request?: Request): Locale {
   const cookie = request?.headers.get('cookie') ?? '';
   const value = /(?:^|;\s*)NEXT_LOCALE=([a-z]{2})/.exec(cookie)?.[1];
@@ -55,7 +54,7 @@ function createAuth(db: Database) {
       provider: 'pg',
       schema: { user, session, account, verification, twoFactor: twoFactorTable },
     }),
-    // Пароль — только у персонала (создаётся в seed/админке); покупатели входят по коду
+    // Пароль — только у персонала (создаётся в seed/админке); покупатели входят по коду из SMS
     emailAndPassword: { enabled: true, disableSignUp: true, minPasswordLength: 10 },
     session: {
       expiresIn: 60 * 60 * 24 * 30,
@@ -75,7 +74,7 @@ function createAuth(db: Database) {
     databaseHooks: {
       session: {
         create: {
-          // Персонал получает сессию только через пароль (+TOTP): вход по SMS/почте для
+          // Персонал получает сессию только через пароль (+TOTP): вход по SMS для
           // аккаунтов admin/manager закрыт, иначе 2FA можно было бы обойти
           async before(created, ctx) {
             const [row] = await db
@@ -98,24 +97,13 @@ function createAuth(db: Database) {
       },
     },
     plugins: [
-      emailOTP({
-        otpLength: 6,
-        expiresIn: OTP_MINUTES * 60,
-        allowedAttempts: 3,
-        storeOTP: 'hashed',
-        rateLimit: { window: 60, max: 3 },
-        async sendVerificationOTP({ email, otp }, ctx) {
-          const locale = localeFromRequest(ctx?.request);
-          await sendEmail(db, otpEmail(locale, email, otp, OTP_MINUTES));
-        },
-      }),
       phoneNumber({
         otpLength: 6,
         expiresIn: OTP_MINUTES * 60,
         allowedAttempts: 3,
         phoneNumberValidator: (value) => normalizeUzPhone(value) === value,
         signUpOnVerification: {
-          // Почта обязательна для Better Auth: до привязки настоящей — служебный адрес
+          // Better Auth требует поле email у пользователя — заполняем служебным адресом
           getTempEmail: (value) => `${value.replace(/\D/g, '')}@phone.redcore.local`,
           getTempName: (value) => value,
         },

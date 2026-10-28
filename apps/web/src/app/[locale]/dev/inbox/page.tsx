@@ -1,7 +1,7 @@
 import { getDb } from '@redcore/db';
 import { formatDate, isLocale } from '@redcore/i18n';
 import { listOutbox } from '@redcore/services';
-import { MailIcon, MessageSquareIcon, SendIcon } from 'lucide-react';
+import { MessageSquareIcon, SendIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -41,19 +41,9 @@ export default async function DevInboxPage({ params }: PageProps<'/[locale]/dev/
             >
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-steel-400">
                 <span className="flex items-center gap-2">
-                  <Badge variant={m.channel === 'email' ? 'info' : 'metal'}>
-                    {m.channel === 'email' ? (
-                      <MailIcon />
-                    ) : m.channel === TELEGRAM ? (
-                      <SendIcon />
-                    ) : (
-                      <MessageSquareIcon />
-                    )}
-                    {m.channel === 'email'
-                      ? t('email')
-                      : m.channel === TELEGRAM
-                        ? t('telegram')
-                        : t('sms')}
+                  <Badge variant="metal">
+                    {m.channel === TELEGRAM ? <SendIcon /> : <MessageSquareIcon />}
+                    {m.channel === TELEGRAM ? t('telegram') : t('sms')}
                   </Badge>
                   {t('to', { to: m.to })}
                 </span>
@@ -61,7 +51,6 @@ export default async function DevInboxPage({ params }: PageProps<'/[locale]/dev/
                   {formatDate(m.createdAt, locale, { dateStyle: 'medium', timeStyle: 'medium' })}
                 </time>
               </div>
-              {m.subject && <p className="font-semibold">{m.subject}</p>}
               <pre className="font-sans text-sm whitespace-pre-wrap text-steel-300">{m.text}</pre>
             </li>
           ))}
