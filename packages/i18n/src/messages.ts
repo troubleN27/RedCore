@@ -44,8 +44,6 @@ import ruOrder from '../messages/ru/order.json';
 import uzOrder from '../messages/uz/order.json';
 import ruAccount from '../messages/ru/account.json';
 import uzAccount from '../messages/uz/account.json';
-import ruInbox from '../messages/ru/inbox.json';
-import uzInbox from '../messages/uz/inbox.json';
 import ruConsole from '../messages/ru/console.json';
 import uzConsole from '../messages/uz/console.json';
 import ruCredits from '../messages/ru/credits.json';
@@ -71,7 +69,6 @@ const ru = {
   dev: ruDev,
   credits: ruCredits,
   console: ruConsole,
-  inbox: ruInbox,
   account: ruAccount,
   order: ruOrder,
   checkout: ruCheckout,
@@ -102,7 +99,6 @@ const uz: Messages = {
   dev: uzDev,
   credits: uzCredits,
   console: uzConsole,
-  inbox: uzInbox,
   account: uzAccount,
   order: uzOrder,
   checkout: uzCheckout,

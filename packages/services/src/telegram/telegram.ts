@@ -1,6 +1,5 @@
 import {
   deliveryZones,
-  devOutbox,
   orderItems,
   orders,
   products,
@@ -16,7 +15,7 @@ import { randomBytes } from 'node:crypto';
 
 // Telegram (этап 11): уведомления персоналу в админ-чат и покупателям по подписке на заказ.
 // Без TELEGRAM_BOT_TOKEN бот работает в мок-режиме: исходящие вызовы Bot API перехватываются
-// и пишутся в dev_outbox (видно на /dev/inbox) — тот же код, те же тексты, что и в проде.
+// и пишутся в лог сервера и в буфер процесса (его читают тесты) — тот же код и те же тексты.
 
 export interface TelegramConfig {
   token: string | null;
@@ -40,6 +39,19 @@ export function telegramConfig(
 
 export const telegramMode = (config = telegramConfig()) => (config.token ? 'bot' : 'mock');
 
+export interface MockTelegramMessage {
+  to: string;
+  text: string;
+}
+
+const MOCK_BUFFER_SIZE = 200;
+const mockMessages: MockTelegramMessage[] = [];
+
+/** Мок-режим: последние сообщения бота в памяти процесса — для тестов и отладки. */
+export function mockTelegramMessages(to?: string): MockTelegramMessage[] {
+  return mockMessages.filter((m) => to === undefined || m.to === to);
+}
+
 type T = (key: string, params?: Record<string, unknown>) => string;
 const translator = (locale: Locale) => getTranslator(locale) as unknown as T;
 const localeOf = (value: string | null | undefined): Locale =>
@@ -47,7 +59,7 @@ const localeOf = (value: string | null | undefined): Locale =>
 
 // ── Бот ──
 
-/** Бот на процесс: в мок-режиме — с фиктивным botInfo (без getMe) и перехватом отправки в outbox. */
+/** Бот на процесс: в мок-режиме — с фиктивным botInfo (без getMe) и перехватом отправки. */
 export function createTelegramBot(db: () => Promise<Database>, config = telegramConfig()): Bot {
   const bot = new Bot(config.token ?? '0:mock', {
     botInfo: config.token
@@ -71,12 +83,9 @@ export function createTelegramBot(db: () => Promise<Database>, config = telegram
     bot.api.config.use(async (_prev, method, payload) => {
       const body = payload as { chat_id?: number | string; text?: string };
       if (method === 'sendMessage' && body.chat_id !== undefined && body.text) {
-        await (
-          await db()
-        )
-          .insert(devOutbox)
-          .values({ channel: 'telegram', to: String(body.chat_id), text: body.text });
-        console.info(`[dev-inbox] telegram → ${body.chat_id}: ${body.text.split('\n')[0]}`);
+        mockMessages.push({ to: String(body.chat_id), text: body.text });
+        if (mockMessages.length > MOCK_BUFFER_SIZE) mockMessages.shift();
+        console.info(`[telegram:mock] → ${body.chat_id}: ${body.text.split('\n')[0]}`);
       }
       return {
         ok: true,

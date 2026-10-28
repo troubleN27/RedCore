@@ -11,7 +11,7 @@ import { env } from '@/env';
 import { adminBasePath } from '@/lib/admin-path';
 
 // Бот на процесс: команды через вебхук и отправка уведомлений. Без TELEGRAM_BOT_TOKEN —
-// мок-режим (сообщения в /dev/inbox), с токеном — Bot API.
+// мок-режим (сообщения только в лог сервера), с токеном — Bot API.
 
 let bot: Bot | undefined;
 

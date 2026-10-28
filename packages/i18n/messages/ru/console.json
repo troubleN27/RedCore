@@ -338,7 +338,7 @@
       "mode": "Режим",
       "modes": {
         "bot": "Бот подключён (@{username})",
-        "mock": "Мок-режим: TELEGRAM_BOT_TOKEN не задан, сообщения — в /dev/inbox"
+        "mock": "Мок-режим: TELEGRAM_BOT_TOKEN не задан — сообщения пишутся только в лог сервера"
       },
       "adminChat": "Админ-чат",
       "adminChatMissing": "не задан (TELEGRAM_ADMIN_CHAT_ID)",

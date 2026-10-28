@@ -1,6 +1,6 @@
-import { devOutbox, orders, products, telegramLinks, type Database } from '@redcore/db';
+import { orders, products, telegramLinks, type Database } from '@redcore/db';
 import { createTestDatabase, type TestDatabase } from '@redcore/db/testing';
-import { desc, eq, sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import type { Bot } from 'grammy';
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
@@ -10,6 +10,7 @@ import {
   botNotifier,
   createTelegramBot,
   createTelegramLink,
+  mockTelegramMessages,
   notifyTelegramOrder,
   sendTelegramTest,
   subscribeByToken,
@@ -70,14 +71,8 @@ async function userSays(chatId: number, text: string, language = 'ru') {
   } as never);
 }
 
-async function lastTo(to: string) {
-  const [row] = await db
-    .select()
-    .from(devOutbox)
-    .where(sql`${devOutbox.channel} = 'telegram' and ${devOutbox.to} = ${to}`)
-    .orderBy(desc(devOutbox.createdAt))
-    .limit(1);
-  return row?.text ?? '';
+function lastTo(to: string) {
+  return mockTelegramMessages(to).at(-1)?.text ?? '';
 }
 
 describe('Telegram-бот (мок-режим)', () => {
@@ -97,7 +92,7 @@ describe('Telegram-бот (мок-режим)', () => {
     expect(link.url).toBe(`https://t.me/RedCoreUzBot?start=${link.token}`);
     expect(link.token).toMatch(/^[A-Za-z0-9_-]{8,64}$/);
     await userSays(5001, `/start ${link.token}`);
-    expect(await lastTo('5001')).toContain(`${orderNumber} buyurtmasi haqida xabar beraman`);
+    expect(lastTo('5001')).toContain(`${orderNumber} buyurtmasi haqida xabar beraman`);
     expect(await telegramSubscriberCount(db, orderId)).toBe(1);
     // Повторное открытие той же ссылки не дублирует подписку
     await userSays(5001, `/start ${link.token}`);
@@ -106,12 +101,12 @@ describe('Telegram-бот (мок-режим)', () => {
 
   it('неверная или просроченная ссылка, /start без параметра и прочий текст', async () => {
     await userSays(5002, '/start nope-nope-nope');
-    expect(await lastTo('5002')).toContain('Ссылка устарела');
+    expect(lastTo('5002')).toContain('Ссылка устарела');
     expect(await subscribeByToken(db, 'bad token!', '5002')).toBeNull();
     await userSays(5002, '/start', 'uz');
-    expect(await lastTo('5002')).toContain('RedCore doʻkoni boti');
+    expect(lastTo('5002')).toContain('RedCore doʻkoni boti');
     await userSays(5002, 'привет');
-    expect(await lastTo('5002')).toContain('/status');
+    expect(lastTo('5002')).toContain('/status');
   });
 
   it('статусы приходят подписчику на языке заказа, персоналу — в админ-чат', async () => {
@@ -122,9 +117,9 @@ describe('Telegram-бот (мок-режим)', () => {
       config,
     };
     await notifyTelegramOrder(db, notifier, orderId, { kind: 'created' }, options);
-    expect(await lastTo('admin-chat')).toContain(`Новый заказ ${orderNumber}`);
-    expect(await lastTo('admin-chat')).toContain(`https://redcore.test/ops/orders/${orderNumber}`);
-    expect(await lastTo('5001')).toContain('qabul qilindi');
+    expect(lastTo('admin-chat')).toContain(`Новый заказ ${orderNumber}`);
+    expect(lastTo('admin-chat')).toContain(`https://redcore.test/ops/orders/${orderNumber}`);
+    expect(lastTo('5001')).toContain('qabul qilindi');
 
     await notifyTelegramOrder(
       db,
@@ -133,7 +128,7 @@ describe('Telegram-бот (мок-режим)', () => {
       { kind: 'status', status: 'shipped' },
       options,
     );
-    const shipped = await lastTo('5001');
+    const shipped = lastTo('5001');
     expect(shipped).toContain(`${orderNumber} buyurtmasi yetkazib berishga topshirildi`);
     expect(shipped).toContain(`https://redcore.test/uz/orders/${orderNumber}?token=`);
 
@@ -144,8 +139,8 @@ describe('Telegram-бот (мок-режим)', () => {
       { kind: 'refunded', amountMinor: 50_000_000, currency: 'uzs' },
       options,
     );
-    expect(await lastTo('5001')).toMatch(/500\s000\sso.m/u);
-    expect(await lastTo('admin-chat')).toContain(`Возврат по заказу ${orderNumber}`);
+    expect(lastTo('5001')).toMatch(/500\s000\sso.m/u);
+    expect(lastTo('admin-chat')).toContain(`Возврат по заказу ${orderNumber}`);
     await notifyTelegramOrder(
       db,
       notifier,
@@ -153,7 +148,7 @@ describe('Telegram-бот (мок-режим)', () => {
       { kind: 'refunded', amountMinor: 1250, currency: 'usd' },
       options,
     );
-    expect(await lastTo('admin-chat')).toContain('12.50 USD');
+    expect(lastTo('admin-chat')).toContain('12.50 USD');
   });
 
   it('после оплаты — «заканчивается» по товарам заказа с малым остатком', async () => {
@@ -171,27 +166,27 @@ describe('Telegram-бот (мок-режим)', () => {
       { kind: 'paid' },
       { siteUrl: 'https://redcore.test', config },
     );
-    expect(await lastTo('admin-chat')).toContain('Заканчивается');
+    expect(lastTo('admin-chat')).toContain('Заканчивается');
   });
 
   it('/status показывает заказы чата, /stop отписывает', async () => {
     await db.update(orders).set({ status: 'assembling' }).where(eq(orders.id, orderId));
     await userSays(5001, '/status');
-    expect(await lastTo('5001')).toContain(
+    expect(lastTo('5001')).toContain(
       `${orderNumber} — Yigʻilmoqda`.slice(0, orderNumber.length + 3),
     );
     await userSays(5001, '/stop');
-    expect(await lastTo('5001')).toContain('Уведомления отключены');
+    expect(lastTo('5001')).toContain('Уведомления отключены');
     expect(await db.select().from(telegramLinks).where(eq(telegramLinks.chatId, '5001'))).toEqual(
       [],
     );
     await userSays(5001, '/status');
-    expect(await lastTo('5001')).toContain('не подписаны');
+    expect(lastTo('5001')).toContain('не подписаны');
   });
 
   it('тестовое сообщение из консоли; без админ-чата — не отправляется', async () => {
     expect(await sendTelegramTest(botNotifier(bot), config)).toBe(true);
-    expect(await lastTo('admin-chat')).toContain('Тестовое сообщение');
+    expect(lastTo('admin-chat')).toContain('Тестовое сообщение');
     expect(await sendTelegramTest(botNotifier(bot), { ...config, adminChatId: null })).toBe(false);
   });
 });

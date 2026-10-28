@@ -1,8 +1,0 @@
-{
-  "title": "Dev-quti",
-  "subtitle": "Bot xaridorlarga va admin-chatga yuboradigan Telegram xabarlari. Faqat ishlab chiqish va demo rejimida mavjud.",
-  "empty": "Hozircha xabarlar yoʻq",
-  "to": "Kimga: {to}",
-  "refresh": "Yangilash",
-  "telegram": "Telegram"
-}

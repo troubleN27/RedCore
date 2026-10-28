@@ -334,20 +334,6 @@ export const stripeEvents = pgTable('stripe_events', {
   processedAt: timestamp({ withTimezone: true }),
 });
 
-// ── Dev-ящик: сообщения Telegram в режиме без токена бота ──
-
-export const devOutbox = pgTable(
-  'dev_outbox',
-  {
-    id: uuid().primaryKey().defaultRandom(),
-    channel: text().notNull(),
-    to: text().notNull(),
-    text: text().notNull(),
-    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
-  },
-  (t) => [index('dev_outbox_time_idx').on(t.createdAt)],
-);
-
 export type OrderRow = typeof orders.$inferSelect;
 export type OrderItemRow = typeof orderItems.$inferSelect;
 export type PaymentRow = typeof payments.$inferSelect;

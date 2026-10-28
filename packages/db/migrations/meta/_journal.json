@@ -78,6 +78,13 @@
       "when": 1793225146630,
       "tag": "0010_password_login",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1793228257688,
+      "tag": "0011_remove_dev_outbox",
+      "breakpoints": true
     }
   ]
 }

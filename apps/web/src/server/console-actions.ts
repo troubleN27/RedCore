@@ -250,7 +250,7 @@ export async function updateAiSettingsAction(input: AiSettings) {
   });
 }
 
-/** Тестовое сообщение в админ-чат Telegram (в мок-режиме — в /dev/inbox). */
+/** Тестовое сообщение в админ-чат Telegram (в мок-режиме — только в лог сервера). */
 export async function sendTelegramTestAction() {
   return run('settings', 'telegram.test', 'settings', async () => {
     const sent = await sendTelegramTest(getTelegramNotifier());

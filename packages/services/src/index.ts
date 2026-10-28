@@ -1,6 +1,5 @@
 export * from './catalog';
 export * from './builds';
-export * from './notify';
 export * from './orders';
 export * from './account';
 export * from './admin';

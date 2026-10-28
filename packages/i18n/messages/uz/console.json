@@ -338,7 +338,7 @@
       "mode": "Rejim",
       "modes": {
         "bot": "Bot ulangan (@{username})",
-        "mock": "Mok-rejim: TELEGRAM_BOT_TOKEN berilmagan, xabarlar — /dev/inbox da"
+        "mock": "Mok-rejim: TELEGRAM_BOT_TOKEN berilmagan — xabarlar faqat server logiga yoziladi"
       },
       "adminChat": "Admin-chat",
       "adminChatMissing": "berilmagan (TELEGRAM_ADMIN_CHAT_ID)",
