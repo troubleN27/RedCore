@@ -1,4 +1,4 @@
-import { devOutbox, inventoryMovements, payments, products, type Database } from '@redcore/db';
+import { inventoryMovements, payments, products, type Database } from '@redcore/db';
 import { createTestDatabase, type TestDatabase } from '@redcore/db/testing';
 import { randomUUID } from 'node:crypto';
 import { eq } from 'drizzle-orm';
@@ -20,7 +20,7 @@ import {
   handleStripeEvent,
   startPayment,
 } from './payments';
-import { canViewOrder, getOrderByNumber, notifyOrder } from './queries';
+import { canViewOrder, getOrderByNumber } from './queries';
 
 let testDb: TestDatabase;
 let db: Database;
@@ -393,16 +393,6 @@ describe('доступ, уведомления, аккаунт', () => {
     expect(canViewOrder(view, { token: 'wrong' })).toBe(false);
     expect(canViewOrder(view, { userId: 'someone' })).toBe(false);
     expect(canViewOrder(view, { role: 'manager' })).toBe(true);
-  });
-
-  it('SMS о заказе попадает в dev-ящик на языке заказа', async () => {
-    const placed = await placeOrder(db, ru, orderInput(), { locale: 'uz', cardEnabled: true });
-    await db.delete(devOutbox);
-    await notifyOrder(db, placed.orderId, { kind: 'created', card: false }, SITE);
-    const sent = await db.select().from(devOutbox);
-    expect(sent.map((m) => m.channel)).toEqual(['sms']);
-    expect(sent[0]!.text).toContain(`${placed.number}-buyurtma rasmiylashtirildi`);
-    expect(sent[0]!.text).toContain(`/uz/orders/${placed.number}?token=`);
   });
 
   it('слияние корзин и адреса пользователя', async () => {

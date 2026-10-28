@@ -20,7 +20,7 @@ export const user = pgTable('user', {
   banned: boolean().default(false),
   banReason: text(),
   banExpires: timestamp({ withTimezone: true }),
-  /** Язык интерфейса, SMS и Telegram */
+  /** Язык интерфейса и Telegram */
   locale: text().notNull().default('ru'),
 });
 

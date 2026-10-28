@@ -4,7 +4,6 @@ import {
   createMockGateway,
   createStripeGateway,
   getUsdRate,
-  notifyOrder,
   notifyTelegramOrder,
   type OrderEvent,
   type PaymentGateway,
@@ -54,8 +53,8 @@ export async function chargeOptions() {
 }
 
 /**
- * Письма, SMS и Telegram по событиям заказа. Ошибки провайдеров не должны ломать ответ —
- * каждый канал отправляется независимо.
+ * Уведомления о событиях заказа — Telegram (покупателю и в админ-чат). Ошибка бота не должна
+ * ломать ответ; покупатель видит статус и на странице заказа.
  */
 export async function sendOrderNotifications(
   events: (OrderEvent | { kind: 'created'; card: boolean; orderId: string })[],
@@ -63,11 +62,6 @@ export async function sendOrderNotifications(
   const db = await getDb();
   const notifier = getTelegramNotifier();
   for (const event of events) {
-    try {
-      await notifyOrder(db, event.orderId, event, env.NEXT_PUBLIC_SITE_URL);
-    } catch (error) {
-      console.error('order notification failed', event, error);
-    }
     try {
       await notifyTelegramOrder(db, notifier, event.orderId, event, {
         siteUrl: env.NEXT_PUBLIC_SITE_URL,

@@ -15,7 +15,6 @@ import ruConfigurator from '../messages/ru/configurator.json';
 import ruComingSoon from '../messages/ru/comingSoon.json';
 import ruCommon from '../messages/ru/common.json';
 import ruDev from '../messages/ru/dev.json';
-import ruSms from '../messages/ru/sms.json';
 import ruErrors from '../messages/ru/errors.json';
 import ruFooter from '../messages/ru/footer.json';
 import ruHome from '../messages/ru/home.json';
@@ -30,7 +29,6 @@ import uzConfigurator from '../messages/uz/configurator.json';
 import uzComingSoon from '../messages/uz/comingSoon.json';
 import uzCommon from '../messages/uz/common.json';
 import uzDev from '../messages/uz/dev.json';
-import uzSms from '../messages/uz/sms.json';
 import uzErrors from '../messages/uz/errors.json';
 import uzFooter from '../messages/uz/footer.json';
 import uzHome from '../messages/uz/home.json';
@@ -71,7 +69,6 @@ const ru = {
   shop: ruShop,
   specs: ruSpecs,
   dev: ruDev,
-  sms: ruSms,
   credits: ruCredits,
   console: ruConsole,
   inbox: ruInbox,
@@ -103,7 +100,6 @@ const uz: Messages = {
   shop: uzShop,
   specs: uzSpecs,
   dev: uzDev,
-  sms: uzSms,
   credits: uzCredits,
   console: uzConsole,
   inbox: uzInbox,

@@ -27,7 +27,7 @@ export function ProfileForm({
       onSubmit={(e) => {
         e.preventDefault();
         startTransition(async () => {
-          // locale — дополнительное поле пользователя (язык писем и SMS)
+          // locale — дополнительное поле пользователя (язык сайта и Telegram)
           const result = await authClient.updateUser({ name: name.trim(), locale: lang } as {
             name: string;
           });

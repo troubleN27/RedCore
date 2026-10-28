@@ -1,14 +1,12 @@
 import { getDb } from '@redcore/db';
 import { formatDate, isLocale } from '@redcore/i18n';
 import { listOutbox } from '@redcore/services';
-import { MessageSquareIcon, SendIcon } from 'lucide-react';
+import { SendIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { devInboxEnabled } from '@/server/dev-inbox';
-
-const TELEGRAM = 'telegram';
 
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = { robots: { index: false, follow: false } };
@@ -42,8 +40,8 @@ export default async function DevInboxPage({ params }: PageProps<'/[locale]/dev/
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-steel-400">
                 <span className="flex items-center gap-2">
                   <Badge variant="metal">
-                    {m.channel === TELEGRAM ? <SendIcon /> : <MessageSquareIcon />}
-                    {m.channel === TELEGRAM ? t('telegram') : t('sms')}
+                    <SendIcon />
+                    {t('telegram')}
                   </Badge>
                   {t('to', { to: m.to })}
                 </span>

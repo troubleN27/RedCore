@@ -59,7 +59,7 @@ export async function registerAction(input: {
 export type LoginResult =
   { ok: true } | { ok: false; error: 'invalidPhone' | 'invalid' | 'locked'; until?: string };
 
-/** Вход покупателя: номер телефона и пароль, без SMS. */
+/** Вход покупателя: номер телефона и пароль. */
 export async function loginAction(input: {
   phone: string;
   password: string;

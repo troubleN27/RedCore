@@ -9,12 +9,8 @@ import {
   settings,
   type Database,
 } from '@redcore/db';
-import { formatPrice, isLocale, type Locale } from '@redcore/i18n';
-import { getTranslator } from '@redcore/i18n/translator';
 import { asc, desc, eq, sql } from 'drizzle-orm';
 import { timingSafeEqual } from 'node:crypto';
-import { sendSms } from '../notify/notify';
-import type { OrderEvent } from './payments';
 
 export async function getOrderByNumber(db: Database, number: string) {
   const [order] = await db.select().from(orders).where(eq(orders.number, number));
@@ -84,41 +80,6 @@ export async function listUserOrders(db: Database, userId: string) {
     .from(orders)
     .where(eq(orders.userId, userId))
     .orderBy(desc(orders.createdAt));
-}
-
-/**
- * SMS о событии заказа на языке заказа. Ошибка провайдера не должна
- * откатывать оплату — поэтому вызывается после транзакции, в after().
- */
-export async function notifyOrder(
-  db: Database,
-  orderId: string,
-  event: { kind: 'created'; card: boolean } | OrderEvent,
-  siteUrl: string,
-): Promise<void> {
-  // SMS — только о создании и оплате; остальные статусы и возвраты идут в Telegram
-  if (event.kind !== 'created' && event.kind !== 'paid') return;
-  const [order] = await db.select().from(orders).where(eq(orders.id, orderId));
-  if (!order) return;
-  const locale: Locale = isLocale(order.locale) ? order.locale : 'ru';
-  const url = `${siteUrl}/${locale}/orders/${order.number}?token=${order.accessToken}`;
-  const t = getTranslator(locale);
-
-  if (event.kind === 'created') {
-    await sendSms(db, {
-      to: order.contactPhone,
-      text: t('sms.orderCreated', {
-        number: order.number,
-        amount: formatPrice(order.totalUzs, locale),
-        url,
-      }),
-    });
-  } else {
-    await sendSms(db, {
-      to: order.contactPhone,
-      text: t('sms.orderPaid', { number: order.number }),
-    });
-  }
 }
 
 /** Курс USD/UZS из настроек магазина — для режима списания в долларах. */

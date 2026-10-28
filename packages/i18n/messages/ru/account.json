@@ -11,7 +11,7 @@
   "profile": {
     "name": "Имя",
     "phone": "Телефон",
-    "language": "Язык писем и SMS",
+    "language": "Язык сайта и Telegram",
     "save": "Сохранить",
     "saved": "Профиль сохранён"
   },

@@ -3,8 +3,8 @@ import { timeZone, type Locale } from './config';
 import { messages } from './messages';
 
 /**
- * Переводчик вне React: письма, SMS, PDF, AI и MCP. Те же словари и ICU, что и на сайте;
- * ключи типизированы полным путём: t('sms.orderPaid', { number }).
+ * Переводчик вне React: Telegram, PDF, AI и MCP. Те же словари и ICU, что и на сайте;
+ * ключи типизированы полным путём: t('telegram.customer.paid', { number }).
  */
 export function getTranslator(locale: Locale) {
   return createTranslator({ locale, messages: messages[locale], timeZone });

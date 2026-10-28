@@ -334,7 +334,7 @@ export const stripeEvents = pgTable('stripe_events', {
   processedAt: timestamp({ withTimezone: true }),
 });
 
-// ── Dev-ящик: SMS и Telegram в режиме без провайдеров ──
+// ── Dev-ящик: сообщения Telegram в режиме без токена бота ──
 
 export const devOutbox = pgTable(
   'dev_outbox',

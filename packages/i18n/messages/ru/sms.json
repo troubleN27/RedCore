@@ -1,4 +1,0 @@
-{
-  "orderCreated": "RedCore: заказ {number} на {amount} оформлен. Статус: {url}",
-  "orderPaid": "RedCore: оплата заказа {number} получена. Спасибо!"
-}

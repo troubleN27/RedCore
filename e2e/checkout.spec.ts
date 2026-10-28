@@ -129,7 +129,7 @@ test.describe('аккаунт', () => {
     await page.getByTestId('login-submit').click();
     await expect(page.getByTestId('login-error')).toContainText('уже зарегистрирован');
 
-    // Вход — номер и пароль, без SMS
+    // Вход — номер и пароль
     await page.getByTestId('tab-sign-in').click();
     await page.getByLabel('Номер телефона').fill(phone);
     await page.getByLabel('Пароль', { exact: true }).fill('неверный-пароль');

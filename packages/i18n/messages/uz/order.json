@@ -2,9 +2,9 @@
   "title": "{number}-buyurtma",
   "thanks": "Rahmat! Buyurtma rasmiylashtirildi",
   "createdAt": "{date} da rasmiylashtirilgan",
-  "guestNote": "Bu sahifani saqlang: xat yoki SMS dagi havola orqali buyurtmaga qaytish mumkin.",
+  "guestNote": "Bu sahifa havolasini saqlang — u orqali buyurtmaga qaytish mumkin. Holatlarni Telegramda ham olish mumkin.",
   "notFound": "Buyurtma topilmadi",
-  "accessDenied": "Buyurtmaga ruxsat yoʻq. Xat yoki SMS dagi havolani oching yoki akkauntga kiring.",
+  "accessDenied": "Buyurtmaga ruxsat yoʻq. Saqlangan buyurtma havolasini oching yoki akkauntga kiring.",
   "status": {
     "draft": "Qoralama",
     "created": "Qabul qilindi",
