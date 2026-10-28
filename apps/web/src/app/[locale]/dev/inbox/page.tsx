@@ -1,26 +1,21 @@
 import { getDb } from '@redcore/db';
 import { formatDate, isLocale } from '@redcore/i18n';
-import { emailMode, listOutbox } from '@redcore/services';
+import { listOutbox } from '@redcore/services';
 import { MailIcon, MessageSquareIcon, SendIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
-import { mockPaymentsEnabled } from '@/server/payments';
+import { devInboxEnabled } from '@/server/dev-inbox';
 
 const TELEGRAM = 'telegram';
 
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
-/** Ящик для разработки и демо-стенда: письма и SMS, которые не ушли провайдерам. */
-function inboxEnabled() {
-  return emailMode() === 'mock' && (process.env.NODE_ENV !== 'production' || mockPaymentsEnabled());
-}
-
 export default async function DevInboxPage({ params }: PageProps<'/[locale]/dev/inbox'>) {
   const { locale } = await params;
-  if (!isLocale(locale) || !inboxEnabled()) notFound();
+  if (!isLocale(locale) || !devInboxEnabled()) notFound();
   const [t, messages] = await Promise.all([
     getTranslations({ locale, namespace: 'inbox' }),
     listOutbox(await getDb(), 50),
