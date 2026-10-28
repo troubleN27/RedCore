@@ -12,7 +12,7 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 40
     env:
       NEXT_TELEMETRY_DISABLED: '1'
       TURBO_TELEMETRY_DISABLED: '1'
@@ -35,7 +35,22 @@ jobs:
       - run: pnpm i18n:check
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
+      # Сервер для E2E запускаем сами, в фоне и с логом в файл: если им управляет Playwright,
+      # на Linux он бесконечно ждёт закрытия вывода next-server после остановки
+      - name: Запуск сайта для E2E
+        env:
+          TELEGRAM_WEBHOOK_SECRET: e2e-telegram-secret
+        run: |
+          nohup pnpm --filter @redcore/web start > next-server.log 2>&1 &
+          for i in $(seq 90); do
+            curl -sf http://localhost:3000/api/health > /dev/null && exit 0
+            sleep 2
+          done
+          cat next-server.log
+          exit 1
       - run: pnpm e2e --project=chromium
+        env:
+          E2E_EXTERNAL_SERVER: '1'
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -43,6 +58,7 @@ jobs:
           path: |
             playwright-report
             test-results
+            next-server.log
           retention-days: 7
 
   # Миграции продакшена: только после зелёной проверки и только для main.

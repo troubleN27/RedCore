@@ -22,7 +22,8 @@ export default defineConfig({
   webServer: {
     command: process.env.CI ? 'pnpm start' : 'pnpm dev',
     url: baseURL,
-    reuseExistingServer: !process.env.CI,
+    // В CI сайт поднимает отдельный шаг workflow (E2E_EXTERNAL_SERVER) — см. ci.yml
+    reuseExistingServer: !process.env.CI || Boolean(process.env.E2E_EXTERNAL_SERVER),
     timeout: 180_000,
     // Вебхук Telegram в продакшен-сборке открыт только с секретом (в dev — встроенный dev-секрет)
     env: { TELEGRAM_WEBHOOK_SECRET: 'e2e-telegram-secret' },

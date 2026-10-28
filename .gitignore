@@ -29,3 +29,6 @@ tooling/3d/raw
 .DS_Store
 Thumbs.db
 *.log
+
+# лог сервера E2E в CI
+next-server.log
