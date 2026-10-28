@@ -15,7 +15,7 @@ export interface GeminiOptions {
   models: Record<ModelTier, string>;
   /** Запасная модель между chat и lite в цепочке (план, §8: 3.8 → 3.6 → 3.5-lite) */
   middle?: string;
-  /** Лимит одной попытки (до первого и между чанками ответа) */
+  /** Сколько ждать первый фрагмент ответа; молчит дольше — следующая модель цепочки */
   timeoutMs?: number;
   /**
    * Общий лимит вызова со всеми повторами и запасными моделями: без него повторы по таймауту
@@ -29,16 +29,22 @@ export interface GeminiOptions {
 }
 
 const RETRY_DELAYS = [300, 1200];
-// Gemini 3 с размышлениями на бесплатном тарифе отвечает и за 15–30 с: лимиты с запасом
-const ATTEMPT_TIMEOUT_MS = 40_000;
+// Перегруженная модель (бесплатный тариф) иногда молчит десятки секунд: ждать её до конца
+// лимита бессмысленно — после 20 с тишины переходим к запасной модели цепочки
+const FIRST_CHUNK_TIMEOUT_MS = 20_000;
 const DEADLINE_MS = 45_000;
 /** Меньше этого на попытку не остаётся — дальше не пробуем */
 const MIN_ATTEMPT_MS = 2_000;
 
 function retryable(error: unknown): boolean {
   if (error instanceof ApiError) return error.status === 429 || error.status >= 500;
+  return error instanceof TypeError; // сеть
+}
+
+/** Таймаут ожидания: повтор той же модели не поможет — сразу следующая модель цепочки. */
+function timedOut(error: unknown): boolean {
   const name = (error as { name?: string })?.name;
-  return name === 'TimeoutError' || name === 'AbortError' || error instanceof TypeError;
+  return name === 'TimeoutError' || name === 'AbortError';
 }
 
 function toContents(messages: ChatMessage[]): Content[] {
@@ -103,9 +109,16 @@ export class GeminiGateway implements LlmGateway {
         if (remaining < MIN_ATTEMPT_MS) break models;
         const startedAt = Date.now();
         let emitted = false;
+        // Пока нет ни одного фрагмента — короткий лимит; дальше ответ дописывается до общего
+        const silence = new AbortController();
+        const silenceTimer = setTimeout(
+          () => silence.abort(new DOMException('no response', 'TimeoutError')),
+          Math.min(this.options.timeoutMs ?? FIRST_CHUNK_TIMEOUT_MS, remaining),
+        );
         try {
           const signal = AbortSignal.any([
-            AbortSignal.timeout(Math.min(this.options.timeoutMs ?? ATTEMPT_TIMEOUT_MS, remaining)),
+            silence.signal,
+            AbortSignal.timeout(remaining),
             ...(request.signal ? [request.signal] : []),
           ]);
           const response = await this.client.models.generateContentStream({
@@ -144,6 +157,7 @@ export class GeminiGateway implements LlmGateway {
           const usage = emptyUsage();
           let calls = 0;
           for await (const chunk of response) {
+            clearTimeout(silenceTimer);
             for (const part of chunk.candidates?.[0]?.content?.parts ?? []) {
               if (part.thought) continue;
               if (part.functionCall?.name) {
@@ -181,10 +195,13 @@ export class GeminiGateway implements LlmGateway {
           console.warn(
             `[ai] gemini ${model} attempt ${attempt + 1} failed after ${Date.now() - startedAt} ms: ${reason}`,
           );
-          if (!retryable(error)) break; // ошибка запроса (400 и т. п.) — следующая модель
+          // Ошибка запроса (400 и т. п.) или молчание — следующая модель; 429/5xx — повтор
+          if (timedOut(error) || !retryable(error)) break;
           const delay = RETRY_DELAYS[attempt];
           if (delay === undefined) break;
           await this.sleep(delay);
+        } finally {
+          clearTimeout(silenceTimer);
         }
       }
     }

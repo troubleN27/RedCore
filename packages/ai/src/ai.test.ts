@@ -461,7 +461,7 @@ describe('шлюз Gemini: повторы, фолбэк моделей, circuit 
     expect(JSON.stringify(sent[1])).toContain('"thoughtSignature":"sig-1"');
   });
 
-  it('модель молчит — общий лимит вызова, а не таймаут функции Vercel', async () => {
+  it('модель молчит — переход к следующей модели и общий лимит вызова', async () => {
     const started: string[] = [];
     // Ответ не приходит никогда: попытку обрывает только abortSignal
     const hanging = {
@@ -490,7 +490,8 @@ describe('шлюз Gemini: повторы, фолбэк моделей, circuit 
     const t0 = Date.now();
     await expect(collect(gateway)).rejects.toBeInstanceOf(LlmUnavailableError);
     expect(Date.now() - t0).toBeLessThan(2_000);
-    expect(started.length).toBeGreaterThan(0);
+    // Молчание не повторяют: сразу следующая модель цепочки
+    expect(started).toEqual(['chat-m', 'mid-m', 'lite-m']);
   });
 });
 
