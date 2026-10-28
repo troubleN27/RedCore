@@ -27,7 +27,7 @@ import { unknownAmounts } from './agents/run';
 import { CircuitBreaker } from './gateway/breaker';
 import { GeminiGateway } from './gateway/gemini';
 import { callTools, say, ScriptedGateway, type ScriptStep } from './gateway/scripted';
-import { LlmUnavailableError, type LlmRequest } from './gateway/types';
+import { LlmUnavailableError, type LlmRequest, type ToolCall } from './gateway/types';
 import { MemoryRateLimiter } from './limits';
 import { chat, classifyByKeywords, type ChatActor, type ChatPlace } from './orchestrator';
 
@@ -416,6 +416,49 @@ describe('шлюз Gemini: повторы, фолбэк моделей, circuit 
     expect(gateway.available()).toBe(true);
     expect(new GeminiGateway({ apiKey: undefined, models }).available()).toBe(false);
     expect(gateway.chain('power')).toEqual(['power-m', 'chat-m']);
+  });
+
+  it('подпись вызова (thought_signature) возвращается модели на следующем шаге', async () => {
+    const sent: unknown[] = [];
+    const client = {
+      models: {
+        generateContentStream: async ({ contents }: { contents: unknown }) => {
+          sent.push(contents);
+          return (async function* () {
+            yield {
+              candidates: [
+                {
+                  content: {
+                    parts: [
+                      {
+                        functionCall: { id: 'c1', name: 'get_policy', args: {} },
+                        thoughtSignature: 'sig-1',
+                      },
+                    ],
+                  },
+                },
+              ],
+            };
+          })();
+        },
+      },
+    };
+    const gateway = new GeminiGateway({ apiKey: 'k', models, client: client as never });
+    const events = [];
+    for await (const e of gateway.stream(request)) events.push(e);
+    const call = events.find((e) => e.type === 'call');
+    expect(call).toMatchObject({ call: { name: 'get_policy', signature: 'sig-1' } });
+
+    const next: LlmRequest = {
+      ...request,
+      messages: [
+        ...request.messages,
+        { role: 'model', parts: [{ kind: 'call', call: (call as { call: ToolCall }).call }] },
+        { role: 'user', parts: [{ kind: 'result', id: 'c1', name: 'get_policy', result: 'ok' }] },
+      ],
+    };
+    for await (const e of gateway.stream(next)) void e;
+    expect(JSON.stringify(sent[1])).toContain('"thoughtSignature":"sig-1"');
   });
 
   it('модель молчит — общий лимит вызова, а не таймаут функции Vercel', async () => {

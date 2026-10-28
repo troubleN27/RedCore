@@ -7,6 +7,11 @@ export interface ToolCall {
   id: string;
   name: string;
   args: Record<string, unknown>;
+  /**
+   * Непрозрачная подпись провайдера (Gemini 3 — thought_signature): её нужно вернуть вместе с
+   * этим вызовом в истории следующего шага, иначе модель отвечает 400.
+   */
+  signature?: string;
 }
 
 export type ChatPart =

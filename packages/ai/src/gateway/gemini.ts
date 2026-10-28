@@ -46,7 +46,10 @@ function toContents(messages: ChatMessage[]): Content[] {
     parts: m.parts.map((p): Part => {
       if (p.kind === 'text') return { text: p.text };
       if (p.kind === 'call')
-        return { functionCall: { id: p.call.id, name: p.call.name, args: p.call.args } };
+        return {
+          functionCall: { id: p.call.id, name: p.call.name, args: p.call.args },
+          ...(p.call.signature ? { thoughtSignature: p.call.signature } : {}),
+        };
       return { functionResponse: { id: p.id, name: p.name, response: { result: p.result } } };
     }),
   }));
@@ -149,6 +152,7 @@ export class GeminiGateway implements LlmGateway {
                     id: part.functionCall.id ?? `call-${calls}`,
                     name: part.functionCall.name,
                     args: (part.functionCall.args ?? {}) as Record<string, unknown>,
+                    ...(part.thoughtSignature ? { signature: part.thoughtSignature } : {}),
                   },
                 };
                 calls++;
