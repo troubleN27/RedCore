@@ -4,7 +4,13 @@ import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 // Единый .env.local лежит в корне монорепо — его же читают скрипты БД и MCP.
-loadEnvConfig(path.resolve(process.cwd(), '../..'), process.env.NODE_ENV !== 'production');
+// forceReload: Next уже вызвал loadEnvConfig для apps/web, а без флага @next/env отдаёт тот кэш.
+loadEnvConfig(
+  path.resolve(process.cwd(), '../..'),
+  process.env.NODE_ENV !== 'production',
+  console,
+  true,
+);
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
