@@ -8,7 +8,10 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
-  reporter: process.env.CI ? 'github' : 'list',
+  // В CI: имя каждого теста в логе (видно, где зависло), аннотации и HTML-отчёт в артефактах
+  reporter: process.env.CI ? [['list'], ['github'], ['html', { open: 'never' }]] : 'list',
+  // Зависший тест не должен съедать всё время задания: отчёт успеет выгрузиться
+  globalTimeout: process.env.CI ? 30 * 60_000 : 0,
   // reducedMotion: сайт отключает плавные прокрутки и анимации — клики не попадают в движущиеся цели
   use: { baseURL, trace: 'on-first-retry', reducedMotion: 'reduce' },
   projects: [
