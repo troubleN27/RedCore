@@ -1,0 +1,14 @@
+# Деплой через CLI: локальные секреты и артефакты не загружаются
+.env
+.env*.local
+node_modules
+**/node_modules
+.next
+**/.next
+.turbo
+**/.turbo
+test-results
+playwright-report
+coverage
+tooling/3d/raw
+next-server.log
