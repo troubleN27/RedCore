@@ -1,0 +1,69 @@
+{
+  "title": "RedCore dizayn tizimi",
+  "subtitle": "Jonli stil qoʻllanmasi: tokenlar, tipografika va asosiy komponentlar. Faqat ishlab chiqish rejimida mavjud.",
+  "sections": {
+    "palette": "Ranglar palitrasi",
+    "typography": "Tipografika",
+    "buttons": "Tugmalar",
+    "badges": "Nishonlar",
+    "cards": "Kartochkalar",
+    "forms": "Kiritish maydonlari",
+    "prices": "Narxlar",
+    "motion": "Animatsiya va yorqinlik",
+    "glyphs": "Gliflarni tekshirish"
+  },
+  "palette": {
+    "bg": "Sahifa foni",
+    "surface": "Kartochkalar va panellar",
+    "border": "Chegaralar",
+    "text": "Asosiy matn",
+    "muted": "Ikkinchi darajali matn",
+    "red500": "Rosso Corsa — CTA tugmalari",
+    "red400": "Qizil matn va RGB",
+    "red900": "Nishonlar foni",
+    "metal": "Metall",
+    "success": "Muvaffaqiyat",
+    "warning": "Ogohlantirish",
+    "danger": "Xatolik",
+    "info": "Maʼlumot"
+  },
+  "typography": {
+    "display": "Sarlavhalar — Unbounded",
+    "body": "Matn — Inter",
+    "mono": "Xususiyatlar — JetBrains Mono",
+    "sample": "Orzuingizdagi kompyuterni yigʻing",
+    "paragraph": "Har bir detalning mosligini real vaqtda tekshiramiz va nima uchun mos kelmasligini tushuntiramiz."
+  },
+  "buttons": {
+    "primary": "Asosiy",
+    "secondary": "Ikkinchi darajali",
+    "outline": "Konturli",
+    "ghost": "Shaffof",
+    "destructive": "Xavfli",
+    "disabled": "Faol emas",
+    "small": "Kichik",
+    "large": "Katta"
+  },
+  "cards": {
+    "productTitle": "Videokarta",
+    "productText": "Mahsulot kartochkasi: ustiga olib borilganda koʻtariladi va qizil chegara paydo boʻladi.",
+    "statLabel": "Oʻrtacha chek",
+    "statDelta": "Oʻtgan haftaga nisbatan +12%"
+  },
+  "forms": {
+    "searchLabel": "Katalog boʻyicha qidiruv",
+    "searchPlaceholder": "Masalan, RTX 5070",
+    "phoneLabel": "Telefon",
+    "phoneHint": "Tasdiqlash kodini yuboramiz"
+  },
+  "motion": {
+    "glow": "Yorqinlik",
+    "shine": "Ustiga olib borilganda yaltirash",
+    "progress": "Yigʻish jarayoni"
+  },
+  "glyphs": {
+    "uz": "Oʻzbekiston, gʻildirak, maʼlumot, taʼmir, soʻm",
+    "ru": "Съешь же ещё этих мягких французских булок, да выпей чаю",
+    "digits": "0123456789 · 12 450 000"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "@redcore/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Схема Drizzle, миграции, клиент Neon (pg Pool) и seed",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema/index.ts",
+    "./testing": "./src/testing.ts"
+  },
+  "scripts": {
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/migrate.ts",
+    "db:seed": "tsx src/seed/index.ts",
+    "db:studio": "drizzle-kit studio",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "db:reset": "tsx src/reset.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@better-auth/utils": "0.5.1",
+    "@electric-sql/pglite": "^0.5.12",
+    "@redcore/domain": "workspace:*",
+    "@redcore/i18n": "workspace:*",
+    "@vercel/functions": "^3.10.3",
+    "drizzle-orm": "^0.45.4",
+    "kysely": "0.29.7",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.23.1",
+    "drizzle-kit": "^0.31.11",
+    "tsx": "^4.23.15",
+    "vitest": "^5.0.5",
+    "zod": "^4.6.7"
+  }
+}

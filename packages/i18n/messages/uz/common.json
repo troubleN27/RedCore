@@ -1,0 +1,35 @@
+{
+  "brand": "RedCore",
+  "tagline": "Sport avtomobili xarakteriga ega kompyuter texnikasi",
+  "actions": {
+    "addToCart": "Savatga",
+    "buy": "Sotib olish",
+    "compare": "Solishtirish",
+    "addToFavorites": "Sevimlilarga",
+    "buildPc": "Kompyuter yigʻish",
+    "details": "Batafsil",
+    "search": "Qidiruv",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "share": "Ulashish",
+    "retry": "Qayta urinish",
+    "toHome": "Bosh sahifaga"
+  },
+  "stock": {
+    "inStock": "Mavjud",
+    "lowStock": "{count, plural, other {# dona qoldi}}",
+    "outOfStock": "Mavjud emas",
+    "preorder": "Buyurtma asosida"
+  },
+  "badges": {
+    "new": "Yangi",
+    "hit": "Xit",
+    "sale": "Chegirma",
+    "compatible": "Mos keladi",
+    "incompatible": "Mos kelmaydi",
+    "estimate": "Taxminiy"
+  },
+  "price": {
+    "discount": "−{percent}%"
+  }
+}

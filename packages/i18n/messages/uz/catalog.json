@@ -1,0 +1,43 @@
+{
+  "title": "Katalog",
+  "subtitle": "Moslik tekshiruvi bilan butlovchi qismlar, periferiya va tayyor kompyuterlar.",
+  "components": "Butlovchi qismlar",
+  "peripherals": "Periferiya",
+  "prebuilt": "Tayyor kompyuterlar",
+  "fromPrice": "{price} dan",
+  "productCount": "{count, plural, other {# ta mahsulot}}",
+  "found": "Topildi: {count, plural, other {# ta mahsulot}}",
+  "filters": "Filtrlar",
+  "showFilters": "Filtrlarni koʻrsatish",
+  "resetFilters": "Tozalash",
+  "showResults": "{count, plural, other {# ta mahsulotni koʻrsatish}}",
+  "inStockOnly": "Faqat mavjudlari",
+  "rangeFrom": "dan",
+  "rangeTo": "gacha",
+  "apply": "Qoʻllash",
+  "yes": "Ha",
+  "compatibilityKey": "Moslik uchun muhim",
+  "sort": {
+    "label": "Saralash",
+    "popular": "Ommabop",
+    "price-asc": "Avval arzonlari",
+    "price-desc": "Avval qimmatlari",
+    "name": "Nomi boʻyicha",
+    "new": "Yangilari"
+  },
+  "empty": {
+    "title": "Hech narsa topilmadi",
+    "text": "Filtrlarni yumshatib yoki tozalab koʻring."
+  },
+  "pagination": {
+    "label": "Katalog sahifalari",
+    "previous": "Orqaga",
+    "next": "Oldinga",
+    "page": "{page}-sahifa"
+  },
+  "breadcrumbs": "Navigatsiya zanjiri",
+  "home": "Bosh sahifa",
+  "metaCategory": "{name} — Toshkentda {price} dan sotib olish | RedCore",
+  "metaCategoryDescription": "{name} mavjud: moslik tekshiruvi, Oʻzbekiston boʻylab yetkazib berish va kafolat bilan {count, plural, other {# ta mahsulot}}.",
+  "productsHeading": "Mahsulotlar"
+}

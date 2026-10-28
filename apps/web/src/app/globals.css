@@ -1,0 +1,282 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/*
+ * Дизайн-система RedCore. Тёмная тема — единственная: сайт всегда в фирменной гамме.
+ * Красный — действие, состояние и подсветка (≤ ~10% площади экрана), не сплошные заливки.
+ * Контраст: красный ТЕКСТ — только brand-bright #FF2800 (5,2:1 на чёрном),
+ * заливки — brand #D40000 с белым текстом (5,5:1).
+ */
+
+:root {
+  /* ── Палитра ── */
+  --rc-black: #0a0a0b;
+  --rc-graphite-950: #111114;
+  --rc-graphite-900: #16161a;
+  --rc-graphite-850: #1e1e24;
+  --rc-graphite-800: #2a2a31;
+  --rc-graphite-700: #3a3a44;
+  --rc-steel-400: #868690;
+  --rc-steel-300: #a1a1aa;
+  --rc-white: #f5f5f7;
+
+  --rc-red-400: #ff2800;
+  --rc-red-500: #d40000;
+  --rc-red-600: #a80000;
+  --rc-red-700: #8c0000;
+  --rc-red-900: #2a0000;
+
+  --rc-metal: #c9ccd1;
+  --rc-metal-dark: #5c6068;
+
+  --rc-success: #2bd47d;
+  --rc-warning: #f6c700;
+  --rc-danger: #ff453a;
+  --rc-info: #4c8dff;
+
+  /* ── Семантические токены shadcn/ui ── */
+  --background: var(--rc-black);
+  --foreground: var(--rc-white);
+  --card: var(--rc-graphite-900);
+  --card-foreground: var(--rc-white);
+  --popover: var(--rc-graphite-950);
+  --popover-foreground: var(--rc-white);
+  --primary: var(--rc-red-500);
+  --primary-foreground: #ffffff;
+  --secondary: var(--rc-graphite-850);
+  --secondary-foreground: var(--rc-white);
+  --muted: var(--rc-graphite-900);
+  --muted-foreground: var(--rc-steel-300);
+  --accent: var(--rc-graphite-850);
+  --accent-foreground: var(--rc-white);
+  --destructive: var(--rc-danger);
+  --border: var(--rc-graphite-800);
+  --input: var(--rc-graphite-800);
+  --ring: var(--rc-red-400);
+  --radius: 0.625rem;
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand: var(--rc-red-500);
+  --color-brand-bright: var(--rc-red-400);
+  --color-brand-dark: var(--rc-red-600);
+  --color-brand-darker: var(--rc-red-700);
+  --color-brand-deep: var(--rc-red-900);
+  --color-graphite-950: var(--rc-graphite-950);
+  --color-graphite-900: var(--rc-graphite-900);
+  --color-graphite-850: var(--rc-graphite-850);
+  --color-graphite-800: var(--rc-graphite-800);
+  --color-graphite-700: var(--rc-graphite-700);
+  --color-steel-400: var(--rc-steel-400);
+  --color-steel-300: var(--rc-steel-300);
+  --color-metal: var(--rc-metal);
+  --color-metal-dark: var(--rc-metal-dark);
+  --color-success: var(--rc-success);
+  --color-warning: var(--rc-warning);
+  --color-danger: var(--rc-danger);
+  --color-info: var(--rc-info);
+
+  --font-display: var(--font-unbounded), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+}
+
+@theme {
+  --shadow-glow-sm: 0 0 12px rgb(255 40 0 / 0.35);
+  --shadow-glow: 0 0 24px rgb(255 40 0 / 0.4), 0 0 2px rgb(255 40 0 / 0.8);
+  --shadow-glow-lg: 0 0 48px rgb(212 0 0 / 0.35);
+  --shadow-panel: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 12px 32px -12px rgb(0 0 0 / 0.6);
+
+  /* «Скоростная» кривая: резкий старт, мягкое торможение */
+  --ease-speed: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-shine: shine 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-glow-pulse: glow-pulse 2.4s ease-in-out infinite;
+  --animate-speed-line: speed-line 3.2s linear infinite;
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes shine {
+    from {
+      transform: translateX(-120%) skewX(-20deg);
+    }
+    to {
+      transform: translateX(260%) skewX(-20deg);
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 12px rgb(255 40 0 / 0.25);
+    }
+    50% {
+      box-shadow: 0 0 28px rgb(255 40 0 / 0.55);
+    }
+  }
+
+  @keyframes speed-line {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(500%);
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ── Фирменные фактуры ── */
+
+/* Карбон: плетение «ёлочкой» в графитовых тонах, едва заметное */
+@utility bg-carbon {
+  background-color: #0f0f12;
+  background-image:
+    linear-gradient(27deg, #0c0c0e 5px, transparent 5px),
+    linear-gradient(207deg, #0c0c0e 5px, transparent 5px),
+    linear-gradient(27deg, #15151a 5px, transparent 5px),
+    linear-gradient(207deg, #15151a 5px, transparent 5px),
+    linear-gradient(90deg, #121216 10px, transparent 10px),
+    linear-gradient(
+      #131317 25%,
+      #101013 25%,
+      #101013 50%,
+      transparent 50%,
+      transparent 75%,
+      #17171c 75%,
+      #17171c
+    );
+  background-position:
+    0 5px,
+    10px 0,
+    0 10px,
+    10px 5px,
+    0 0,
+    0 0;
+  background-size: 20px 20px;
+}
+
+/* Брашированный металл для шапок и панелей */
+@utility bg-brushed {
+  background-image:
+    linear-gradient(180deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0) 45%),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.018) 0 1px, transparent 1px 3px);
+}
+
+/* Красное свечение hero на чёрном */
+@utility bg-hero-glow {
+  background-image:
+    radial-gradient(55% 60% at 78% 18%, rgb(212 0 0 / 0.3), transparent 70%),
+    radial-gradient(35% 45% at 8% 92%, rgb(255 40 0 / 0.1), transparent 70%);
+}
+
+/* Градиент CTA: Scuderia → Rosso Corsa → тёмно-красный */
+@utility bg-cta {
+  background-image: linear-gradient(135deg, #ff2800 0%, #d40000 55%, #8c0000 100%);
+}
+
+@utility text-gradient-red {
+  background-image: linear-gradient(135deg, #ff6a45 0%, #ff2800 45%, #d40000 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Мелкие подписи в стиле моторспорта */
+@utility label-caps {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scrollbar-color: var(--rc-graphite-700) transparent;
+    scrollbar-width: thin;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgb(212 0 0 / 0.55);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Переход между страницами магазина (app/[locale]/(shop)/template.tsx) */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-enter {
+  animation: page-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

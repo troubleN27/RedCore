@@ -1,0 +1,42 @@
+{
+  "title": "Shaxsiy kabinet",
+  "greeting": "Assalomu alaykum, {name}",
+  "nav": {
+    "profile": "Profil",
+    "orders": "Buyurtmalar",
+    "builds": "Yigʻmalar",
+    "addresses": "Manzillar",
+    "favorites": "Sevimlilar"
+  },
+  "profile": {
+    "name": "Ism",
+    "email": "Pochta",
+    "emailTemp": "Pochta koʻrsatilmagan",
+    "phone": "Telefon",
+    "language": "Xat va SMS tili",
+    "save": "Saqlash",
+    "saved": "Profil saqlandi"
+  },
+  "orders": {
+    "empty": "Hozircha buyurtmalar yoʻq",
+    "itemsCount": "{count} ta mahsulot"
+  },
+  "builds": {
+    "empty": "Saqlangan yigʻmalar hozircha yoʻq — yigʻmani konfiguratorda saqlang.",
+    "open": "Ochish",
+    "untitled": "{id} yigʻmasi"
+  },
+  "addresses": {
+    "empty": "Hozircha manzillar yoʻq",
+    "add": "Manzil qoʻshish",
+    "delete": "Oʻchirish",
+    "deleteConfirm": "Manzil oʻchirilsinmi?",
+    "default": "Asosiy",
+    "recipient": "Qabul qiluvchi",
+    "save": "Manzilni saqlash",
+    "saved": "Manzil saqlandi",
+    "deleted": "Manzil oʻchirildi",
+    "cancel": "Bekor qilish"
+  },
+  "synced": "Sevimlilar va savat akkauntda saqlanadi va boshqa qurilmalarda ham mavjud."
+}

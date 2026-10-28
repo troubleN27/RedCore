@@ -1,0 +1,24 @@
+{
+  "name": "@redcore/fps-tools",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Калибровка калькулятора FPS по замерам: α и поправки вендоров игр, показатель k",
+  "scripts": {
+    "calibrate": "tsx src/calibrate.ts",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@redcore/db": "workspace:*",
+    "@redcore/domain": "workspace:*",
+    "@redcore/services": "workspace:*"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.12",
+    "@types/node": "^24.19.2",
+    "tsx": "^4.23.15",
+    "vitest": "^5.0.5"
+  }
+}

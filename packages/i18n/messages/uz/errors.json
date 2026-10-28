@@ -1,0 +1,11 @@
+{
+  "notFound": {
+    "code": "404",
+    "title": "Sahifa topilmadi",
+    "text": "Bu detal korpusga sigʻmayotganga oʻxshaydi: bunday sahifa yoʻq yoki u boshqa joyga koʻchirilgan."
+  },
+  "generic": {
+    "title": "Nimadir notoʻgʻri ketdi",
+    "text": "Biz allaqachon tekshiryapmiz. Sahifani yangilab koʻring."
+  }
+}

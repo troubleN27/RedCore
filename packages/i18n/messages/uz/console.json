@@ -1,0 +1,554 @@
+{
+  "meta": {
+    "title": "RedCore konsoli"
+  },
+  "nav": {
+    "dashboard": "Boshqaruv paneli",
+    "orders": "Buyurtmalar",
+    "products": "Mahsulotlar",
+    "stock": "Ombor",
+    "reviews": "Sharhlar",
+    "promos": "Promokodlar",
+    "games": "Oʻyinlar",
+    "ai": "AI",
+    "payments": "Toʻlovlar",
+    "users": "Foydalanuvchilar",
+    "settings": "Sozlamalar",
+    "mcp": "MCP",
+    "audit": "Harakatlar jurnali",
+    "logout": "Chiqish",
+    "toStore": "Saytga"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "manager": "Menejer",
+    "customer": "Xaridor"
+  },
+  "login": {
+    "title": "Konsolga kirish",
+    "subtitle": "Faqat xodimlar uchun. Parol va autentifikator ilovasidagi kod kerak.",
+    "email": "Pochta",
+    "password": "Parol",
+    "submit": "Davom etish",
+    "submitting": "Tekshirilmoqda…",
+    "totpTitle": "Ikki bosqichli himoya kodi",
+    "totpHint": "Google Authenticator, Authy yoki 1Password ni oching va RedCore ning 6 xonali kodini kiriting.",
+    "totpLabel": "Ilovadagi kod",
+    "verify": "Kirish",
+    "back": "Orqaga",
+    "enrollTitle": "Ikki bosqichli himoyani ulang",
+    "enrollHint": "2FA siz konsolga kirib boʻlmaydi. Parolni tasdiqlang, QR-kodni autentifikator ilovasi bilan skanerlang va kodni kiriting.",
+    "enrollPassword": "Parolni qayta kiriting",
+    "enrollStart": "QR-kodni koʻrsatish",
+    "secretLabel": "Qoʻlda kiritish uchun sir",
+    "backupTitle": "Zaxira kodlari",
+    "backupHint": "Ularni ishonchli joyda saqlang — telefon yoʻq boʻlsa, har biridan bir marta foydalanish mumkin.",
+    "enrollConfirm": "Ulash va kirish",
+    "errors": {
+      "invalid": "Pochta yoki parol notoʻgʻri.",
+      "locked": "Muvaffaqiyatsiz urinishlar juda koʻp. Kirish {time} gacha bloklandi.",
+      "totp": "Kod notoʻgʻri. Telefondagi vaqtni tekshirib, qayta urinib koʻring.",
+      "enroll": "2FA ni ulab boʻlmadi. Parolni tekshiring."
+    }
+  },
+  "common": {
+    "save": "Saqlash",
+    "saved": "Saqlandi",
+    "cancel": "Bekor qilish",
+    "delete": "Oʻchirish",
+    "create": "Yaratish",
+    "search": "Qidiruv",
+    "all": "Hammasi",
+    "empty": "Hech narsa topilmadi",
+    "status": "Holat",
+    "date": "Sana",
+    "total": "Summa",
+    "back": "Orqaga",
+    "error": "Amalni bajarib boʻlmadi",
+    "page": "{pages} dan {page}-sahifa",
+    "prev": "Orqaga",
+    "next": "Oldinga",
+    "yes": "Ha",
+    "no": "Yoʻq",
+    "open": "Ochish",
+    "active": "Faol",
+    "inactive": "Oʻchirilgan"
+  },
+  "dashboard": {
+    "title": "Boshqaruv paneli",
+    "periods": {
+      "d7": "7 kun",
+      "d30": "30 kun",
+      "d90": "90 kun"
+    },
+    "kpi": {
+      "revenue": "Tushum",
+      "orders": "Buyurtmalar",
+      "aov": "Oʻrtacha chek",
+      "paidShare": "Toʻlangan",
+      "conversion": "Konfigurator konversiyasi"
+    },
+    "hints": {
+      "revenue": "Davr ichidagi toʻlangan buyurtmalar, bekor qilingan va qaytarilganlarsiz",
+      "orders": "Qoralamalardan tashqari barcha buyurtmalar",
+      "conversion": "Konfigurator ochilishlaridan yigʻma savatga qoʻshilganlari ulushi"
+    },
+    "charts": {
+      "revenue": "Kunlik tushum",
+      "orders": "Kunlik buyurtmalar"
+    },
+    "topProducts": "Tushum boʻyicha top mahsulotlar",
+    "topBuilds": "Ommabop yigʻmalar",
+    "funnel": {
+      "title": "Konfigurator voronkasi",
+      "views": "Konfiguratorni ochdi",
+      "saved": "Yigʻmani saqladi",
+      "toCart": "Savatga qoʻshdi",
+      "orders": "Buyurtma berdi"
+    },
+    "lowStock": "Tugab bormoqda",
+    "qty": "Dona",
+    "times": "{count} marta",
+    "noData": "Davr uchun maʼlumot yoʻq"
+  },
+  "orders": {
+    "title": "Buyurtmalar",
+    "searchPlaceholder": "Raqam, telefon yoki ism",
+    "cols": {
+      "number": "Raqam",
+      "date": "Sana",
+      "customer": "Xaridor",
+      "items": "Mahsulotlar",
+      "total": "Summa",
+      "status": "Holat",
+      "payment": "Toʻlov"
+    },
+    "detail": {
+      "customer": "Xaridor",
+      "delivery": "Yetkazib berish",
+      "items": "Tarkib",
+      "history": "Holatlar tarixi",
+      "payments": "Toʻlovlar",
+      "actions": "Amallar",
+      "changeStatus": "Oʻtkazish: «{status}»",
+      "note": "Holat oʻzgarishiga izoh",
+      "noActions": "Bu holat uchun amallar yoʻq",
+      "attempt": "{n}-urinish",
+      "refundedAmount": "{amount} qaytarildi",
+      "assemblyChecklist": "Yigʻish roʻyxati: BIOS, kabel joylash, 30 daqiqa stress-test, xaridor uchun surat.",
+      "refund": {
+        "title": "Qaytarish",
+        "amount": "Qaytariladigan summa, soʻm",
+        "full": "Toʻliq",
+        "restock": "Mahsulotlarni omborga qaytarish",
+        "reason": "Sababi",
+        "submit": "Qaytarishni rasmiylashtirish",
+        "done": "Qaytarish yuborildi — holatni vebxuk yangilaydi",
+        "hint": "Pul toʻlov tizimi orqali qaytariladi; buyurtma va toʻlov vebxuk orqali yangilanadi."
+      }
+    }
+  },
+  "products": {
+    "title": "Mahsulotlar",
+    "new": "Yangi mahsulot",
+    "searchPlaceholder": "Nomi, SKU yoki brend",
+    "cols": {
+      "name": "Mahsulot",
+      "sku": "SKU",
+      "category": "Turkum",
+      "price": "Narx",
+      "stock": "Qoldiq",
+      "reserved": "Band",
+      "status": "Holat"
+    },
+    "statuses": {
+      "draft": "Qoralama",
+      "active": "Sotuvda",
+      "archived": "Arxivda"
+    },
+    "form": {
+      "basics": "Asosiy",
+      "sku": "SKU",
+      "slug": "Manzil (slug)",
+      "name": "Model",
+      "brand": "Brend",
+      "category": "Turkum",
+      "price": "Narx, soʻm",
+      "compareAt": "Eski narx, soʻm",
+      "cost": "Tannarx, soʻm",
+      "status": "Holat",
+      "featured": "Xit savdo",
+      "warranty": "Kafolat, oy",
+      "translations": "Tavsiflar",
+      "shortRu": "Qisqa tavsif (RU)",
+      "shortUz": "Qisqa tavsif (UZ)",
+      "descriptionRu": "Tavsif (RU)",
+      "descriptionUz": "Tavsif (UZ)",
+      "specs": "Xususiyatlar",
+      "specsHint": "Maydonlar turkum sxemasi boʻyicha qurilgan; moslik ham ular boʻyicha tekshiriladi.",
+      "listHint": "Vergul bilan",
+      "stock": "Ombor",
+      "stockDelta": "Qoldiqni oʻzgartirish",
+      "stockNote": "Tuzatish sababi",
+      "stockApply": "Qoʻllash",
+      "invalid": "Maydonlarni tekshiring: {fields}",
+      "saved": "Mahsulot saqlandi",
+      "created": "Mahsulot yaratildi",
+      "duplicate": "SKU yoki manzil band",
+      "model": "3D-model",
+      "modelHint": ".glb fayl, 15 MB va 500 000 uchburchakkacha. Masshtab detal oʻlchamiga avtomatik keltiriladi; body*, rgb*, glass* nomli materiallar ijro rangiga boʻyaladi.",
+      "modelCurrent": "Oʻz modeli: {size} KB, {triangles} uchburchak",
+      "modelNone": "Oʻz modeli yoʻq — xususiyatlar boʻyicha bazaviy yoki protsedurali model koʻrsatiladi.",
+      "modelUpload": "GLB yuklash",
+      "modelUploading": "Yuklanmoqda va tekshirilmoqda…",
+      "modelUploaded": "Model yuklandi",
+      "modelRemove": "Oʻz modelini olib tashlash",
+      "modelRemoved": "Oʻz modeli olib tashlandi",
+      "modelErrors": {
+        "not_glb": "Bu GLB fayl emas.",
+        "too_large": "Fayl 15 MB dan katta.",
+        "too_many_triangles": "500 000 dan ortiq uchburchak — modelni soddalashtiring.",
+        "empty": "Faylda geometriya yoʻq.",
+        "invalid": "Fayl buzilgan yoki oʻqilmaydi.",
+        "failed": "Modelni yuklab boʻlmadi."
+      }
+    }
+  },
+  "stock": {
+    "title": "Ombor",
+    "lowStock": "Qoldigʻi {n} dona va undan kam",
+    "movements": "Harakatlar",
+    "cols": {
+      "product": "Mahsulot",
+      "available": "Mavjud",
+      "stock": "Omborda",
+      "reserved": "Bandda",
+      "delta": "Oʻzgarish",
+      "reason": "Sabab",
+      "order": "Buyurtma",
+      "date": "Sana",
+      "note": "Izoh"
+    },
+    "reasons": {
+      "reserve": "Band qilish",
+      "release": "Bandni bekor qilish",
+      "commit": "Hisobdan chiqarish",
+      "restock": "Kirim",
+      "adjust": "Tuzatish",
+      "return": "Qaytarish"
+    }
+  },
+  "reviews": {
+    "title": "Sharhlar",
+    "tabs": {
+      "pending": "Moderatsiyada",
+      "approved": "Eʼlon qilingan",
+      "rejected": "Rad etilgan"
+    },
+    "approve": "Eʼlon qilish",
+    "reject": "Rad etish",
+    "verified": "Xarid tasdiqlangan",
+    "pros": "Afzalliklar: {text}",
+    "cons": "Kamchiliklar: {text}"
+  },
+  "promos": {
+    "title": "Promokodlar",
+    "new": "Yangi promokod",
+    "cols": {
+      "code": "Kod",
+      "type": "Turi",
+      "value": "Chegirma",
+      "minOrder": "Summadan",
+      "used": "Ishlatilgan",
+      "ends": "Gacha",
+      "active": "Faol"
+    },
+    "types": {
+      "percent": "Foiz",
+      "fixed": "Summa"
+    },
+    "form": {
+      "code": "Kod",
+      "type": "Chegirma turi",
+      "value": "Miqdori (% yoki summa)",
+      "minOrder": "Minimal buyurtma summasi",
+      "maxDiscount": "Maksimal chegirma",
+      "startsAt": "Boshlanishi",
+      "endsAt": "Tugashi",
+      "usageLimit": "Foydalanish limiti",
+      "perUserLimit": "Bir xaridorga",
+      "active": "Faol",
+      "descriptionRu": "Tavsif (RU)",
+      "descriptionUz": "Tavsif (UZ)",
+      "created": "Promokod yaratildi",
+      "exists": "Bunday kod allaqachon bor"
+    }
+  },
+  "payments": {
+    "title": "Toʻlovlar",
+    "events": "Stripe hodisalari",
+    "records": "Buyurtmalar boʻyicha toʻlovlar",
+    "cols": {
+      "event": "Hodisa",
+      "type": "Turi",
+      "status": "Holat",
+      "date": "Sana",
+      "error": "Xatolik",
+      "order": "Buyurtma",
+      "provider": "Provayder",
+      "amount": "Summa",
+      "attempt": "Urinish"
+    },
+    "statuses": {
+      "received": "Qabul qilindi",
+      "processed": "Qayta ishlandi",
+      "ignored": "Oʻtkazib yuborildi",
+      "failed": "Xatolik",
+      "pending": "Kutilmoqda",
+      "succeeded": "Muvaffaqiyatli",
+      "expired": "Muddati tugadi",
+      "partially_refunded": "Qisman qaytarilgan",
+      "refunded": "Qaytarildi"
+    }
+  },
+  "users": {
+    "title": "Foydalanuvchilar",
+    "searchPlaceholder": "Ism, pochta yoki telefon",
+    "cols": {
+      "name": "Ism",
+      "contact": "Kontaktlar",
+      "role": "Rol",
+      "twoFactor": "2FA",
+      "created": "Roʻyxatdan oʻtgan",
+      "banned": "Bloklash"
+    },
+    "ban": "Bloklash",
+    "unban": "Blokdan chiqarish",
+    "roleChanged": "Rol oʻzgartirildi",
+    "self": "Oʻz rolingizni oʻzgartirib boʻlmaydi"
+  },
+  "settings": {
+    "title": "Sozlamalar",
+    "pricing": "Kurs va narxlar",
+    "rate": "USD/UZS kursi",
+    "rateHint": "Dollarda yechish rejimi uchun (PAYMENT_CHARGE_CURRENCY=usd)",
+    "store": "Doʻkon",
+    "phone": "Telefon",
+    "email": "Pochta",
+    "zones": "Yetkazib berish hududlari",
+    "zoneCols": {
+      "name": "Hudud",
+      "price": "Narx",
+      "freeFrom": "Bepul — dan",
+      "eta": "Muddat, kun",
+      "cod": "Qabul qilganda",
+      "active": "Faol"
+    },
+    "services": "Xizmatlar",
+    "serviceCols": {
+      "name": "Xizmat",
+      "price": "Narx",
+      "active": "Faol"
+    },
+    "telegram": {
+      "title": "Telegram",
+      "mode": "Rejim",
+      "modes": {
+        "bot": "Bot ulangan (@{username})",
+        "mock": "Mok-rejim: TELEGRAM_BOT_TOKEN berilmagan, xabarlar — /dev/inbox da"
+      },
+      "adminChat": "Admin-chat",
+      "adminChatMissing": "berilmagan (TELEGRAM_ADMIN_CHAT_ID)",
+      "subscribers": "Xaridor obunalari",
+      "webhook": "Vebxuk: {url}",
+      "test": "Sinov xabari",
+      "sent": "Admin-chatga yuborildi"
+    }
+  },
+  "audit": {
+    "title": "Harakatlar jurnali",
+    "cols": {
+      "date": "Vaqt",
+      "actor": "Xodim",
+      "action": "Amal",
+      "entity": "Obyekt",
+      "ip": "IP",
+      "diff": "Oʻzgarishlar"
+    }
+  },
+  "games": {
+    "title": "FPS kalkulyatori oʻyinlari",
+    "new": "Yangi oʻyin",
+    "edit": "«{name}» oʻyini",
+    "hint": "Etalon RTX 5070 ning ruxsat va presetlar boʻyicha FPS va Ryzen 7 9800X3D chegarasi. Oʻzgarishlar /fps va konfiguratorda darhol koʻrinadi.",
+    "cols": {
+      "name": "Oʻyin",
+      "profile": "Profil",
+      "alpha": "α (CPU)",
+      "bench": "1440p Ultra",
+      "active": "Kalkulyatorda"
+    },
+    "profiles": {
+      "aaa": "AAA",
+      "competitive": "Kibersport"
+    },
+    "fields": {
+      "name": "Nomi",
+      "slug": "Slug",
+      "steamAppId": "Steam App ID",
+      "coverUrl": "Muqova (URL)",
+      "hue": "Muqovasiz rang tusi",
+      "profile": "Profil",
+      "cpuAlpha": "CPU ga sezgirlik (α)",
+      "biasNvidia": "NVIDIA tuzatmasi",
+      "biasAmd": "AMD tuzatmasi",
+      "biasIntel": "Intel tuzatmasi",
+      "ramMinGb": "Minimal xotira, GB",
+      "ramRecGb": "Tavsiya etilgan xotira, GB",
+      "good": "«Qulay» chegarasi, FPS",
+      "playable": "«Oʻynasa boʻladi» chegarasi, FPS",
+      "lowRatio": "1% low / oʻrtacha",
+      "fpsCap": "Dvigatel FPS chegarasi",
+      "sort": "Tartib",
+      "isActive": "Kalkulyatorda koʻrsatish",
+      "supports": "Qoʻllab-quvvatlash",
+      "dlss": "DLSS",
+      "fsr": "FSR",
+      "xess": "XeSS",
+      "frameGen": "Kadr generatsiyasi"
+    },
+    "grids": {
+      "gpu": "Etalon videokarta FPS (RTX 5070)",
+      "vram": "Videoxotira talabi, GB",
+      "cpu": "Etalon protsessor chegarasi (9800X3D), FPS"
+    },
+    "save": "Saqlash",
+    "saved": "Oʻyin saqlandi",
+    "invalid": "Maydonlarni tekshiring: {fields}",
+    "failed": "Saqlab boʻlmadi",
+    "import": {
+      "title": "CSV oʻlchovlarni import qilish",
+      "hint": "Ustunlar: game,resolution,preset,gpu_fps,vram_gb va ixtiyoriy cpu_fps. game — oʻyin slugi, resolution — 1080p/1440p/2160p, preset — low/medium/high/ultra.",
+      "file": "CSV fayl",
+      "submit": "Import qilish",
+      "done": "Yangilangan qatorlar: {count}",
+      "errors": "Xatolar ({count}):",
+      "line": "{line}-qator: {message}"
+    }
+  },
+  "mcp": {
+    "title": "MCP: kalitlar va jurnal",
+    "hint": "Tashqi MCP-mijozlar (Cursor, Claude, Inspector) {url} manziliga Authorization: Bearer <kalit> sarlavhasi bilan ulanadi. Asboblar toʻplami kalit scopes bilan belgilanadi.",
+    "keys": {
+      "title": "API kalitlar",
+      "new": "Yangi kalit",
+      "name": "Nomi",
+      "scopes": "Huquqlar (scopes)",
+      "userEmail": "«:own» uchun foydalanuvchi pochtasi (ixtiyoriy)",
+      "create": "Kalit yaratish",
+      "created": "Kalit yaratildi. Uni hozir nusxalang — keyin koʻrib boʻlmaydi:",
+      "copy": "Nusxalash",
+      "copied": "Nusxalandi",
+      "revoke": "Bekor qilish",
+      "revoked": "Bekor qilingan",
+      "cols": {
+        "name": "Kalit",
+        "scopes": "Scopes",
+        "user": "Foydalanuvchi",
+        "lastUsed": "Ishlatilgan",
+        "status": "Holat"
+      },
+      "active": "Faol",
+      "never": "hali yoʻq"
+    },
+    "scopes": {
+      "catalog:read": "Katalog: oʻqish",
+      "builds:read": "Yigʻmalar, moslik, FPS",
+      "orders:read:own": "Oʻz buyurtmalari: oʻqish",
+      "orders:read": "Barcha buyurtmalar: oʻqish",
+      "orders:write:own": "Oʻz nomidan buyurtma qoralamalari",
+      "orders:write": "Buyurtmalar: yaratish va holatni oʻzgartirish",
+      "stock:read": "Ombor: oʻqish",
+      "stock:write": "Ombor: tuzatish",
+      "analytics:read": "Savdo tahlili",
+      "support:write": "Qoʻllab-quvvatlashga murojaatlar"
+    },
+    "calls": {
+      "title": "Asboblar chaqiruvlari jurnali",
+      "cols": {
+        "at": "Vaqt",
+        "tool": "Asbob",
+        "source": "Kim",
+        "args": "Argumentlar",
+        "result": "Natija",
+        "ms": "ms"
+      },
+      "ok": "ok",
+      "sources": {
+        "agent": "Agent",
+        "mcp_external": "Tashqi mijoz"
+      }
+    }
+  },
+  "ai": {
+    "title": "AI-yordamchilar",
+    "assistant": "Administrator yordamchisi",
+    "drafts": {
+      "title": "AI qoralamalari",
+      "empty": "Qoralamalar yoʻq",
+      "apply": "Qoʻllash",
+      "reject": "Rad etish",
+      "short": "Qisqacha",
+      "description": "Tavsif"
+    },
+    "logs": {
+      "title": "AI-jurnal",
+      "daily": "14 kun uchun",
+      "cols": {
+        "at": "Vaqt",
+        "agent": "Agent",
+        "model": "Model",
+        "mode": "Rejim",
+        "tokens": "Tokenlar",
+        "latency": "ms",
+        "cost": "$",
+        "error": "Xato",
+        "dialog": "Suhbat"
+      },
+      "filters": {
+        "all": "Barcha agentlar",
+        "errors": "Faqat xatolar va zaxira rejimlar",
+        "apply": "Koʻrsatish"
+      },
+      "modes": {
+        "llm": "LLM",
+        "fallback": "model zaxirasi",
+        "deterministic": "AI siz: {reason}",
+        "guard": "guard"
+      },
+      "open": "Ochish",
+      "series": {
+        "runs": "Ishga tushirishlar",
+        "tokens": "Tokenlar",
+        "errors": "Xatolar",
+        "fallbacks": "Zaxira rejimlar"
+      }
+    },
+    "dialog": {
+      "title": "Suhbat",
+      "user": "Xaridor",
+      "assistant": "Yordamchi"
+    },
+    "settings": {
+      "title": "AI sozlamalari",
+      "enabled": "AI yoqilgan (nosozlik va ortiqcha xarajat uchun oʻchirgich)",
+      "guestPer10Min": "Mehmon xabarlari 10 daqiqada",
+      "userPer10Min": "Foydalanuvchi xabarlari 10 daqiqada",
+      "dailyTokensGuest": "Mehmon tokenlari sutkada",
+      "dailyTokensUser": "Foydalanuvchi tokenlari sutkada",
+      "maxMessageChars": "Xabar uzunligi, belgi",
+      "save": "Saqlash",
+      "keyMissing": "GEMINI_API_KEY berilmagan — chat deterministik rejimda ishlaydi."
+    }
+  }
+}

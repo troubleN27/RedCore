@@ -1,0 +1,45 @@
+{
+  "title": "Savat",
+  "empty": "Savat hozircha boʻsh",
+  "emptyText": "Katalogdan mahsulot qoʻshing yoki konfiguratorda kompyuter yigʻing.",
+  "toCatalog": "Katalogga",
+  "toConfigurator": "Kompyuter yigʻish",
+  "itemsCount": "{count} ta mahsulot",
+  "remove": "Oʻchirish",
+  "decrease": "Sonini kamaytirish",
+  "increase": "Sonini koʻpaytirish",
+  "shortage": "Omborda faqat {count} dona bor",
+  "unavailable": "Mavjud emas — buyurtma berish uchun savatdan oʻchiring",
+  "missing": "Ayrim mahsulotlar sotuvdan olindi va savatdan oʻchirildi.",
+  "clear": "Savatni tozalash",
+  "clearConfirm": "Savatdagi barcha mahsulotlar oʻchirilsinmi?",
+  "summary": {
+    "title": "Buyurtma summasi",
+    "subtotal": "Mahsulotlar",
+    "discount": "Promokod chegirmasi",
+    "delivery": "Yetkazib berish",
+    "deliveryAtCheckout": "rasmiylashtirishda",
+    "services": "Xizmatlar",
+    "total": "Jami",
+    "freeDeliveryLeft": "Toshkent boʻylab bepul kuryer yetkazib berishigacha — {amount}"
+  },
+  "promo": {
+    "label": "Promokod",
+    "placeholder": "REDCORE10",
+    "apply": "Qoʻllash",
+    "remove": "Promokodni olib tashlash",
+    "applied": "{code} promokodi qoʻllandi",
+    "errors": {
+      "not_found": "Bunday promokod yoʻq.",
+      "inactive": "Promokod oʻchirilgan.",
+      "not_started": "Promokod hali amal qilmaydi.",
+      "expired": "Promokodning amal qilish muddati tugagan.",
+      "min_order": "Buyurtma summasi bu promokod uchun minimal summadan kam.",
+      "usage_limit": "Promokod endi amal qilmaydi: foydalanish limiti tugagan.",
+      "per_user_limit": "Siz bu promokoddan allaqachon foydalangansiz.",
+      "not_applicable": "Promokod savatdagi mahsulotlarga tegishli emas."
+    }
+  },
+  "checkout": "Rasmiylashtirishga oʻtish",
+  "secure": "Narxlar va mavjudlik rasmiylashtirishda yana tekshiriladi"
+}

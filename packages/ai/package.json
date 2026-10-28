@@ -1,0 +1,33 @@
+{
+  "name": "@redcore/ai",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "AI-агенты на Gemini поверх MCP: шлюз моделей, оркестратор, агенты, лимиты и логи",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@google/genai": "2.31.0",
+    "@modelcontextprotocol/client": "2.4.0",
+    "@redcore/db": "workspace:*",
+    "@redcore/domain": "workspace:*",
+    "@redcore/i18n": "workspace:*",
+    "@redcore/mcp": "workspace:*",
+    "@redcore/services": "workspace:*",
+    "@upstash/ratelimit": "2.2.0",
+    "@upstash/redis": "1.40.0",
+    "drizzle-orm": "^0.45.4",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.12",
+    "@types/node": "^24.0.0",
+    "vitest": "^5.0.5"
+  }
+}

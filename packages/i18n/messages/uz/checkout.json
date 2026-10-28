@@ -1,0 +1,63 @@
+{
+  "title": "Buyurtmani rasmiylashtirish",
+  "signInPrompt": "Akkauntingiz bormi? Kiring — kontaktlar va manzillar oʻzi toʻldiriladi, buyurtma kabinetda paydo boʻladi.",
+  "sections": {
+    "contact": "Kontaktlar",
+    "delivery": "Yetkazib berish",
+    "services": "Xizmatlar",
+    "payment": "Toʻlov",
+    "comment": "Izoh"
+  },
+  "contact": {
+    "name": "Ism va familiya",
+    "phone": "Telefon",
+    "phoneHint": "Buyurtmani tasdiqlash uchun qoʻngʻiroq qilamiz",
+    "email": "Pochta",
+    "emailHint": "Chek va buyurtma holatlarini yuboramiz (ixtiyoriy)"
+  },
+  "delivery": {
+    "zone": "Yetkazib berish hududi",
+    "free": "Bepul",
+    "eta": "{min}–{max} kun",
+    "today": "bugun yoki ertaga",
+    "pickupInfo": "RedCore doʻkoni: Toshkent, Amir Temur koʻchasi, 108. Har kuni 10:00 dan 20:00 gacha.",
+    "savedAddress": "Saqlangan manzil",
+    "newAddress": "Yangi manzil",
+    "city": "Shahar yoki tuman",
+    "district": "Mahalla / massiv",
+    "street": "Koʻcha",
+    "house": "Uy",
+    "apartment": "Xonadon",
+    "landmark": "Moʻljal",
+    "landmarkHint": "Masalan: 110-maktab roʻparasida, metro yonida",
+    "saveAddress": "Manzilni akkauntda saqlash"
+  },
+  "services": {
+    "assemblyHint": "Taklif qilamiz, chunki buyurtmada protsessor va ona plata bor."
+  },
+  "payment": {
+    "card": "Karta bilan onlayn",
+    "cardHint": "Visa, Mastercard · Stripe himoyalangan shakli (test rejimi)",
+    "cardMockHint": "Demo toʻlov: pul yechilmaydi",
+    "cardDisabled": "Karta bilan toʻlov hozircha mavjud emas",
+    "cod": "Qabul qilganda",
+    "codHint": "Naqd, Uzcard yoki Humo — kuryerga yoki doʻkonda",
+    "codNotAllowed": "Bu hududga — faqat karta bilan onlayn toʻlov"
+  },
+  "commentPlaceholder": "Buyurtma yoki yetkazib berish boʻyicha istaklar",
+  "submit": "{amount} lik buyurtmani tasdiqlash",
+  "submitting": "Rasmiylashtirilmoqda…",
+  "agree": "Tugmani bosib, yetkazib berish va qaytarish shartlariga rozilik bildirasiz.",
+  "required": "Majburiy maydon",
+  "errors": {
+    "empty": "Savat boʻsh.",
+    "invalid": "Shakl maydonlarini tekshiring.",
+    "unknown_zone": "Yetkazib berish hududini tanlang.",
+    "address_required": "Yetkazib berish manzilini kiriting.",
+    "cod_not_allowed": "Bu hududga qabul qilganda toʻlash mumkin emas.",
+    "card_disabled": "Karta bilan toʻlov mavjud emas — qabul qilganda toʻlashni tanlang.",
+    "out_of_stock": "Rasmiylashtirayotganingizda tugab qoldi: {names}. Savatni oʻzgartiring.",
+    "promo": "Promokod endi amal qilmaydi — uni olib tashlab, qayta urinib koʻring.",
+    "generic": "Buyurtmani rasmiylashtirib boʻlmadi. Qayta urinib koʻring."
+  }
+}

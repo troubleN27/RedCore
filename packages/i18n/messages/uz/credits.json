@@ -1,0 +1,13 @@
+{
+  "title": "Mualliflar va litsenziyalar",
+  "subtitle": "Sayt ochiq 3D-modellar, shriftlar va maʼlumotlardan foydalanadi. Ularning mualliflariga rahmat.",
+  "models": "3D-modellar",
+  "fonts": "Shriftlar",
+  "data": "Maʼlumotlar",
+  "author": "Muallif: {author}",
+  "license": "Litsenziya: {license}",
+  "changes": "Oʻzgarishlar: {changes}",
+  "source": "Manba",
+  "procedural": "Muallifi koʻrsatilmagan modellar RedCore kodida mahsulot xususiyatlari boʻyicha qurilgan. Sahna yoritilishi protsedurali.",
+  "noModels": "Hozir barcha 3D-modellar protsedurali — tashqi modellar yuklab olingandan keyin paydo boʻladi."
+}

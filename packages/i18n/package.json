@@ -1,0 +1,26 @@
+{
+  "name": "@redcore/i18n",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Локали, словари RU/UZ и форматирование (цены в сумах, даты) — общие для сайта, писем, AI и MCP",
+  "exports": {
+    ".": "./src/index.ts",
+    "./messages": "./src/messages.ts",
+    "./translator": "./src/translator.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "check": "tsx src/check-keys.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.23.15",
+    "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "use-intl": "^4.14.9"
+  }
+}

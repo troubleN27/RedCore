@@ -1,0 +1,111 @@
+{
+  "title": "FPS kalkulyatori",
+  "subtitle": "Yigʻma 20 ta mashhur oʻyinda qancha kadr berishi — Full HD, 2K va 4K da, apskeyl va kadr generatsiyasi bilan.",
+  "estimate": "Taxmin",
+  "methodTitle": "Qanday hisoblanadi",
+  "method": "Videokarta FPS — etalon RTX 5070 ning oʻyindagi oʻlchovi, kartangizning ruxsatga mos indeksi va apskeyl ortishiga koʻpaytiriladi. Protsessor FPS — etalon Ryzen 7 9800X3D chegarasi, protsessoringiz indeksiga koʻpaytiriladi; oʻyinning CPU ga sezgirligi va xotira rejimi hisobga olinadi. Natija — ikki qiymatning «yumshoq minimumi» hamda videoxotira va operativ xotira yetishmasa jarima. Diapazon ±15%, etalondan uzoqda — ±25%. Bu taxmin, oʻlchov emas: haqiqiy FPS sahna, drayverlar va oʻyin versiyasiga bogʻliq.",
+  "tabs": {
+    "forward": "Mening kompyuterim",
+    "reverse": "N FPS kerak"
+  },
+  "controls": {
+    "gpu": "Videokarta",
+    "cpu": "Protsessor",
+    "ram": "Operativ xotira",
+    "resolution": "Ruxsat",
+    "preset": "Grafika sozlamalari",
+    "upscale": "Apskeyl",
+    "upscaler": "Texnologiya",
+    "frameGen": "Kadr generatsiyasi",
+    "fromBuild": "Mening yigʻmamdan",
+    "fromBuildDone": "Konfiguratordan videokarta va protsessor qoʻyildi",
+    "fromBuildEmpty": "Konfiguratorda hali protsessor va videokarta yoʻq",
+    "sort": "Saralash",
+    "sortFps": "FPS boʻyicha",
+    "sortName": "Nomi boʻyicha"
+  },
+  "ram": {
+    "dual": "{gb} GB {type}, ikki modul",
+    "single": "{gb} GB {type}, bitta modul"
+  },
+  "resolutions": {
+    "1080p": "1080p",
+    "1440p": "1440p",
+    "2160p": "4K"
+  },
+  "presets": {
+    "low": "Past",
+    "medium": "Oʻrta",
+    "high": "Yuqori",
+    "ultra": "Ultra"
+  },
+  "upscaleModes": {
+    "off": "Oʻchiq",
+    "quality": "Sifat",
+    "balanced": "Muvozanat",
+    "performance": "Unumdorlik"
+  },
+  "upscalers": {
+    "dlss": "DLSS",
+    "fsr": "FSR",
+    "xess": "XeSS"
+  },
+  "frameGenModes": {
+    "off": "Oʻchiq",
+    "2x": "2×",
+    "3x": "3×",
+    "4x": "4×"
+  },
+  "result": {
+    "fps": "{fps} FPS",
+    "range": "{min}–{max}",
+    "low": "1% low ≈ {fps}",
+    "frameGen": "Kadr generatsiyasi {mode} bilan: ≈ {fps}",
+    "frameGenUnavailable": "Bu karta yoki oʻyin uchun {mode} kadr generatsiyasi mavjud emas",
+    "limiter": {
+      "gpu": "Videokartaga tayanadi",
+      "cpu": "Protsessorga tayanadi",
+      "balanced": "Muvozanatli",
+      "cap": "Dvigatel chegarasi — {cap} FPS"
+    },
+    "rating": {
+      "great": "Qulay",
+      "playable": "Oʻynasa boʻladi",
+      "bad": "Tortmaydi"
+    },
+    "vram": "Videoxotira kam: oʻyinga ~{need} GB kerak",
+    "ram": "Bu oʻyin uchun operativ xotira kam",
+    "upscaler": "Apskeyl: {name}",
+    "noUpscaler": "Oʻyin apskeylni qoʻllab-quvvatlamaydi",
+    "extrapolated": "Etalondan uzoq — aniqlik pastroq",
+    "thresholds": "Chegaralar: {playable} va {good} FPS",
+    "competitive": "Kibersport"
+  },
+  "reverse": {
+    "game": "Oʻyin",
+    "target": "Maqsad, FPS",
+    "submit": "Yigʻma tanlash",
+    "loading": "Tanlanmoqda…",
+    "tiers": {
+      "minimum": "Minimal",
+      "optimal": "Optimal",
+      "headroom": "Zaxira bilan"
+    },
+    "forecast": "Prognoz: {fps} FPS ({min}–{max})",
+    "total": "Jami",
+    "open": "Konfiguratorda ochish",
+    "opened": "Yigʻma konfiguratorga yuklandi",
+    "unachievable": "Mavjud mahsulotlar bilan maqsadga erishib boʻlmaydi.",
+    "suggestPreset": "«{preset}» preseti bilan maqsadga erishiladi.",
+    "suggestUpscale": "«{mode}» rejimidagi apskeyl bilan maqsadga erishiladi.",
+    "tooHigh": "Hatto eng kuchli mavjud qismlar ham bunday FPS bermaydi.",
+    "hint": "Mavjud mahsulotlardan 2–3 ta mos yigʻma tanlaymiz: minimal, optimal va zaxira bilan.",
+    "error": "Yigʻma tanlab boʻlmadi. Qaytadan urinib koʻring."
+  },
+  "panel": {
+    "title": "Bu yigʻmaning FPS",
+    "needParts": "Protsessor va videokartani tanlang — mashhur oʻyinlarda FPS taxminini koʻrsatamiz.",
+    "more": "Barcha oʻyinlar va sozlamalar"
+  },
+  "cover": "{name} muqovasi"
+}

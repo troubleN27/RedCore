@@ -1,0 +1,15 @@
+pnpm-lock.yaml
+node_modules
+.next
+.turbo
+dist
+coverage
+playwright-report
+test-results
+packages/db/migrations
+apps/web/public
+
+# Генерируются `pnpm assets:report` / `assets:build`
+ASSETS_LICENSES.md
+apps/web/src/generated/
+apps/web/public/detect-gpu/

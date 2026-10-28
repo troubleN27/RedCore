@@ -1,0 +1,10 @@
+{
+  "title": "Dev-quti",
+  "subtitle": "Sayt xaridorlarga yuboradigan xatlar va SMS lar. Faqat ishlab chiqish va demo rejimida mavjud.",
+  "empty": "Hozircha xabarlar yoʻq",
+  "email": "Xat",
+  "sms": "SMS",
+  "to": "Kimga: {to}",
+  "refresh": "Yangilash",
+  "telegram": "Telegram"
+}

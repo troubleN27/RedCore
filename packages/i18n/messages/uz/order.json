@@ -1,0 +1,108 @@
+{
+  "title": "{number}-buyurtma",
+  "thanks": "Rahmat! Buyurtma rasmiylashtirildi",
+  "createdAt": "{date} da rasmiylashtirilgan",
+  "guestNote": "Bu sahifani saqlang: xat yoki SMS dagi havola orqali buyurtmaga qaytish mumkin.",
+  "notFound": "Buyurtma topilmadi",
+  "accessDenied": "Buyurtmaga ruxsat yoʻq. Xat yoki SMS dagi havolani oching yoki akkauntga kiring.",
+  "status": {
+    "draft": "Qoralama",
+    "created": "Qabul qilindi",
+    "pending_payment": "Toʻlov kutilmoqda",
+    "paid": "Toʻlangan",
+    "assembling": "Yigʻilmoqda",
+    "shipped": "Yetkazib berishga topshirildi",
+    "delivered": "Yetkazib berildi",
+    "cancelled": "Bekor qilindi",
+    "refunded": "Qaytarildi"
+  },
+  "paymentStatus": {
+    "unpaid": "Toʻlanmagan",
+    "pending": "Toʻlov kutilmoqda",
+    "paid": "Toʻlangan",
+    "partially_refunded": "Qisman qaytarilgan",
+    "refunded": "Pul qaytarildi",
+    "failed": "Toʻlov oʻtmadi"
+  },
+  "method": {
+    "card": "Karta bilan onlayn",
+    "cod": "Qabul qilganda"
+  },
+  "timeline": "Buyurtma tarixi",
+  "actors": {
+    "customer": "siz",
+    "admin": "menejer",
+    "system": "tizim",
+    "webhook": "toʻlov tizimi",
+    "agent": "AI-maslahatchi"
+  },
+  "items": "Buyurtma tarkibi",
+  "delivery": "Yetkazib berish",
+  "pickup": "Doʻkondan olib ketish",
+  "contact": "Qabul qiluvchi",
+  "comment": "Izoh",
+  "promo": "{code} promokodi",
+  "pay": {
+    "title": "Karta bilan toʻlov",
+    "reserved": "Mahsulotlar {time} gacha band qilingan",
+    "button": "{amount} toʻlash",
+    "processing": "Toʻlov amalga oshirilmoqda…",
+    "waiting": "Bankdan tasdiq kutilmoqda — sahifa oʻzi yangilanadi.",
+    "declined": "Toʻlov rad etildi: {reason}. Boshqa kartani sinab koʻring.",
+    "declineReasons": {
+      "insufficient_funds": "mablagʻ yetarli emas",
+      "card_declined": "karta bank tomonidan rad etildi",
+      "generic": "bank amaliyotni tasdiqlamadi"
+    },
+    "success": "Toʻlov qabul qilindi — rahmat!",
+    "error": "Toʻlov shaklini ochib boʻlmadi. Sahifani yangilang.",
+    "stripeLocale": "Stripe shakli rus tilida koʻrsatiladi: Stripe hozircha oʻzbek tilini qoʻllab-quvvatlamaydi.",
+    "mock": {
+      "title": "Test toʻlovi",
+      "hint": "Stripe kalitlari sozlanmagan — demo shlyuz ishlaydi. U vebxukka test kartalari uchun Stripe yuboradigan hodisalarni yuboradi.",
+      "card": "Karta raqami",
+      "presets": {
+        "success": "Muvaffaqiyatli toʻlov",
+        "threeDS": "3-D Secure tasdigʻi bilan",
+        "declined": "Mablagʻ yetarli emas"
+      },
+      "unknownCard": "Quyidagi test kartalaridan birini ishlating.",
+      "threeDSTitle": "3-D Secure tasdigʻi",
+      "threeDSBody": "Bank {amount} toʻlovni tasdiqlashni soʻramoqda.",
+      "confirm": "Tasdiqlash",
+      "fail": "Rad etish",
+      "expire": "Toʻlov muddati tugashini modellashtirish"
+    }
+  },
+  "cancel": {
+    "button": "Buyurtmani bekor qilish",
+    "confirm": "Buyurtma bekor qilinsinmi? Mahsulotlar bandi olib tashlanadi.",
+    "done": "Buyurtma bekor qilindi"
+  },
+  "cancelReasons": {
+    "payment_expired": "toʻlov muddati tugadi",
+    "customer": "sizning iltimosingiz bilan",
+    "admin": "doʻkon qarori bilan"
+  },
+  "cancelledBecause": "Sababi: {reason}",
+  "toAccount": "Barcha buyurtmalarim",
+  "continue": "Xaridni davom ettirish",
+  "draft": {
+    "title": "Yordamchidan qoralama",
+    "text": "Bu buyurtmani AI-yordamchi yoki tashqi ilova tayyorlagan. Tarkib va kontaktlarni tekshiring: mahsulot faqat tasdiqlangandan keyin band qilinadi va buyurtma ishga tushadi.",
+    "confirm": "Buyurtmani tasdiqlash",
+    "done": "Buyurtma tasdiqlandi",
+    "errors": {
+      "forbidden": "Buyurtmaga kirish yoʻq",
+      "not_draft": "Buyurtma allaqachon tasdiqlangan yoki bekor qilingan",
+      "out_of_stock": "Baʼzi mahsulotlar tugadi — buyurtmani qaytadan rasmiylashtiring",
+      "failed": "Buyurtmani tasdiqlab boʻlmadi"
+    }
+  },
+  "telegram": {
+    "button": "Holatlarni Telegramda olish",
+    "hint": "Buyurtma toʻlanganda, yigʻila boshlaganda, joʻnatilganda va yetkazilganda bot xabar yuboradi.",
+    "subscribers": "Obuna boʻlgan chatlar: {count}",
+    "failed": "Havola yaratib boʻlmadi"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "title": "Kompyuter konfiguratori",
+  "subtitle": "Qismlarni istalgan tartibda tanlang — moslik, quvvat va narx darhol qayta hisoblanadi.",
+  "slots": {
+    "case": "Korpus",
+    "motherboard": "Ona plata",
+    "cpu": "Protsessor",
+    "cooler": "Sovutish",
+    "ram": "Operativ xotira",
+    "gpu": "Videokarta",
+    "storage": "Xotira qurilmalari",
+    "psu": "Quvvat bloki",
+    "case_fan": "Ventilyatorlar"
+  },
+  "steps": {
+    "label": "Yigʻish bosqichlari",
+    "required": "Majburiy",
+    "optional": "Ixtiyoriy",
+    "notSelected": "Tanlanmagan",
+    "progress": "{total} ta majburiydan {filled} tasi",
+    "next": "Keyingisi: {slot}",
+    "itemsCount": "{count} ta pozitsiya"
+  },
+  "candidates": {
+    "search": "Qidiruv: {slot}",
+    "onlyCompatible": "Faqat mos keladiganlar",
+    "inStockOnly": "Faqat mavjudlari",
+    "sortLabel": "Saralash",
+    "sort": {
+      "popular": "Ommabop",
+      "priceAsc": "Avval arzonlari",
+      "priceDesc": "Avval qimmatlari"
+    },
+    "count": "{count} ta variant",
+    "hidden": "Mos kelmaydiganlar yashirildi: {count}",
+    "showAll": "Hammasini koʻrsatish",
+    "empty": "Mos mahsulotlar yoʻq. Filtrlarni oʻzgartiring yoki tanlangan qismlarni almashtiring.",
+    "compatible": "Mos keladi",
+    "incompatible": "Mos kelmaydi",
+    "warning": "Izohlar bor",
+    "moreIssues": "yana {count} ta"
+  },
+  "actions": {
+    "select": "Tanlash",
+    "selected": "Tanlangan",
+    "replace": "Almashtirish",
+    "add": "Qoʻshish",
+    "remove": "Olib tashlash",
+    "increase": "Yana bittasini qoʻshish",
+    "decrease": "Bittasini olib tashlash",
+    "clear": "Tozalash",
+    "clearConfirm": "Yigʻma tozalansinmi? Tanlangan qismlar oʻchiriladi.",
+    "save": "Saqlash va ulashish",
+    "saved": "Saqlandi",
+    "saving": "Saqlanmoqda…",
+    "saveError": "Yigʻmani saqlab boʻlmadi. Qayta urinib koʻring.",
+    "copyLink": "Havolani nusxalash",
+    "linkCopied": "Havola nusxalandi",
+    "openShared": "Yigʻma sahifasini ochish",
+    "toCart": "Butun yigʻmani savatga",
+    "addedToCart": "Savatga {count} ta pozitsiya qoʻshildi",
+    "unavailableSkipped": "Mavjud emas va qoʻshilmadi: {names}",
+    "pdf": "PDF yuklab olish",
+    "edit": "Konfiguratorda ochish",
+    "goToSlot": "«{slot}» bosqichiga oʻtish"
+  },
+  "summary": {
+    "title": "Sizning yigʻmangiz",
+    "empty": "Yigʻma boʻsh — istalgan qismdan boshlang.",
+    "total": "Jami",
+    "missing": "Yetishmaydi: {slots}",
+    "noIssues": "Moslik muammolari topilmadi.",
+    "checkTitle": "Moslik tekshiruvi",
+    "open": "Yigʻmani koʻrsatish",
+    "close": "Yigʻish"
+  },
+  "power": {
+    "title": "Quvvat sarfi",
+    "load": "Eng yuqori yuklama ~{watts} Vt",
+    "recommended": "Tavsiya etilgan quvvat bloki — {watts} Vt dan",
+    "psuLoad": "Quvvat bloki yuklamasi {percent}%",
+    "noPsu": "Quvvat bloki tanlanmagan",
+    "hint": "Quvvat blokining optimal yuklamasi — 50–70%: jimroq va videokarta choʻqqilari uchun zaxira bilan.",
+    "unit": "{watts} Vt"
+  },
+  "loaded": {
+    "shared": "Saqlangan yigʻma yuklandi",
+    "notFound": "Havola boʻyicha yigʻma topilmadi — qoralamangiz ochildi."
+  },
+  "share": {
+    "title": "Kompyuter yigʻmasi",
+    "namedTitle": "«{name}» yigʻmasi",
+    "savedAt": "{date} da saqlangan",
+    "views": "{count} marta koʻrilgan",
+    "pricesNote": "Narxlar va mavjudlik — bugungi; saqlash paytida summa {amount} edi.",
+    "components": "Butlovchi qismlar",
+    "qty": "× {qty}",
+    "metaDescription": "{status}. {count} ta qism, jami {amount}. Yigʻmani RedCore konfiguratorida oching va takomillashtiring."
+  },
+  "pdf": {
+    "title": "Kompyuter yigʻmasi spetsifikatsiyasi",
+    "generated": "{date} da tuzilgan",
+    "colSlot": "Qism",
+    "colItem": "Mahsulot",
+    "colQty": "Soni",
+    "colPrice": "Narxi",
+    "colSum": "Summa",
+    "status": "Moslik holati",
+    "power": "Yuklama ~{load} Vt · tavsiya etilgan quvvat bloki {recommended} Vt dan",
+    "link": "Onlayn versiya: {url}",
+    "disclaimer": "Narxlar hujjat tuzilgan sanada amal qiladi. Mavjudlikni menejerdan aniqlang."
+  },
+  "scene": {
+    "title": "3D-yigʻma",
+    "hint": "Sahna yigʻmangizni takrorlaydi: detalni tanlang — u oʻz joyiga oʻrnatiladi. Sichqoncha yoki barmoq bilan aylantiring.",
+    "show": "3D ni koʻrsatish",
+    "hide": "3D ni yashirish",
+    "loading": "3D sahna yigʻilmoqda…",
+    "unsupported": "Bu qurilmada 3D mavjud emas: WebGL qoʻllab-quvvatlanmaydi.",
+    "lost": "Videokarta 3D sahnani qayta yukladi — tiklanmoqda…",
+    "schematic": "Detallar xususiyatlari boʻyicha sxematik modellar",
+    "modes": {
+      "label": "Koʻrinish rejimi",
+      "normal": "Oddiy",
+      "panel": "Panelsiz",
+      "exploded": "Ajratish",
+      "focus": "Ajratib koʻrsatish"
+    },
+    "overview": "Umumiy koʻrinish",
+    "rgb": "RGB yorugʻlik",
+    "rgbColor": "Yorugʻlik rangi",
+    "quality": "Sifat",
+    "qualities": {
+      "high": "Yuqori",
+      "medium": "Oʻrta",
+      "low": "Past"
+    },
+    "snapshot": "PNG surat",
+    "snapshotDone": "Yigʻma surati saqlandi",
+    "defaultCase": "Korpus tanlanmagan — shartli mid-tower koʻrsatilgan",
+    "outOfCase": "Korpusga sigʻmaydigan detallar qizil chiziq bilan belgilangan"
+  }
+}

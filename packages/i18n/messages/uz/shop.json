@@ -1,0 +1,47 @@
+{
+  "search": {
+    "placeholder": "Qidiruv: RTX 5070, Ryzen 7, DDR5…",
+    "label": "Katalog boʻyicha qidiruv",
+    "open": "Qidiruvni ochish",
+    "products": "Mahsulotlar",
+    "categories": "Toifalar",
+    "showAll": "Barcha natijalar ({count})",
+    "nothing": "«{query}» soʻrovi boʻyicha hech narsa topilmadi",
+    "hint": "Model, brend, artikul yoki xususiyat boʻyicha qidiring: «9800X3D», «videokarta 16 GB», «AM5».",
+    "title": "Qidiruv",
+    "resultsFor": "«{query}» soʻrovi boʻyicha natijalar",
+    "metaTitle": "«{query}» qidiruvi"
+  },
+  "compare": {
+    "title": "Solishtirish",
+    "empty": "Solishtirish roʻyxati hozircha boʻsh",
+    "emptyText": "Mahsulot kartochkasida «Solishtirish» tugmasini bosing — bir toifadagi 4 tagacha mahsulotni solishtirish mumkin.",
+    "onlyDifferences": "Faqat farqlar",
+    "remove": "Olib tashlash",
+    "clear": "Tozalash",
+    "price": "Narx",
+    "goTo": "Solishtirishga oʻtish ({count})"
+  },
+  "favorites": {
+    "title": "Sevimlilar",
+    "empty": "Sevimlilar hozircha boʻsh",
+    "emptyText": "Mahsulotni bu yerda saqlash uchun kartochkadagi yurakchani bosing.",
+    "clear": "Tozalash"
+  },
+  "prebuilt": {
+    "title": "RedCore tayyor kompyuterlari",
+    "subtitle": "Tekshirilgan qismlardan yigʻmalar: moslik, sovutish va quvvat bloki zaxira bilan tanlangan. Har birini konfiguratorda ochib, oʻzgartirish mumkin."
+  },
+  "home": {
+    "categoriesTitle": "Toifalar",
+    "featuredTitle": "Eng koʻp sotilganlar",
+    "prebuiltTitle": "Tayyor kompyuterlar",
+    "allCatalog": "Butun katalog",
+    "allPrebuilt": "Barcha yigʻmalar"
+  },
+  "header": {
+    "cart": "Savat",
+    "favorites": "Sevimlilar",
+    "compare": "Solishtirish"
+  }
+}

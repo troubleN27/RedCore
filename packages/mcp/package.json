@@ -1,0 +1,32 @@
+{
+  "name": "@redcore/mcp",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP-сервер магазина: инструменты, ресурсы и промпты со scopes; транспорты in-memory, HTTP и stdio",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "stdio": "tsx src/bin/stdio.ts",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "2.4.0",
+    "@modelcontextprotocol/server": "2.4.0",
+    "@redcore/db": "workspace:*",
+    "@redcore/domain": "workspace:*",
+    "@redcore/i18n": "workspace:*",
+    "@redcore/services": "workspace:*",
+    "drizzle-orm": "^0.45.4",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.12",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.23.15",
+    "vitest": "^5.0.5"
+  }
+}

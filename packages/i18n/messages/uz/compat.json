@@ -1,0 +1,85 @@
+{
+  "status": {
+    "incomplete": "Yigʻma tugallanmagan",
+    "errors": "Mos kelmaslik bor",
+    "warnings": "Mos keladi, izohlar bor",
+    "ok": "Hammasi mos keladi"
+  },
+  "severity": {
+    "error": "Xatolik",
+    "warning": "Diqqat",
+    "info": "Maslahat"
+  },
+  "cpu": {
+    "socketMismatch": "Protsessor soketi {cpuSocket} {boardSocket} soketli ona plataga mos kelmaydi.",
+    "familyUnsupported": "{chipset} chipseti bu avlod protsessorlarini qoʻllab-quvvatlamaydi.",
+    "biosUpdate": "Bu protsessor uchun {chipset} chipsetli platada BIOS yangilash kerak boʻlishi mumkin — doʻkonda yigʻishda bepul qilamiz."
+  },
+  "ram": {
+    "typeMismatchBoard": "{ramType} xotira {boardType} xotirani qoʻllab-quvvatlaydigan plataga oʻrnatilmaydi.",
+    "typeMismatchCpu": "Protsessor {ramType} xotirani qoʻllab-quvvatlamaydi.",
+    "slotsExceeded": "Xotira modullari {modules} ta, platada esa {slots} ta slot bor.",
+    "capacityExceeded": "Xotira hajmi {totalGb} GB — ruxsat etilgan maksimum {maxGb} GB dan koʻp.",
+    "speedDowngrade": "{speed} MT/s xotira plata chastotasida — {maxSpeed} MT/s gacha ishlaydi.",
+    "singleChannel": "Bitta xotira moduli — bir kanalli rejim, oʻyinlarda FPS 15–20% ga kamayadi. Ikki modulli toʻplam yaxshiroq.",
+    "mixedKits": "Turli xotira toʻplamlari eʼlon qilingan chastotada ishlamasligi mumkin — bitta toʻplam yaxshiroq.",
+    "fourDimmDdr5": "Toʻrtta DDR5 moduli odatda pasaytirilgan chastotada ishlaydi."
+  },
+  "case": {
+    "motherboardFormFactor": "{formFactor} formatidagi plata bu korpusga sigʻmaydi."
+  },
+  "gpu": {
+    "tooLong": "{lengthMm} mm videokarta sigʻmaydi: korpusda maksimum {maxMm} mm.",
+    "tooThick": "Videokarta {slots} ta slotni egallaydi, korpusda esa {maxSlots} ta mavjud.",
+    "noDisplayOutput": "Protsessorda oʻrnatilgan grafika yoʻq — videokartasiz tasvir boʻlmaydi."
+  },
+  "cooler": {
+    "tooTall": "{heightMm} mm balandlikdagi kuler sigʻmaydi: korpusda {maxMm} mm gacha.",
+    "socketUnsupported": "Kuler {socket} soketini qoʻllab-quvvatlamaydi.",
+    "insufficient": "Kuler {ratingW} Vt ga moʻljallangan, protsessor esa {cpuW} Vt gacha isteʼmol qiladi — qizib ketadi.",
+    "weak": "Kuler {ratingW} Vt ga moʻljallangan: {cpuW} Vt gacha yuklamada protsessor chastotani pasaytiradi va shovqin qiladi.",
+    "radiatorUnsupported": "Bu korpusda {radiatorMm} mm radiatorni oʻrnatish uchun joy yoʻq.",
+    "ramClearance": "{ramHeightMm} mm balandlikdagi xotira kulerga tegishi mumkin (boʻshliq {clearanceMm} mm).",
+    "boxed": "Protsessor bilan birga keladigan quti kuleri ishlatiladi."
+  },
+  "storage": {
+    "m2SlotsExceeded": "M.2 disklar {count} ta, platada esa {slots} ta M.2 slot bor.",
+    "m2GenDowngrade": "PCIe 5.0 disk PCIe {gen}.0 slot tezligida ishlaydi.",
+    "sataPortsExceeded": "SATA qurilmalar {count} ta, platada esa {ports} ta port bor.",
+    "bays25Exceeded": "2,5″ disklar ({count} ta) uchun korpusda faqat {bays} ta joy bor.",
+    "bays35Exceeded": "3,5″ disklar ({count} ta) uchun korpusda faqat {bays} ta joy bor."
+  },
+  "psu": {
+    "insufficient": "{psuW} Vt quvvat bloki yigʻma yuklamasidan (~{loadW} Vt) kuchsiz.",
+    "belowRecommended": "{recommendedW} Vt dan quvvat bloki tavsiya etamiz: {psuW} Vt zaxirasiz ishlaydi.",
+    "gpuConnectorsMissing": "Quvvat blokida videokarta uchun ulagichlar yetarli emas: {connector} kerak.",
+    "gpuAdapterRequired": "Videokarta {pcie8} ta 8-pin ulagichli 12V-2x6 adapter orqali ulanadi — tabiiy 12V-2x6 ulagichli blok yaxshiroq.",
+    "formFactor": "{formFactor} formatidagi quvvat bloki bu korpusga mos emas.",
+    "tooLong": "{lengthMm} mm uzunlikdagi quvvat bloki sigʻmaydi: korpusda {maxMm} mm gacha."
+  },
+  "fans": {
+    "sizeUnsupported": "Korpus {sizeMm} mm ventilyatorlarni qoʻllab-quvvatlamaydi.",
+    "slotsExceeded": "Ventilyatorlar {count} ta, korpusda esa {slots} ta joy bor.",
+    "headersExceeded": "Ventilyatorlar {count} ta, platada esa {headers} ta ulagich — hab yoki ajratgich kerak boʻladi."
+  },
+  "perf": {
+    "cpuBottleneck": "Protsessor videokartani cheklaydi: unumdorlik ~{lossPercent}% gacha kamayadi.",
+    "pcieBandwidth": "x{lanes} shinali videokarta PCIe {boardGen}.0 platada biroz unumdorlik yoʻqotadi.",
+    "vramLimited": "Yangi oʻyinlar uchun 1440p yuqori sozlamalarda {vramGb} GB videoxotira kam.",
+    "lowRam": "Zamonaviy oʻyinlar uchun {totalGb} GB operativ xotira kam — 16 GB dan, yaxshisi 32 GB tavsiya etamiz.",
+    "hddSystemDrive": "HDD dagi tizim sekin yuklanadi — SSD qoʻshing."
+  },
+  "analysis": {
+    "cpu_bottleneck": "Protsessor videokartani cheklaydi: oʻyinlarda taxminan {lossPercent}% FPS yoʻqotiladi.",
+    "gpu_weak_for_cpu": "{cpu} protsessori {gpu} videokartasidan ancha kuchli: oʻyinlar uchun videokartaga sarflash foydaliroq.",
+    "psu_tight": "Quvvat bloki {loadPercent}% yuklangan — zaxira kam, {recommendedW} Vt dan yaxshiroq.",
+    "psu_oversized": "{psuW} Vt quvvat bloki katta zaxira bilan: {recommendedW} Vt ham yetadi, tejash mumkin.",
+    "ram_single_channel": "Bitta xotira moduli ({capacityGb} GB) — bir kanalli rejim, FPS 10–15% past.",
+    "ram_low_for_tier": "Bu darajadagi videokarta uchun {capacityGb} GB xotira kam — 32 GB yaxshiroq.",
+    "vram_low_for_resolution": "{resolution} uchun {vramGb} GB videoxotira kam: oʻyinlar {needGb} GB dan talab qiladi.",
+    "gpu_budget_share_low": "Videokartaga byudjetning atigi {sharePercent}% toʻgʻri keladi — oʻyin yigʻmasi uchun bu kam.",
+    "motherboard_overspend": "Plata videokarta narxining {ratioPercent}% ini tashkil qiladi — FPS bermaydigan ortiqcha xarajat.",
+    "storage_small": "{capacityGb} GB nakopitel zamonaviy oʻyinlar uchun kam — 1 TB dan yaxshiroq.",
+    "hdd_only": "HDD dagi tizim sekin yuklanadi — SSD kerak."
+  }
+}

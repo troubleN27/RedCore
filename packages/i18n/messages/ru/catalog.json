@@ -1,0 +1,43 @@
+{
+  "title": "Каталог",
+  "subtitle": "Комплектующие, периферия и готовые компьютеры с проверкой совместимости.",
+  "components": "Комплектующие",
+  "peripherals": "Периферия",
+  "prebuilt": "Готовые ПК",
+  "fromPrice": "от {price}",
+  "productCount": "{count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}}",
+  "found": "Найдено: {count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}}",
+  "filters": "Фильтры",
+  "showFilters": "Показать фильтры",
+  "resetFilters": "Сбросить",
+  "showResults": "Показать {count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}}",
+  "inStockOnly": "Только в наличии",
+  "rangeFrom": "от",
+  "rangeTo": "до",
+  "apply": "Применить",
+  "yes": "Да",
+  "compatibilityKey": "Важно для совместимости",
+  "sort": {
+    "label": "Сортировка",
+    "popular": "Популярные",
+    "price-asc": "Сначала дешёвые",
+    "price-desc": "Сначала дорогие",
+    "name": "По названию",
+    "new": "Новинки"
+  },
+  "empty": {
+    "title": "Ничего не нашлось",
+    "text": "Попробуйте ослабить фильтры или сбросить их."
+  },
+  "pagination": {
+    "label": "Страницы каталога",
+    "previous": "Назад",
+    "next": "Вперёд",
+    "page": "Страница {page}"
+  },
+  "breadcrumbs": "Навигационная цепочка",
+  "home": "Главная",
+  "metaCategory": "{name} — купить в Ташкенте по цене от {price} | RedCore",
+  "metaCategoryDescription": "{name} в наличии: {count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}} с проверкой совместимости, доставкой по Узбекистану и гарантией.",
+  "productsHeading": "Товары"
+}

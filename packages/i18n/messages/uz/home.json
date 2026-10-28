@@ -1,0 +1,35 @@
+{
+  "hero": {
+    "eyebrow": "Kompyuter texnikasi doʻkoni · Toshkent",
+    "title": "Orzuingizdagi kompyuterni 3D formatda yigʻing",
+    "subtitle": "Real vaqtda moslik tekshiruvi, animatsion 3D yigʻish, top oʻyinlarda FPS bahosi va AI-maslahatchi — kuchli kompyuterni xatosiz yigʻish uchun hammasi bor.",
+    "ctaPrimary": "Konfiguratorni ochish",
+    "ctaSecondary": "Katalogga oʻtish"
+  },
+  "buildCard": {
+    "label": "Hafta yigʻmasi",
+    "power": "Isteʼmol",
+    "powerValue": "{watts} / {psu} Vt",
+    "total": "Jami",
+    "open": "Yigʻmani koʻrish"
+  },
+  "features": {
+    "title": "Nega RedCore",
+    "compat": {
+      "title": "Real vaqtda moslik",
+      "text": "Soket, xotira, oʻlchamlar, quvvat bloki — har bir detalni tekshiramiz va muammo nimada ekanini tushuntiramiz."
+    },
+    "threeD": {
+      "title": "Toʻliq 3D",
+      "text": "Har bir detal animatsiya bilan oʻz joyiga oʻrnatiladi: aylantiring, yaqinlashtiring, yigʻmani qismlarga ajrating."
+    },
+    "fps": {
+      "title": "FPS kalkulyatori",
+      "text": "Eng ogʻir va mashhur 20 ta oʻyinda istalgan grafika sozlamalarida FPS bahosi."
+    },
+    "ai": {
+      "title": "AI-maslahatchi",
+      "text": "Vazifa va byudjetga mos yigʻmani faqat mavjud mahsulotlardan tanlab beradi."
+    }
+  }
+}

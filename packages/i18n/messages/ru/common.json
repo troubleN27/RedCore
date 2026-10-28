@@ -1,0 +1,35 @@
+{
+  "brand": "RedCore",
+  "tagline": "Компьютерное железо с характером спорткара",
+  "actions": {
+    "addToCart": "В корзину",
+    "buy": "Купить",
+    "compare": "Сравнить",
+    "addToFavorites": "В избранное",
+    "buildPc": "Собрать ПК",
+    "details": "Подробнее",
+    "search": "Поиск",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "share": "Поделиться",
+    "retry": "Повторить",
+    "toHome": "На главную"
+  },
+  "stock": {
+    "inStock": "В наличии",
+    "lowStock": "Осталось {count, plural, one {# штука} few {# штуки} many {# штук} other {# штуки}}",
+    "outOfStock": "Нет в наличии",
+    "preorder": "Под заказ"
+  },
+  "badges": {
+    "new": "Новинка",
+    "hit": "Хит",
+    "sale": "Скидка",
+    "compatible": "Совместим",
+    "incompatible": "Несовместим",
+    "estimate": "Оценка"
+  },
+  "price": {
+    "discount": "−{percent}%"
+  }
+}

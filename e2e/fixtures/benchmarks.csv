@@ -1,0 +1,4 @@
+game,resolution,preset,gpu_fps,vram_gb,cpu_fps
+# правка одной ячейки и одна ошибочная строка
+dota-2,1440p,ultra,260,4.5,255
+no-such-game,1440p,ultra,10,4,

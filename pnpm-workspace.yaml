@@ -1,0 +1,22 @@
+packages:
+  - apps/*
+  - packages/*
+  - tooling/*
+
+# Скрипты установки разрешены только этим зависимостям (нативные бинарники).
+# @swc/core и @parcel/watcher приносит next-intl, unrs-resolver — eslint-import-resolver.
+allowBuilds:
+  # SDK Gemini и protobufjs: postinstall не нужен (только сообщения и проверки версий)
+  '@google/genai': false
+  '@parcel/watcher': true
+  '@swc/core': true
+  esbuild: true
+  protobufjs: false
+  # sharp — сжатие текстур моделей в WebP (tooling/3d)
+  sharp: true
+  unrs-resolver: true
+
+# Точечные обновления транзитивных зависимостей по pnpm audit (этап 12)
+overrides:
+  '@vercel/cli-config>zod': ^4.6.7
+  '@esbuild-kit/core-utils>esbuild': ^0.25.0

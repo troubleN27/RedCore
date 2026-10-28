@@ -1,0 +1,31 @@
+# зависимости
+node_modules
+.pnpm-store
+
+# сборка
+.next
+out
+dist
+.turbo
+*.tsbuildinfo
+next-env.d.ts
+
+# тесты
+coverage
+playwright-report
+test-results
+blob-report
+
+# окружение
+.env
+.env*.local
+!.env.example
+.vercel
+
+# 3D-исходники (скачиваются вручную, см. ASSETS_LICENSES.md)
+tooling/3d/raw
+
+# системное
+.DS_Store
+Thumbs.db
+*.log

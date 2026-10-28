@@ -1,0 +1,36 @@
+{
+  "bot": {
+    "welcome": "Assalomu alaykum! Bu RedCore doʻkoni boti. Buyurtma holatlarini olish uchun saytdagi buyurtma sahifasini oching va «Holatlarni Telegramda olish» tugmasini bosing.",
+    "subscribed": "Tayyor! {number} buyurtmasi haqida xabar beraman. Hozir: {status}.",
+    "linkInvalid": "Havola eskirgan yoki amal qilmaydi. Buyurtma sahifasini ochib, tugmani yana bosing.",
+    "statusList": "Buyurtmalaringiz:",
+    "statusLine": "{number} — {status}",
+    "noOrders": "Siz hali birorta buyurtmaga obuna boʻlmagansiz.",
+    "stopped": "Bildirishnomalar oʻchirildi. Buyurtma sahifasidan qayta obuna boʻlish mumkin.",
+    "help": "Buyruqlar: /status — buyurtmalar holati, /stop — bildirishnomalarni oʻchirish."
+  },
+  "customer": {
+    "created": "{number} buyurtmasi qabul qilindi. Summa: {total}.",
+    "paid": "{number} buyurtmasi toʻlandi. Rahmat!",
+    "assembling": "{number} buyurtmasi yigʻilmoqda.",
+    "shipped": "{number} buyurtmasi yetkazib berishga topshirildi.",
+    "delivered": "{number} buyurtmasi yetkazib berildi. Yoqimli foydalaning!",
+    "cancelled": "{number} buyurtmasi bekor qilindi.",
+    "refunded": "{number} buyurtmasi boʻyicha qaytarish rasmiylashtirildi: {amount}. Pul kartaga 3–10 ish kunida tushadi.",
+    "open": "Buyurtmani ochish: {url}"
+  },
+  "admin": {
+    "created": "🆕 Yangi buyurtma {number}: {total}, {items} ta, {method}, {zone}. Manba: {source}.",
+    "paid": "💳 {number} buyurtmasi toʻlandi: {total}.",
+    "cancelled": "✖️ {number} buyurtmasi bekor qilindi ({reason}).",
+    "refunded": "↩️ {number} buyurtmasi boʻyicha qaytarish: {amount}.",
+    "lowStock": "⚠️ Tugayapti: {items}.",
+    "ticket": "🆘 {number} murojaati: {topic}. {message}",
+    "open": "Konsol: {url}",
+    "test": "✅ RedCore konsolidan sinov xabari."
+  },
+  "methods": {
+    "card": "karta bilan",
+    "cod": "qabul qilganda"
+  }
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "font",
+    "title": "Inter (PDF и OG-картинки)",
+    "author": "Rasmus Andersson",
+    "license": "SIL Open Font License 1.1",
+    "url": "https://github.com/rsms/inter",
+    "changes": "без изменений, файлы WOFF из пакета inter-ui"
+  },
+  {
+    "kind": "font",
+    "title": "Unbounded (заголовки)",
+    "author": "NaN Studio",
+    "license": "SIL Open Font License 1.1",
+    "url": "https://fonts.google.com/specimen/Unbounded",
+    "changes": "без изменений, подключается через next/font"
+  },
+  {
+    "kind": "font",
+    "title": "JetBrains Mono (характеристики)",
+    "author": "JetBrains",
+    "license": "SIL Open Font License 1.1",
+    "url": "https://github.com/JetBrains/JetBrainsMono",
+    "changes": "без изменений, подключается через next/font"
+  },
+  {
+    "kind": "data",
+    "title": "detect-gpu — бенчмарки видеокарт для выбора качества 3D",
+    "author": "pmndrs",
+    "license": "MIT",
+    "url": "https://github.com/pmndrs/detect-gpu",
+    "changes": "копия JSON в public/detect-gpu"
+  }
+]

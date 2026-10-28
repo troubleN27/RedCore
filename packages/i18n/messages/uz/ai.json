@@ -1,0 +1,117 @@
+{
+  "widget": {
+    "title": "RedCore AI-yordamchisi",
+    "open": "Yordamchi bilan chatni ochish",
+    "close": "Chatni yopish",
+    "newChat": "Yangi suhbat",
+    "placeholder": "Yigʻma, mahsulot yoki buyurtma haqida soʻrang…",
+    "send": "Yuborish",
+    "stop": "Toʻxtatish",
+    "typing": "Yordamchi yozmoqda…",
+    "tooLong": "Xabar {max} belgidan uzun",
+    "disclaimer": "Yordamchi javoblarida noaniqliklar boʻlishi mumkin. Narx va mavjudlik — doʻkon katalogidan.",
+    "fallbackBanner": "AI hozir mavjud emas — soddalashtirilgan rejimda javob beramiz",
+    "estimate": "Taxmin",
+    "agents": {
+      "consultant": "Yigʻma boʻyicha maslahatchi",
+      "reviewer": "Yigʻmani tekshirish",
+      "support": "Qoʻllab-quvvatlash",
+      "admin": "Administrator yordamchisi"
+    },
+    "handoff": "Uzatyapman: {agent}",
+    "greeting": {
+      "consultant": "Assalomu alaykum! Byudjet va oʻyinlarga mos kompyuter tanlayman yoki qism tanlashda yordam beraman.",
+      "reviewer": "Yigʻmangizning mosligi va muvozanatini tekshirib, nimani almashtirish kerakligini aytaman.",
+      "support": "Assalomu alaykum! Buyurtma holati, yetkazish, toʻlov, kafolat va qaytarish boʻyicha yordam beraman.",
+      "admin": "Savdo va qoldiqlarni koʻrsataman, xarid va mahsulot tavsiflarini tayyorlayman."
+    },
+    "suggestions": {
+      "consultant": [
+        "15 mln soʻmgacha oʻyin kompyuteri yigʻ",
+        "1440p uchun qaysi videokarta?",
+        "25 mln gacha montaj va oʻyin uchun kompyuter"
+      ],
+      "reviewer": ["Yigʻmamni tekshir", "Kam pul bilan nimani yaxshilash mumkin?"],
+      "support": [
+        "Buyurtmam qayerda?",
+        "Samarqandga yetkazish qancha?",
+        "Mahsulotni qanday qaytaraman?"
+      ],
+      "admin": [
+        "30 kunlik savdo",
+        "Nimani xarid qilish kerak?",
+        "RTX 5070 mahsuloti uchun tavsif yoz"
+      ]
+    },
+    "tools": {
+      "search_products": "Mahsulotlarni qidiryapman",
+      "get_product": "Mahsulot kartasini koʻryapman",
+      "list_categories": "Kategoriyalarni koʻryapman",
+      "generate_builds": "Yigʻmalarni tanlayapman",
+      "check_compatibility": "Moslikni tekshiryapman",
+      "analyze_build": "Muvozanatni tahlil qilyapman",
+      "estimate_fps": "FPS ni baholayapman",
+      "list_games": "Oʻyinlarni koʻryapman",
+      "suggest_alternatives": "Almashtirishlarni qidiryapman",
+      "get_delivery_options": "Yetkazishni koʻryapman",
+      "get_my_orders": "Buyurtmalaringizni koʻryapman",
+      "get_order_status": "Buyurtmani tekshiryapman",
+      "get_policy": "Doʻkon qoidalarini koʻryapman",
+      "create_support_ticket": "Murojaat yaratyapman",
+      "sales_report": "Savdoni hisoblayapman",
+      "low_stock_report": "Qoldiqlarni koʻryapman",
+      "purchase_recommendations": "Xaridni hisoblayapman",
+      "get_stock": "Omborni tekshiryapman",
+      "propose_build": "Yigʻma kartasini tayyorlayapman",
+      "propose_swap": "Almashtirishni tayyorlayapman",
+      "show_products": "Mahsulotlarni koʻrsatyapman",
+      "propose_product_copy": "Tavsif qoralamasini tayyorlayapman",
+      "handoff": "Suhbatni uzatyapman"
+    },
+    "build": {
+      "open": "Konfiguratorda ochish",
+      "total": "Jami"
+    },
+    "swap": {
+      "title": "Almashtirish: {slot}",
+      "replace": "Almashtirish",
+      "replaced": "Qism konfiguratorda almashtirildi",
+      "perf": "unumdorlikka {delta}%"
+    },
+    "copy": {
+      "title": "Tavsif qoralamasi: {name}",
+      "note": "Qoralama sifatida saqlandi — konsolning «AI» boʻlimida qoʻllash mumkin."
+    },
+    "ticket": "{number} murojaati yaratildi — operator siz bilan bogʻlanadi.",
+    "errors": {
+      "rate_limited": "Xabarlar juda koʻp. Bir necha daqiqadan keyin urinib koʻring.",
+      "too_long": "Xabar juda uzun.",
+      "failed": "Javob olib boʻlmadi. Qaytadan urinib koʻring.",
+      "forbidden": "Bu yordamchi mavjud emas."
+    },
+    "review": "Yigʻmani AI bilan tekshirish"
+  },
+  "fallback": {
+    "askBudget": "Byudjet va vazifani yozing — masalan, «15 mln soʻmgacha oʻyin kompyuteri» yoki «25 mln gacha montaj uchun» — mavjud mahsulotlardan yigʻmalar tanlayman.",
+    "builds": "{budget} byudjetiga mavjud mahsulotlardan yigʻmalar tanladim. Istalganini konfiguratorda oching — u yerda moslik va FPS koʻrinadi.",
+    "noBuilds": "{budget} byudjetiga mavjud mahsulotlardan mos kompyuter yigʻib boʻlmadi. Byudjetni oshirib koʻring.",
+    "titles": {
+      "cheaper": "Arzonroq",
+      "balanced": "Byudjetga",
+      "stronger": "Zaxira bilan"
+    },
+    "review": {
+      "empty": "Konfiguratorga qismlarni qoʻshing — yigʻmani tekshiraman.",
+      "ok": "Moslik xatolari yoʻq, aniq nomutanosiblik topmadim.",
+      "found": "Nimaga eʼtibor berish kerak:"
+    },
+    "support": {
+      "intro": "Buyurtma holatini koʻrsata olaman (RC-2026-000123 koʻrinishidagi raqam va buyurtmadagi telefon) hamda yetkazish, toʻlov, kafolat va qaytarish haqida aytib beraman.",
+      "order": "{number} buyurtmasi: {status}, summa {total}.",
+      "orderNotFound": "Buyurtma topilmadi yoki kirish yoʻq. Raqam va buyurtmadagi telefonni tekshiring.",
+      "myOrders": "Soʻnggi buyurtmalaringiz:",
+      "noOrders": "Sizda hali buyurtmalar yoʻq."
+    },
+    "admin": "7 kunlik qisqacha: tushum {revenue}, buyurtmalar {orders}, oʻrtacha chek {aov}."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "delivery": {
+    "title": "Yetkazib berish",
+    "text": "Oʻzbekistonning barcha 14 hududiga yetkazamiz: Toshkent boʻylab — 1–2 kun, hududlarga — 2–5 kun. Toshkentdagi doʻkondan olib ketish bepul. Yetkazish narxi hududga bogʻliq va zona uchun koʻrsatilgan summadan bepul. Qabul qilganda toʻlash hamma hududlarda mavjud emas — zonalar va shartlar quyida."
+  },
+  "payment": {
+    "title": "Toʻlov",
+    "text": "Bank kartasi bilan onlayn (Visa, Mastercard) — buyurtma tasdiqlangandan keyin toʻlanadi, holat avtomatik oʻzgaradi. Qabul qilganda naqd yoki karta bilan — yetkazish zonasida mavjud boʻlsa. Narxlar QQS bilan soʻmda koʻrsatilgan."
+  },
+  "warranty": {
+    "title": "Kafolat",
+    "text": "Barcha mahsulotlarga ishlab chiqaruvchi kafolati amal qiladi; muddat mahsulot kartasida koʻrsatilgan (odatda 12–36 oy). Kafolat boʻyicha murojaat uchun buyurtma raqami kerak. Diagnostika doʻkon servis markazida 3 ish kuni ichida oʻtkaziladi, taʼmirlash yoki almashtirish — ishlab chiqaruvchi servis markazi qaroriga koʻra. Kafolat mexanik shikastlanish, mustaqil taʼmirlash izlari va kuchlanishni oshirib overklok qilishga tatbiq etilmaydi."
+  },
+  "returns": {
+    "title": "Qaytarish",
+    "text": "Sifatli mahsulotni qabul qilganingizdan keyin 10 kun ichida qaytarish mumkin, agar qadoq, toʻplam va tovar koʻrinishi saqlangan boʻlsa. Karta bilan toʻlangan pul 3–10 ish kunida oʻsha kartaga qaytariladi. Nuqsonli mahsulot kafolat boʻyicha qabul qilinadi. Doʻkon yigʻgan kompyuter toʻliq qaytariladi; soz kompyuter qaytarilganda yigʻish xizmati haqi qaytarilmaydi."
+  }
+}
