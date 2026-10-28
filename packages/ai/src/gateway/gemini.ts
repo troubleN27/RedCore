@@ -100,6 +100,7 @@ export class GeminiGateway implements LlmGateway {
       for (let attempt = 0; attempt <= RETRY_DELAYS.length; attempt++) {
         const remaining = deadline - Date.now();
         if (remaining < MIN_ATTEMPT_MS) break models;
+        const startedAt = Date.now();
         let emitted = false;
         try {
           const signal = AbortSignal.any([
@@ -175,6 +176,10 @@ export class GeminiGateway implements LlmGateway {
         } catch (error) {
           lastError = error;
           if (emitted || request.signal?.aborted) throw error;
+          const reason = error instanceof ApiError ? `${error.status}` : (error as Error)?.name;
+          console.warn(
+            `[ai] gemini ${model} attempt ${attempt + 1} failed after ${Date.now() - startedAt} ms: ${reason}`,
+          );
           if (!retryable(error)) break; // ошибка запроса (400 и т. п.) — следующая модель
           const delay = RETRY_DELAYS[attempt];
           if (delay === undefined) break;
