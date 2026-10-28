@@ -392,6 +392,8 @@ test('сквозной сценарий: каталог → конфигурат
   page,
   browser,
 }) => {
+  // Восемь шагов конфигуратора с 3D-сценой на программном WebGL — на раннере CI это минуты
+  test.setTimeout(240_000);
   const shopper = await (await browser.newContext()).newPage();
   await shopper.goto('/ru');
   await shopper.evaluate(() => {
@@ -414,7 +416,9 @@ test('сквозной сценарий: каталог → конфигурат
     .getByRole('navigation', { name: 'Основная навигация' })
     .getByRole('link', { name: 'Конфигуратор' })
     .click();
-  await expect(shopper.getByTestId('configurator')).toHaveAttribute('data-hydrated', 'true');
+  await expect(shopper.getByTestId('configurator')).toHaveAttribute('data-hydrated', 'true', {
+    timeout: 30_000,
+  });
   const lines = shopper.getByTestId('summary-lines').locator('li');
   const slots = ['case', 'motherboard', 'cpu', 'cooler', 'ram', 'gpu', 'storage', 'psu'];
   for (const [i, slot] of slots.entries()) {

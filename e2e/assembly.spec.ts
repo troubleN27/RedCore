@@ -11,7 +11,9 @@ async function fillBuild(page: Page) {
   await page.goto('/ru/configurator');
   await page.evaluate(() => localStorage.removeItem('redcore-configurator'));
   await page.reload();
-  await expect(page.getByTestId('configurator')).toHaveAttribute('data-hydrated', 'true');
+  await expect(page.getByTestId('configurator')).toHaveAttribute('data-hydrated', 'true', {
+    timeout: 30_000,
+  });
   const lines = page.getByTestId('summary-lines').locator('li');
   for (const [i, slot] of SLOTS.entries()) {
     await page.getByTestId(`step-${slot}`).click();

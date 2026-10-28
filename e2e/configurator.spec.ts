@@ -3,7 +3,9 @@ import { expect, test, type Page } from '@playwright/test';
 /** Выбирает товар в шаге конфигуратора, в том числе несовместимый с уже выбранными. */
 async function pick(page: Page, slot: string, name: string) {
   // До гидрации клики по шагам ничего не делают
-  await expect(page.getByTestId('configurator')).toHaveAttribute('data-hydrated', 'true');
+  await expect(page.getByTestId('configurator')).toHaveAttribute('data-hydrated', 'true', {
+    timeout: 30_000,
+  });
   await page.getByTestId(`step-${slot}`).click();
   const onlyCompatible = page.getByTestId('only-compatible');
   if ((await onlyCompatible.getAttribute('data-state')) === 'checked') await onlyCompatible.click();
