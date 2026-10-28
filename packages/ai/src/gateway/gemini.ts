@@ -15,7 +15,13 @@ export interface GeminiOptions {
   models: Record<ModelTier, string>;
   /** Запасная модель между chat и lite в цепочке (план, §8: 3.8 → 3.6 → 3.5-lite) */
   middle?: string;
+  /** Лимит одной попытки (до первого и между чанками ответа) */
   timeoutMs?: number;
+  /**
+   * Общий лимит вызова со всеми повторами и запасными моделями. Функция чата на Vercel живёт
+   * 60 с, а агент делает несколько вызовов: без общего лимита чат молча обрывался по таймауту.
+   */
+  deadlineMs?: number;
   breaker?: CircuitBreaker;
   /** Для тестов: подменить клиента */
   client?: Pick<GoogleGenAI, 'models'>;
@@ -23,6 +29,10 @@ export interface GeminiOptions {
 }
 
 const RETRY_DELAYS = [300, 1200];
+const ATTEMPT_TIMEOUT_MS = 15_000;
+const DEADLINE_MS = 20_000;
+/** Меньше этого на попытку не остаётся — дальше не пробуем */
+const MIN_ATTEMPT_MS = 2_000;
 
 function retryable(error: unknown): boolean {
   if (error instanceof ApiError) return error.status === 429 || error.status >= 500;
@@ -80,14 +90,17 @@ export class GeminiGateway implements LlmGateway {
     if (!this.client) throw new LlmUnavailableError('no_key');
     if (this.breaker.isOpen()) throw new LlmUnavailableError('breaker');
     const chain = this.chain(request.tier);
+    const deadline = Date.now() + (this.options.deadlineMs ?? DEADLINE_MS);
     let lastError: unknown;
 
-    for (const model of chain) {
+    models: for (const model of chain) {
       for (let attempt = 0; attempt <= RETRY_DELAYS.length; attempt++) {
+        const remaining = deadline - Date.now();
+        if (remaining < MIN_ATTEMPT_MS) break models;
         let emitted = false;
         try {
           const signal = AbortSignal.any([
-            AbortSignal.timeout(this.options.timeoutMs ?? 30_000),
+            AbortSignal.timeout(Math.min(this.options.timeoutMs ?? ATTEMPT_TIMEOUT_MS, remaining)),
             ...(request.signal ? [request.signal] : []),
           ]);
           const response = await this.client.models.generateContentStream({

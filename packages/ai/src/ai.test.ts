@@ -417,6 +417,38 @@ describe('шлюз Gemini: повторы, фолбэк моделей, circuit 
     expect(new GeminiGateway({ apiKey: undefined, models }).available()).toBe(false);
     expect(gateway.chain('power')).toEqual(['power-m', 'chat-m']);
   });
+
+  it('модель молчит — общий лимит вызова, а не таймаут функции Vercel', async () => {
+    const started: string[] = [];
+    // Ответ не приходит никогда: попытку обрывает только abortSignal
+    const hanging = {
+      generateContentStream: ({
+        model,
+        config,
+      }: {
+        model: string;
+        config: { abortSignal: AbortSignal };
+      }) => {
+        started.push(model);
+        return new Promise((_, reject) =>
+          config.abortSignal.addEventListener('abort', () => reject(config.abortSignal.reason)),
+        );
+      },
+    };
+    const gateway = new GeminiGateway({
+      apiKey: 'k',
+      models,
+      middle: 'mid-m',
+      client: { models: hanging } as never,
+      timeoutMs: 100,
+      deadlineMs: 2_400,
+      sleep: async () => {},
+    });
+    const t0 = Date.now();
+    await expect(collect(gateway)).rejects.toBeInstanceOf(LlmUnavailableError);
+    expect(Date.now() - t0).toBeLessThan(2_000);
+    expect(started.length).toBeGreaterThan(0);
+  });
 });
 
 describe('мелочи', () => {

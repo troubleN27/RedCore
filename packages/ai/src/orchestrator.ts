@@ -241,6 +241,8 @@ export async function* chat(request: ChatRequest): AsyncGenerator<AgentEvent> {
           outcome = next.value;
         } catch (err) {
           if (!(err instanceof LlmUnavailableError) || emitted) throw err;
+          // Причина отказа модели (ключ, квота, таймаут) — в лог: в ответе покупателю её нет
+          if (err.reason !== 'no_key') console.warn('[ai] llm unavailable', err.reason, err.cause);
           deterministic = err.reason === 'no_key' ? 'unavailable' : err.reason;
           yield { type: 'fallback', reason: deterministic };
           outcome = yield* runFallback({
