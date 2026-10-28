@@ -126,7 +126,7 @@ export function PaymentPanel({
             },
           }}
         >
-          <StripeForm amount={amount} onSubmitted={() => setSubmitted(true)} />
+          <StripeForm onSubmitted={() => setSubmitted(true)} />
           {locale === 'uz' && <p className="text-xs text-steel-400">{t('stripeLocale')}</p>}
         </CheckoutElementsProvider>
       ) : (
@@ -142,14 +142,20 @@ export function PaymentPanel({
   );
 }
 
-function StripeForm({ amount, onSubmitted }: { amount: string; onSubmitted: () => void }) {
+function StripeForm({ onSubmitted }: { onSubmitted: () => void }) {
   const t = useTranslations('order.pay');
   const checkout = useCheckoutElements();
+  const [email, setEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
   if (checkout.type === 'loading') return <Skeleton className="h-40 rounded-lg" />;
   if (checkout.type === 'error') return <p className="text-sm text-danger">{t('error')}</p>;
+
+  // Stripe требует показывать сумму из самой сессии — иначе confirm() выбрасывает ошибку
+  const amount = checkout.checkout.total.total.amount;
+  // Гость оставляет только телефон, а для оплаты картой Stripe нужна почта
+  const needsEmail = !checkout.checkout.email;
 
   return (
     <form
@@ -158,13 +164,39 @@ function StripeForm({ amount, onSubmitted }: { amount: string; onSubmitted: () =
         e.preventDefault();
         setError(null);
         startTransition(async () => {
-          // 3-D Secure Stripe показывает сам; без редиректа остаёмся на странице и ждём вебхук
-          const result = await checkout.checkout.confirm({ redirect: 'if_required' });
-          if (result.type === 'error') setError(result.error.message);
-          else onSubmitted();
+          try {
+            // 3-D Secure Stripe показывает сам; без редиректа остаёмся на странице и ждём вебхук
+            const result = await checkout.checkout.confirm({
+              redirect: 'if_required',
+              ...(needsEmail && { email: email.trim() }),
+            });
+            if (result.type === 'error') setError(result.error.message);
+            else onSubmitted();
+          } catch (thrown) {
+            // Исключение внутри transition уронило бы страницу целиком — показываем его в форме
+            console.error('[stripe] confirm failed', thrown);
+            setError(t('confirmError'));
+          }
         });
       }}
     >
+      {needsEmail && (
+        <div className="space-y-1.5">
+          <Label htmlFor="pay-email">{t('email')}</Label>
+          <Input
+            id="pay-email"
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            aria-describedby="pay-email-hint"
+          />
+          <p id="pay-email-hint" className="text-xs text-steel-400">
+            {t('emailHint')}
+          </p>
+        </div>
+      )}
       <PaymentElement options={{ layout: 'tabs' }} />
       {error && (
         <p role="alert" className="text-sm text-danger">

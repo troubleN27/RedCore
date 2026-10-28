@@ -56,6 +56,9 @@
     },
     "success": "Toʻlov qabul qilindi — rahmat!",
     "error": "Toʻlov shaklini ochib boʻlmadi. Sahifani yangilang.",
+    "email": "Chek uchun pochta",
+    "emailHint": "Stripe toʻlov chekini shu manzilga yuboradi.",
+    "confirmError": "Toʻlovni amalga oshirib boʻlmadi. Qaytadan urinib koʻring.",
     "stripeLocale": "Stripe shakli rus tilida koʻrsatiladi: Stripe hozircha oʻzbek tilini qoʻllab-quvvatlamaydi.",
     "mock": {
       "title": "Test toʻlovi",
