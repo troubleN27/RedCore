@@ -14,7 +14,8 @@ import { paymentProvider } from '@/server/payments';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
+// Агент делает несколько вызовов модели подряд (каждый — до 45 с): Fluid compute позволяет 300 с
+export const maxDuration = 300;
 
 const GUEST_COOKIE = 'rc_ai_guest';
 const WINDOW_MS = 10 * 60 * 1000;
