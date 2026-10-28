@@ -83,50 +83,63 @@ test.describe('оплата картой (мок-шлюз → вебхук)', ()
 });
 
 test.describe('аккаунт', () => {
-  test('вход по коду из SMS, слияние корзины, заказ в кабинете', async ({
+  test('регистрация по телефону и паролю, заказ в кабинете, повторный вход', async ({
     page,
-    context,
     request,
   }) => {
     const phone = uniquePhone();
+    const password = 'Test-Password-1';
     const product = await pickProduct(request, 'NVMe');
-    // Гостевой заказ с этого номера потом появится в кабинете
-    await fillCart(page, { [product]: 1 });
+    await fillCart(page, { [product]: 2 });
+
+    await page.goto('/ru/login?next=/account/orders');
+    await page.getByTestId('tab-register').click();
+    await page.getByLabel('Номер телефона').fill(phone);
+    await page.getByLabel('Пароль', { exact: true }).fill(password);
+    await page.getByLabel('Повторите пароль').fill('другой-пароль');
+    await page.getByTestId('login-submit').click();
+    await expect(page.getByTestId('login-error')).toContainText('Пароли не совпадают');
+
+    await page.getByLabel('Повторите пароль').fill(password);
+    await page.getByTestId('login-submit').click();
+    await expect(page).toHaveURL(/\/ru\/account\/orders$/);
+
+    // Корзина гостя сохранилась в аккаунте, заказ вошедшего покупателя — в кабинете
+    await page.goto('/ru/cart');
+    await expect(page.getByTestId('cart-line')).toHaveCount(1);
+    await expect(page.getByTestId('cart-qty')).toHaveText('2');
     await checkout(page, { phone, method: 'cod' });
     const number = (await page.getByRole('heading', { level: 1 }).textContent())!.replace(
       'Заказ ',
       '',
     );
-
-    await fillCart(page, { [product]: 2 });
-    await page.goto('/ru/login?next=/account/orders');
-    await page.getByLabel('Номер телефона').fill(phone);
-    await page.getByTestId('send-code').click();
-    await expect(page.getByTestId('otp-input')).toBeVisible();
-
-    const inbox = await context.newPage();
-    await inbox.goto('/ru/dev/inbox');
-    const sms = inbox
-      .locator(`[data-testid="inbox-message"][data-to="${phone}"]`, { hasText: 'код для входа' })
-      .first();
-    // В карточке есть и номер получателя — берём именно код из текста SMS
-    const code = /код для входа (\d{6})/.exec((await sms.textContent()) ?? '')?.[1];
-    expect(code).toBeTruthy();
-    await inbox.close();
-
-    await page.getByTestId('otp-input').fill(code!);
-    await page.getByTestId('verify-code').click();
-    await expect(page).toHaveURL(/\/ru\/account\/orders$/);
+    await page.goto('/ru/account/orders');
     await expect(page.getByTestId('account-orders')).toContainText(number, { timeout: 10_000 });
-
-    // Корзина гостя сохранилась в аккаунте
-    await page.goto('/ru/cart');
-    await expect(page.getByTestId('cart-line')).toHaveCount(1);
-    await expect(page.getByTestId('cart-qty')).toHaveText('2');
 
     await page.goto('/ru/account');
     await page.getByTestId('sign-out').click();
     await expect(page).toHaveURL(/\/ru$/);
+
+    // Повторная регистрация того же номера — подсказка войти
+    await page.goto('/ru/login');
+    await page.getByTestId('tab-register').click();
+    await page.getByLabel('Номер телефона').fill(phone);
+    await page.getByLabel('Пароль', { exact: true }).fill(password);
+    await page.getByLabel('Повторите пароль').fill(password);
+    await page.getByTestId('login-submit').click();
+    await expect(page.getByTestId('login-error')).toContainText('уже зарегистрирован');
+
+    // Вход — номер и пароль, без SMS
+    await page.getByTestId('tab-sign-in').click();
+    await page.getByLabel('Номер телефона').fill(phone);
+    await page.getByLabel('Пароль', { exact: true }).fill('неверный-пароль');
+    await page.getByTestId('login-submit').click();
+    await expect(page.getByTestId('login-error')).toContainText(
+      'Неверный номер телефона или пароль',
+    );
+    await page.getByLabel('Пароль', { exact: true }).fill(password);
+    await page.getByTestId('login-submit').click();
+    await expect(page).toHaveURL(/\/ru\/account$/);
   });
 
   test('кабинет без входа ведёт на страницу входа', async ({ page }) => {

@@ -1,5 +1,5 @@
-import { user, type Database } from '@redcore/db';
-import { eq } from 'drizzle-orm';
+import type { Database } from '@redcore/db';
+import { findUserIdByLogin } from '@redcore/services';
 import { scopePresets, type ApiScope, type McpActor } from './context';
 
 /**
@@ -18,11 +18,11 @@ export async function resolveStdioActor(
     };
   }
   if (spec.startsWith('customer:')) {
-    const email = spec.slice('customer:'.length);
-    const [row] = await db.select({ id: user.id }).from(user).where(eq(user.email, email));
-    if (!row) throw new Error(`MCP_STDIO_ACTOR: user ${email} not found`);
+    const login = spec.slice('customer:'.length);
+    const userId = await findUserIdByLogin(db, login);
+    if (!userId) throw new Error(`MCP_STDIO_ACTOR: user ${login} not found`);
     return {
-      actor: { ...base, kind: 'user', userId: row.id, label: `stdio:${email}` },
+      actor: { ...base, kind: 'user', userId, label: `stdio:${login}` },
       scopes: [...scopePresets.customer],
     };
   }

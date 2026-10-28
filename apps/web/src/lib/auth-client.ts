@@ -1,10 +1,11 @@
 'use client';
 
-import { adminClient, phoneNumberClient } from 'better-auth/client/plugins';
+import { adminClient } from 'better-auth/client/plugins';
 import { createAuthClient } from 'better-auth/react';
 
+// Регистрация и вход — server actions; клиенту нужны только сессия и выход
 export const authClient = createAuthClient({
-  plugins: [phoneNumberClient(), adminClient()],
+  plugins: [adminClient()],
 });
 
 export const { useSession, signOut } = authClient;

@@ -10,7 +10,7 @@ const fixtures = path.join(process.cwd(), 'e2e', 'fixtures');
 test.describe.configure({ mode: 'serial', timeout: 90_000 });
 
 test.beforeEach(({ isMobile }) => {
-  // Подключение 2FA — разовое действие на аккаунт: параллельные проекты мешали бы друг другу
+  // Сценарии консоли меняют общие данные (заказы, цены, ключи) — гоняем их одним проектом
   test.skip(isMobile, 'консоль проверяется на десктопе');
 });
 
@@ -23,8 +23,8 @@ test('консоль скрыта: /admin, прямой путь и HTTP-вхо�
   }
   expect(
     (
-      await request.post('/api/auth/sign-in/email', {
-        data: { email: 'admin@redcore.uz', password: PASSWORD },
+      await request.post('/api/auth/sign-in/username', {
+        data: { username: 'admin', password: PASSWORD },
       })
     ).status(),
   ).toBe(404);
@@ -34,37 +34,37 @@ test('консоль скрыта: /admin, прямой путь и HTTP-вхо�
   await expect(page.getByTestId('staff-login')).toBeVisible();
 });
 
-test('без кода TOTP в консоль не попасть; неверный код отклоняется', async ({ page }) => {
-  await staffLogin(page, 'admin@redcore.uz');
+test('вход в консоль по логину и паролю; покупатель и неверный пароль не пускаются', async ({
+  page,
+}) => {
+  await staffLogin(page, 'admin');
   await page.getByTestId('staff-logout').click();
   await expect(page).toHaveURL(new RegExp(`${BASE}/login`));
-
-  await submitPassword(page, 'admin@redcore.uz');
-  await expect(page.locator('#staff-totp')).toBeVisible();
-  // Пароль верный, но без кода раздел недоступен
+  // Без входа раздел недоступен
   await page.goto(`${BASE}/orders`);
   await expect(page).toHaveURL(new RegExp(`${BASE}/login`));
 
-  await submitPassword(page, 'admin@redcore.uz');
-  await page.locator('#staff-totp').fill('000000');
-  await page.getByTestId('totp-submit').click();
-  await expect(page.getByTestId('staff-error')).toContainText('Неверный код');
+  await submitPassword(page, 'manager', 'wrong-password');
+  await expect(page.getByTestId('staff-error')).toContainText('Неверный логин или пароль');
+  // Аккаунт покупателя с верным паролем — тоже отказ: консоль только для персонала
+  await submitPassword(page, '998901234567', 'RedCore-Demo-2026');
+  await expect(page.getByTestId('staff-error')).toContainText('Неверный логин или пароль');
 });
 
 test('после 5 неудачных попыток вход блокируется', async ({ page }) => {
-  const email = `ghost-${Date.now()}@redcore.uz`;
+  const login = `ghost${Date.now()}`;
   for (let i = 0; i < 4; i++) {
-    await submitPassword(page, email, 'wrong-password');
-    await expect(page.getByTestId('staff-error')).toContainText('Неверная почта или пароль');
+    await submitPassword(page, login, 'wrong-password');
+    await expect(page.getByTestId('staff-error')).toContainText('Неверный логин или пароль');
   }
-  await submitPassword(page, email, 'wrong-password');
+  await submitPassword(page, login, 'wrong-password');
   await expect(page.getByTestId('staff-error')).toContainText('Вход заблокирован до');
-  await submitPassword(page, email, PASSWORD);
+  await submitPassword(page, login, PASSWORD);
   await expect(page.getByTestId('staff-error')).toContainText('Вход заблокирован до');
 });
 
 test('менеджер не видит пользователей и настройки', async ({ page }) => {
-  await staffLogin(page, 'manager@redcore.uz');
+  await staffLogin(page, 'manager');
   const nav = page.getByTestId('console-nav');
   await expect(nav.locator('[data-section="orders"]')).toBeVisible();
   for (const section of ['users', 'settings', 'audit']) {
@@ -111,7 +111,7 @@ test('возврат из консоли: Stripe/мок → вебхук → з�
     timeout: 15_000,
   });
 
-  await staffLogin(page, 'admin@redcore.uz');
+  await staffLogin(page, 'admin');
   await expect(page.getByTestId('kpi-revenue')).not.toHaveText(/^0\s/);
 
   await page.goto(`${BASE}/orders?q=${number}`);
@@ -139,7 +139,7 @@ test('загрузка своей GLB, проверка файла, показ �
   const { items } = (await search.json()) as { items: { slug: string; name: string }[] };
   const product = items[0]!;
 
-  await staffLogin(page, 'admin@redcore.uz');
+  await staffLogin(page, 'admin');
   await page.goto(`${BASE}/products?q=${encodeURIComponent(product.name)}`);
   await page.getByTestId('console-products').getByRole('link').first().click();
   const upload = page.getByTestId('model-upload');
@@ -165,7 +165,7 @@ test('загрузка своей GLB, проверка файла, показ �
 test('игры калькулятора FPS: менеджер добавляет игру — она сразу на /fps; импорт CSV', async ({
   page,
 }) => {
-  await staffLogin(page, 'manager@redcore.uz');
+  await staffLogin(page, 'manager');
   await page.goto(`${BASE}/games`);
   await expect(page.getByTestId('console-games')).toContainText('Cyberpunk 2077');
 
@@ -202,7 +202,7 @@ test('MCP: админ создаёт ключ, внешний клиент ра�
   page,
   baseURL,
 }) => {
-  await staffLogin(page, 'admin@redcore.uz');
+  await staffLogin(page, 'admin');
   await page.goto(`${BASE}/mcp`);
   const form = page.getByTestId('api-key-form');
   await form.getByTestId('api-key-name').fill(`E2E Cursor ${Date.now()}`);
@@ -264,7 +264,7 @@ test('MCP: админ создаёт ключ, внешний клиент ра�
 test('AI в консоли: помощник без ключа отвечает сводкой, логи запусков и диалог', async ({
   page,
 }) => {
-  await staffLogin(page, 'manager@redcore.uz');
+  await staffLogin(page, 'manager');
   await page.goto(`${BASE}/ai`);
   await expect(page.getByTestId('ai-key-missing')).toBeVisible();
   const panel = page.getByTestId('chat-panel');
@@ -345,7 +345,7 @@ test('Telegram: покупатель подписывается по ссылк�
   await expect(inbox('admin-chat', `Новый заказ ${number}`)).toBeVisible();
 
   // Менеджер начинает сборку — покупателю приходит статус (быстрее 5 с)
-  await staffLogin(page, 'manager@redcore.uz');
+  await staffLogin(page, 'manager');
   await page.goto(`${BASE}/orders/${number}`);
   await page.getByTestId('to-assembling').click();
   await expect(page.getByText('Сохранено')).toBeVisible();
@@ -373,7 +373,7 @@ test('правка цены в консоли сразу видна на вит�
   // Открываем карточку на витрине заранее — её пререндер попадает в кэш
   await page.goto(`/ru/p/${product.slug}`);
 
-  await staffLogin(page, 'manager@redcore.uz');
+  await staffLogin(page, 'manager');
   await page.goto(`${BASE}/products?q=${encodeURIComponent(product.name)}`);
   await page.getByTestId('console-products').getByRole('link').first().click();
   const price = page.locator('#pf-priceUzs');
@@ -448,7 +448,7 @@ test('сквозной сценарий: каталог → конфигурат
   });
 
   // Возврат из консоли → вебхук charge.refunded → заказ «возвращён» у покупателя
-  await staffLogin(page, 'admin@redcore.uz');
+  await staffLogin(page, 'admin');
   await page.goto(`${BASE}/orders?q=${number}`);
   await page.getByRole('link', { name: number }).click();
   await page.getByTestId('refund-submit').click();

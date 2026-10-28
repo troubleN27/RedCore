@@ -54,7 +54,7 @@ export default async function ConsoleMcpPage({ params }: PageProps<'/[locale]/co
               </span>
             ),
             scopes: <span className="font-mono text-xs">{k.scopes.join(', ')}</span>,
-            user: k.userEmail ?? '',
+            user: k.userLogin ?? '',
             lastUsed: when(k.lastUsedAt),
             status: k.revokedAt ? (
               <span className="text-steel-400">{t('keys.revoked')}</span>

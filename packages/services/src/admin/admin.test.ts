@@ -332,6 +332,9 @@ describe('пользователи', () => {
       .from(user)
       .where(eq(user.id, 'demo-customer'));
     expect(row?.role).toBe('manager');
-    expect((await listUsers(db, { q: 'redcore.uz' })).total).toBeGreaterThanOrEqual(3);
+    expect((await listUsers(db, { q: '+998' })).total).toBeGreaterThanOrEqual(3);
+    expect((await listUsers(db, { q: 'manager' })).rows.map((u) => u.username)).toContain(
+      'manager',
+    );
   });
 });

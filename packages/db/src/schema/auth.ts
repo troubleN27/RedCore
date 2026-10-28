@@ -1,6 +1,6 @@
-import { boolean, index, integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { boolean, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
-// Таблицы Better Auth (ядро + плагины phoneNumber и admin). Имена полей — как ждёт адаптер
+// Таблицы Better Auth (ядро + плагины username и admin). Имена полей — как ждёт адаптер
 // Drizzle; идентификаторы — строки, их генерирует Better Auth.
 
 export const user = pgTable('user', {
@@ -11,18 +11,17 @@ export const user = pgTable('user', {
   image: text(),
   createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
-  // phoneNumber
+  // username: логин для входа — у покупателя номер цифрами (998901234567), у персонала admin/manager
+  username: text().unique(),
+  /** Телефон покупателя в формате +998… (заполняется из логина при регистрации) */
   phoneNumber: text().unique(),
-  phoneNumberVerified: boolean(),
   // admin: customer | manager | admin
   role: text().notNull().default('customer'),
   banned: boolean().default(false),
   banReason: text(),
   banExpires: timestamp({ withTimezone: true }),
-  /** Язык писем, SMS и Telegram */
+  /** Язык интерфейса, SMS и Telegram */
   locale: text().notNull().default('ru'),
-  // twoFactor: обязателен для входа в админ-панель
-  twoFactorEnabled: boolean().default(false),
 });
 
 export const session = pgTable(
@@ -76,23 +75,6 @@ export const verification = pgTable(
     updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [index('verification_identifier_idx').on(t.identifier)],
-);
-
-/** Секрет TOTP (зашифрован Better Auth ключом BETTER_AUTH_SECRET) и резервные коды. */
-export const twoFactor = pgTable(
-  'two_factor',
-  {
-    id: text().primaryKey(),
-    secret: text().notNull(),
-    backupCodes: text().notNull(),
-    userId: text()
-      .notNull()
-      .references(() => user.id, { onDelete: 'cascade' }),
-    verified: boolean().default(true),
-    failedVerificationCount: integer().default(0),
-    lockedUntil: timestamp({ withTimezone: true }),
-  },
-  (t) => [index('two_factor_user_idx').on(t.userId), index('two_factor_secret_idx').on(t.secret)],
 );
 
 export type UserRow = typeof user.$inferSelect;

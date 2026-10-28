@@ -1,105 +1,113 @@
 'use client';
 
-import { normalizeUzPhone } from '@redcore/domain';
-import { InboxIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useEffect, useState, useTransition } from 'react';
+import { formatDate } from '@redcore/i18n';
+import { LogInIcon, UserPlusIcon } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import { useState, useTransition } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Link, useRouter } from '@/i18n/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
+import { loginAction, registerAction } from '@/server/account-auth-actions';
 
+type Mode = 'signIn' | 'register';
+
+const MODES = [
+  { mode: 'signIn', icon: LogInIcon, testId: 'tab-sign-in' },
+  { mode: 'register', icon: UserPlusIcon, testId: 'tab-register' },
+] as const;
 type ErrorKey =
-  'invalidPhone' | 'invalidCode' | 'tooManyAttempts' | 'expired' | 'rateLimited' | 'generic';
+  | 'invalidPhone'
+  | 'invalid'
+  | 'locked'
+  | 'passwordShort'
+  | 'passwordMismatch'
+  | 'phoneTaken'
+  | 'generic';
 
-const RESEND_SECONDS = 60;
+/** Совпадает с MIN_PASSWORD_LENGTH на сервере: здесь — только для подсказки и проверки до отправки */
+const MIN_PASSWORD = 8;
 
-function errorKey(error: { status?: number; code?: string } | null): ErrorKey {
-  if (!error) return 'generic';
-  if (error.status === 429) return 'rateLimited';
-  switch (error.code) {
-    case 'INVALID_OTP':
-      return 'invalidCode';
-    case 'OTP_EXPIRED':
-    case 'OTP_NOT_FOUND':
-      return 'expired';
-    case 'TOO_MANY_ATTEMPTS':
-      return 'tooManyAttempts';
-    case 'INVALID_PHONE_NUMBER':
-      return 'invalidPhone';
-    default:
-      return 'generic';
-  }
-}
-
-export function LoginForm({ next, showDevInbox }: { next: string; showDevInbox: boolean }) {
+export function LoginForm({ next }: { next: string }) {
   const t = useTranslations('auth');
+  const locale = useLocale();
   const router = useRouter();
+  const [mode, setMode] = useState<Mode>('signIn');
   const [phone, setPhone] = useState('');
-  const [sentTo, setSentTo] = useState<string | null>(null);
-  const [code, setCode] = useState('');
-  const [error, setError] = useState<ErrorKey | null>(null);
-  const [cooldown, setCooldown] = useState(0);
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [error, setError] = useState<{ key: ErrorKey; until?: string } | null>(null);
   const [pending, startTransition] = useTransition();
 
-  useEffect(() => {
-    if (cooldown <= 0) return;
-    const timer = setTimeout(() => setCooldown((s) => s - 1), 1000);
-    return () => clearTimeout(timer);
-  }, [cooldown]);
-
-  function sendCode() {
-    const value = normalizeUzPhone(phone);
-    if (!value) {
-      setError('invalidPhone');
-      return;
-    }
+  function switchMode(value: Mode) {
+    setMode(value);
+    setPassword('');
+    setConfirm('');
     setError(null);
-    startTransition(async () => {
-      const result = await authClient.phoneNumber.sendOtp({ phoneNumber: value });
-      if (result.error) {
-        setError(errorKey(result.error));
-        return;
-      }
-      setSentTo(value);
-      setCode('');
-      setCooldown(RESEND_SECONDS);
-    });
   }
 
-  function verify(event: React.FormEvent) {
+  function submit(event: React.FormEvent) {
     event.preventDefault();
-    if (!sentTo || code.length !== 6) {
-      setError('invalidCode');
-      return;
-    }
     setError(null);
+    if (mode === 'register') {
+      if (password.length < MIN_PASSWORD) return setError({ key: 'passwordShort' });
+      if (password !== confirm) return setError({ key: 'passwordMismatch' });
+    }
     startTransition(async () => {
-      const result = await authClient.phoneNumber.verify({ phoneNumber: sentTo, code });
-      if (result.error) {
-        setError(errorKey(result.error));
+      const result =
+        mode === 'register'
+          ? await registerAction({ phone, password, confirm, locale })
+          : await loginAction({ phone, password });
+      if (!result.ok) {
+        setError({ key: result.error, until: 'until' in result ? result.until : undefined });
         return;
       }
-      toast.success(t('welcome'));
+      // Сессию поставил server action — клиентский useSession перечитывает её
+      authClient.$store.notify('$sessionSignal');
+      toast.success(t(mode === 'register' ? 'registered' : 'welcome'));
       router.replace(next);
       router.refresh();
     });
   }
 
-  const errorText = error ? t(`errors.${error}`) : null;
+  const errorText = error
+    ? error.key === 'locked' && error.until
+      ? t('errors.locked', {
+          time: formatDate(error.until, locale, { hour: '2-digit', minute: '2-digit' }),
+        })
+      : t(`errors.${error.key}`, { min: MIN_PASSWORD })
+    : null;
 
   return (
     <div className="space-y-5" data-testid="login-form">
-      {!sentTo && (
-        <form
-          className="space-y-3"
-          onSubmit={(e) => {
-            e.preventDefault();
-            sendCode();
-          }}
-        >
+      <div
+        className="grid grid-cols-2 gap-1 rounded-lg border border-graphite-800 bg-graphite-900 p-1"
+        role="group"
+        aria-label={t('title')}
+      >
+        {MODES.map(({ mode: value, icon: Icon, testId }) => (
+          <button
+            key={value}
+            type="button"
+            aria-pressed={mode === value}
+            onClick={() => switchMode(value)}
+            data-testid={testId}
+            className={cn(
+              'inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-semibold transition-colors [&_svg]:size-4',
+              mode === value ? 'bg-graphite-700 text-white' : 'text-steel-300 hover:text-white',
+            )}
+          >
+            <Icon />
+            {t(`tabs.${value}`)}
+          </button>
+        ))}
+      </div>
+
+      <form className="space-y-3" onSubmit={submit}>
+        <div className="space-y-1.5">
           <Label htmlFor="login-phone">{t('phoneLabel')}</Label>
           <Input
             id="login-phone"
@@ -109,82 +117,54 @@ export function LoginForm({ next, showDevInbox }: { next: string; showDevInbox: 
             placeholder={t('phonePlaceholder')}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            aria-invalid={Boolean(error)}
+            aria-invalid={error?.key === 'invalidPhone' || error?.key === 'phoneTaken'}
+            required
             autoFocus
           />
-          <Button type="submit" className="w-full" disabled={pending} data-testid="send-code">
-            {pending ? t('sending') : t('sendCode')}
-          </Button>
-        </form>
-      )}
-
-      {sentTo && (
-        <form className="space-y-3" onSubmit={verify}>
-          <p className="text-sm text-steel-300">
-            {t('codeSent', { target: sentTo })}{' '}
-            <button
-              type="button"
-              className="text-brand-bright underline underline-offset-2"
-              onClick={() => setSentTo(null)}
-            >
-              {t('change')}
-            </button>
-          </p>
-          <Label htmlFor="login-code">{t('codeLabel')}</Label>
+        </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="login-password">{t('passwordLabel')}</Label>
           <Input
-            id="login-code"
-            inputMode="numeric"
-            autoComplete="one-time-code"
-            maxLength={6}
-            value={code}
-            onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-            className="text-center font-mono text-2xl tracking-[0.5em]"
-            aria-invalid={Boolean(error)}
-            autoFocus
-            data-testid="otp-input"
+            id="login-password"
+            type="password"
+            autoComplete={mode === 'register' ? 'new-password' : 'current-password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            aria-describedby={mode === 'register' ? 'login-password-hint' : undefined}
+            required
           />
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={pending || code.length !== 6}
-            data-testid="verify-code"
-          >
-            {pending ? t('verifying') : t('verify')}
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            className="w-full"
-            disabled={pending || cooldown > 0}
-            onClick={sendCode}
-          >
-            {cooldown > 0 ? t('resendIn', { seconds: cooldown }) : t('resend')}
-          </Button>
-        </form>
-      )}
+          {mode === 'register' && (
+            <p id="login-password-hint" className="text-xs text-steel-400">
+              {t('passwordHint', { min: MIN_PASSWORD })}
+            </p>
+          )}
+        </div>
+        {mode === 'register' && (
+          <div className="space-y-1.5">
+            <Label htmlFor="login-confirm">{t('confirmLabel')}</Label>
+            <Input
+              id="login-confirm"
+              type="password"
+              autoComplete="new-password"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              aria-invalid={error?.key === 'passwordMismatch'}
+              required
+            />
+          </div>
+        )}
+        <Button type="submit" className="w-full" disabled={pending} data-testid="login-submit">
+          {pending ? t('pending') : t(mode === 'register' ? 'submitRegister' : 'submitSignIn')}
+        </Button>
+      </form>
 
       {errorText && (
         <p
           role="alert"
           className="rounded-md border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-danger"
+          data-testid="login-error"
         >
           {errorText}
-        </p>
-      )}
-
-      {showDevInbox && (
-        <p className="flex items-start gap-2 rounded-md border border-info/30 bg-info/5 px-3 py-2 text-xs text-steel-300">
-          <InboxIcon className="mt-0.5 size-4 shrink-0 text-info" />
-          <span>
-            {t('devHint')}{' '}
-            <Link
-              href="/dev/inbox"
-              target="_blank"
-              className="text-info underline underline-offset-2"
-            >
-              {t('devInbox')}
-            </Link>
-          </span>
         </p>
       )}
     </div>

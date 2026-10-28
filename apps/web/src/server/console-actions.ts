@@ -60,14 +60,14 @@ async function run(
   entity: string,
   fn: (staff: {
     id: string;
-    email: string;
+    login: string;
   }) => Promise<{ id?: string | null; diff?: Record<string, unknown> } | void>,
 ): Promise<ActionResult> {
   const staff = await requireStaff(section);
   try {
     const result = (await fn(staff)) ?? {};
     await audit(
-      { id: staff.id, email: staff.email },
+      { id: staff.id, login: staff.login },
       action,
       entity,
       result.id ?? null,
@@ -220,7 +220,7 @@ export async function importBenchmarksAction(
   if (text.length > 500_000) return { ok: false };
   try {
     const result = await importBenchmarksCsv(await getDb(), text);
-    await audit({ id: staff.id, email: staff.email }, 'game.benchmarks.import', 'game', null, {
+    await audit({ id: staff.id, login: staff.login }, 'game.benchmarks.import', 'game', null, {
       updated: result.updated,
       errors: result.errors.length,
     });
@@ -264,13 +264,13 @@ export async function sendTelegramTestAction() {
 export async function createApiKeyAction(input: {
   name: string;
   scopes: string[];
-  userEmail?: string;
+  userLogin?: string;
 }): Promise<{ ok: true; key: string } | { ok: false; error: string; fields?: string[] }> {
   let key = '';
   const result = await run('mcp', 'mcp.key.create', 'api_key', async (staff) => {
     const created = await createApiKey(
       await getDb(),
-      { ...input, scopes: input.scopes as never, userEmail: input.userEmail || undefined },
+      { ...input, scopes: input.scopes as never, userLogin: input.userLogin || undefined },
       staff.id,
     );
     key = created.key;

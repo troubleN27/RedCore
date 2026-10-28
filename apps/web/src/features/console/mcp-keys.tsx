@@ -20,7 +20,7 @@ export function ApiKeyCreateForm() {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [name, setName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
+  const [userLogin, setUserLogin] = useState('');
   const [scopes, setScopes] = useState<string[]>(DEFAULT_SCOPES);
   const [created, setCreated] = useState<string | null>(null);
 
@@ -32,7 +32,7 @@ export function ApiKeyCreateForm() {
         onSubmit={(e) => {
           e.preventDefault();
           startTransition(async () => {
-            const result = await createApiKeyAction({ name, scopes, userEmail });
+            const result = await createApiKeyAction({ name, scopes, userLogin });
             if (result.ok) {
               setCreated(result.key);
               setName('');
@@ -52,13 +52,8 @@ export function ApiKeyCreateForm() {
             />
           </div>
           <div className="space-y-1">
-            <Label htmlFor="key-user">{t('keys.userEmail')}</Label>
-            <Input
-              id="key-user"
-              type="email"
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
-            />
+            <Label htmlFor="key-user">{t('keys.userLogin')}</Label>
+            <Input id="key-user" value={userLogin} onChange={(e) => setUserLogin(e.target.value)} />
           </div>
         </div>
         <fieldset className="grid gap-2 sm:grid-cols-3">

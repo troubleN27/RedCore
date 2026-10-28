@@ -1,5 +1,4 @@
 {
-  "otp": "RedCore: код для входа {code}. Никому его не сообщайте.",
   "orderCreated": "RedCore: заказ {number} на {amount} оформлен. Статус: {url}",
   "orderPaid": "RedCore: оплата заказа {number} получена. Спасибо!"
 }

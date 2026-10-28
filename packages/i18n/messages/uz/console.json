@@ -26,29 +26,14 @@
   },
   "login": {
     "title": "Konsolga kirish",
-    "subtitle": "Faqat xodimlar uchun. Parol va autentifikator ilovasidagi kod kerak.",
-    "email": "Pochta",
+    "subtitle": "Faqat xodimlar uchun: login va parol.",
+    "login": "Login",
     "password": "Parol",
-    "submit": "Davom etish",
+    "submit": "Kirish",
     "submitting": "Tekshirilmoqda…",
-    "totpTitle": "Ikki bosqichli himoya kodi",
-    "totpHint": "Google Authenticator, Authy yoki 1Password ni oching va RedCore ning 6 xonali kodini kiriting.",
-    "totpLabel": "Ilovadagi kod",
-    "verify": "Kirish",
-    "back": "Orqaga",
-    "enrollTitle": "Ikki bosqichli himoyani ulang",
-    "enrollHint": "2FA siz konsolga kirib boʻlmaydi. Parolni tasdiqlang, QR-kodni autentifikator ilovasi bilan skanerlang va kodni kiriting.",
-    "enrollPassword": "Parolni qayta kiriting",
-    "enrollStart": "QR-kodni koʻrsatish",
-    "secretLabel": "Qoʻlda kiritish uchun sir",
-    "backupTitle": "Zaxira kodlari",
-    "backupHint": "Ularni ishonchli joyda saqlang — telefon yoʻq boʻlsa, har biridan bir marta foydalanish mumkin.",
-    "enrollConfirm": "Ulash va kirish",
     "errors": {
-      "invalid": "Pochta yoki parol notoʻgʻri.",
-      "locked": "Muvaffaqiyatsiz urinishlar juda koʻp. Kirish {time} gacha bloklandi.",
-      "totp": "Kod notoʻgʻri. Telefondagi vaqtni tekshirib, qayta urinib koʻring.",
-      "enroll": "2FA ni ulab boʻlmadi. Parolni tekshiring."
+      "invalid": "Login yoki parol notoʻgʻri.",
+      "locked": "Muvaffaqiyatsiz urinishlar juda koʻp. Kirish {time} gacha bloklandi."
     }
   },
   "common": {
@@ -313,12 +298,11 @@
   },
   "users": {
     "title": "Foydalanuvchilar",
-    "searchPlaceholder": "Ism, pochta yoki telefon",
+    "searchPlaceholder": "Ism, login yoki telefon",
     "cols": {
       "name": "Ism",
-      "contact": "Kontaktlar",
+      "contact": "Login va telefon",
       "role": "Rol",
-      "twoFactor": "2FA",
       "created": "Roʻyxatdan oʻtgan",
       "banned": "Bloklash"
     },
@@ -443,7 +427,7 @@
       "new": "Yangi kalit",
       "name": "Nomi",
       "scopes": "Huquqlar (scopes)",
-      "userEmail": "«:own» uchun foydalanuvchi pochtasi (ixtiyoriy)",
+      "userLogin": "«:own» uchun foydalanuvchi logini — xaridorning telefon raqami (ixtiyoriy)",
       "create": "Kalit yaratish",
       "created": "Kalit yaratildi. Uni hozir nusxalang — keyin koʻrib boʻlmaydi:",
       "copy": "Nusxalash",

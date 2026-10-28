@@ -4,18 +4,18 @@ import { eq, sql } from 'drizzle-orm';
 export const MAX_LOGIN_FAILURES = 5;
 export const LOCK_MINUTES = 15;
 
-const keyOf = (email: string) => email.trim().toLowerCase();
+const keyOf = (login: string) => login.trim().toLowerCase();
 
-/** Заблокирован ли вход для этого email и до какого момента. */
+/** Заблокирован ли вход для этого логина и до какого момента. */
 export async function loginLockedUntil(
   db: Database,
-  email: string,
+  login: string,
   now = new Date(),
 ): Promise<Date | null> {
   const [row] = await db
     .select()
     .from(adminLoginAttempts)
-    .where(eq(adminLoginAttempts.key, keyOf(email)));
+    .where(eq(adminLoginAttempts.key, keyOf(login)));
   return row?.lockedUntil && row.lockedUntil > now ? row.lockedUntil : null;
 }
 
@@ -25,12 +25,12 @@ export async function loginLockedUntil(
  */
 export async function recordLoginFailure(
   db: Database,
-  email: string,
+  login: string,
   now = new Date(),
 ): Promise<{ failures: number; lockedUntil: Date | null }> {
   const [row] = await db
     .insert(adminLoginAttempts)
-    .values({ key: keyOf(email), failures: 1, lastAttemptAt: now })
+    .values({ key: keyOf(login), failures: 1, lastAttemptAt: now })
     .onConflictDoUpdate({
       target: adminLoginAttempts.key,
       set: { failures: sql`${adminLoginAttempts.failures} + 1`, lastAttemptAt: now },
@@ -41,10 +41,10 @@ export async function recordLoginFailure(
   await db
     .update(adminLoginAttempts)
     .set({ failures: 0, lockedUntil })
-    .where(eq(adminLoginAttempts.key, keyOf(email)));
+    .where(eq(adminLoginAttempts.key, keyOf(login)));
   return { failures: MAX_LOGIN_FAILURES, lockedUntil };
 }
 
-export async function resetLoginFailures(db: Database, email: string): Promise<void> {
-  await db.delete(adminLoginAttempts).where(eq(adminLoginAttempts.key, keyOf(email)));
+export async function resetLoginFailures(db: Database, login: string): Promise<void> {
+  await db.delete(adminLoginAttempts).where(eq(adminLoginAttempts.key, keyOf(login)));
 }

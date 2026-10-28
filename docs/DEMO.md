@@ -11,8 +11,8 @@ pnpm dev                                  # без Neon: встроенная б
 ```
 
 Вкладки: сайт `/ru`, консоль `/ops-console-dev` (в продакшене — `ADMIN_BASE_PATH`),
-ящик `/ru/dev/inbox`. Вход в консоль: `admin@redcore.uz`, пароль `RedCore-Staff-2026`, при
-первом входе — 2FA по QR (Google Authenticator).
+ящик `/ru/dev/inbox`. Вход в консоль: логин `admin`, пароль `RedCore-Staff-2026`. Демо-покупатель
+на сайте: `+998 90 123 45 67`, пароль `RedCore-Demo-2026`.
 
 ## Сценарий
 

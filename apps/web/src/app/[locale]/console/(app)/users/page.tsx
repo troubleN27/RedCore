@@ -34,7 +34,6 @@ export default async function ConsoleUsersPage({
         columns={[
           { key: 'name', label: t('cols.name') },
           { key: 'contact', label: t('cols.contact') },
-          { key: 'twoFactor', label: t('cols.twoFactor') },
           { key: 'created', label: t('cols.created') },
           { key: 'role', label: t('cols.role') },
         ]}
@@ -53,11 +52,10 @@ export default async function ConsoleUsersPage({
             ),
             contact: (
               <span className="text-xs">
-                {u.email.endsWith('@phone.redcore.local') ? '' : u.email}
+                <span className="font-mono">{u.username ?? ''}</span>
                 <span className="block text-steel-400">{u.phoneNumber ?? ''}</span>
               </span>
             ),
-            twoFactor: u.twoFactorEnabled ? tc('yes') : tc('no'),
             created: formatDate(u.createdAt, locale),
             role: (
               <UserControls

@@ -1,33 +1,18 @@
 import 'server-only';
-import {
-  account,
-  getDb,
-  session,
-  twoFactor as twoFactorTable,
-  user,
-  verification,
-  type Database,
-} from '@redcore/db';
-import { normalizeUzPhone } from '@redcore/domain';
-import { isLocale, type Locale } from '@redcore/i18n';
-import { claimGuestOrders, otpSms, sendSms } from '@redcore/services';
-import { eq } from 'drizzle-orm';
+import { account, getDb, session, user, verification, type Database } from '@redcore/db';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { nextCookies } from 'better-auth/next-js';
 import { admin } from 'better-auth/plugins/admin';
-import { phoneNumber } from 'better-auth/plugins/phone-number';
-import { twoFactor } from 'better-auth/plugins/two-factor';
+import { username } from 'better-auth/plugins/username';
 import { headers } from 'next/headers';
 import { cache } from 'react';
 import { env } from '@/env';
+import { PHONE_LOGIN_RE, phoneFromLogin } from '@/lib/login';
 
-const OTP_MINUTES = 5;
-const STAFF_SIGN_IN_PATHS = new Set([
-  '/sign-in/email',
-  '/two-factor/verify-totp',
-  '/two-factor/enable',
-]);
+/** Минимальная длина пароля — и покупателя, и сотрудника. */
+export const MIN_PASSWORD_LENGTH = 8;
+
 // Только для локальной разработки и CI: в продакшене без BETTER_AUTH_SECRET сервер не стартует
 const DEV_SECRET = 'redcore-dev-secret-do-not-use-in-production-0001';
 
@@ -39,23 +24,18 @@ function authSecret(): string {
   return DEV_SECRET;
 }
 
-/** Язык SMS — из cookie выбора языка (на странице входа она всегда есть). */
-function localeFromRequest(request?: Request): Locale {
-  const cookie = request?.headers.get('cookie') ?? '';
-  const value = /(?:^|;\s*)NEXT_LOCALE=([a-z]{2})/.exec(cookie)?.[1];
-  return value && isLocale(value) ? value : 'ru';
-}
-
 function createAuth(db: Database) {
   return betterAuth({
     secret: authSecret(),
     baseURL: env.NEXT_PUBLIC_SITE_URL,
     database: drizzleAdapter(db, {
       provider: 'pg',
-      schema: { user, session, account, verification, twoFactor: twoFactorTable },
+      schema: { user, session, account, verification },
     }),
-    // Пароль — только у персонала (создаётся в seed/админке); покупатели входят по коду из SMS
-    emailAndPassword: { enabled: true, disableSignUp: true, minPasswordLength: 10 },
+    // Логин + пароль. Регистрация и вход — только через server actions (HTTP закрыт в
+    // /api/auth): там проверка телефона, подтверждение пароля и блокировка после 5 ошибок.
+    // Better Auth требует email у пользователя — это служебный адрес, наружу он не показывается.
+    emailAndPassword: { enabled: true, minPasswordLength: MIN_PASSWORD_LENGTH },
     session: {
       expiresIn: 60 * 60 * 24 * 30,
       updateAge: 60 * 60 * 24,
@@ -64,55 +44,26 @@ function createAuth(db: Database) {
     user: {
       additionalFields: {
         locale: { type: 'string', required: false, defaultValue: 'ru', input: true },
+        phoneNumber: { type: 'string', required: false, input: false },
       },
     },
-    socialProviders:
-      env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
-        ? { google: { clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET } }
-        : undefined,
     rateLimit: { enabled: true, window: 60, max: 30 },
     databaseHooks: {
-      session: {
+      user: {
         create: {
-          // Персонал получает сессию только через пароль (+TOTP): вход по SMS для
-          // аккаунтов admin/manager закрыт, иначе 2FA можно было бы обойти
-          async before(created, ctx) {
-            const [row] = await db
-              .select({ role: user.role })
-              .from(user)
-              .where(eq(user.id, created.userId));
-            const staff = row?.role === 'admin' || row?.role === 'manager';
-            if (staff && ctx?.path && !STAFF_SIGN_IN_PATHS.has(ctx.path)) return false;
-            return { data: created };
-          },
-          // Гостевые заказы с подтверждённого номера сразу появляются в кабинете
-          async after(created) {
-            const [row] = await db
-              .select({ phone: user.phoneNumber, verified: user.phoneNumberVerified })
-              .from(user)
-              .where(eq(user.id, created.userId));
-            if (row?.phone && row.verified) await claimGuestOrders(db, created.userId, row.phone);
+          // Логин покупателя — его номер: телефон в профиле заполняется из логина
+          async before(created) {
+            const login = (created as { username?: string }).username ?? '';
+            if (!PHONE_LOGIN_RE.test(login)) return { data: created };
+            return { data: { ...created, phoneNumber: phoneFromLogin(login) } };
           },
         },
       },
     },
     plugins: [
-      phoneNumber({
-        otpLength: 6,
-        expiresIn: OTP_MINUTES * 60,
-        allowedAttempts: 3,
-        phoneNumberValidator: (value) => normalizeUzPhone(value) === value,
-        signUpOnVerification: {
-          // Better Auth требует поле email у пользователя — заполняем служебным адресом
-          getTempEmail: (value) => `${value.replace(/\D/g, '')}@phone.redcore.local`,
-          getTempName: (value) => value,
-        },
-        async sendOTP({ phoneNumber: to, code }, ctx) {
-          await sendSms(db, { to, text: otpSms(localeFromRequest(ctx?.request), code) });
-        },
-      }),
+      // Логин персонала — admin, manager; покупателя — номер телефона цифрами (998901234567)
+      username({ minUsernameLength: 3, maxUsernameLength: 30, displayUsername: false }),
       admin({ defaultRole: 'customer', adminRoles: ['admin'] }),
-      twoFactor({ issuer: 'RedCore', allowPasswordless: false }),
       // Должен быть последним: выставляет cookie из server actions
       nextCookies(),
     ],

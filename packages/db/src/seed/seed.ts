@@ -5,7 +5,7 @@ import { buildSeedCatalog, searchTextFor } from './catalog';
 import { categories as categorySeeds } from './data/categories';
 import { deliveryZones, promoCodes, services } from './data/commerce';
 import { demoReviews } from './data/reviews';
-import { demoUsers, staffPassword } from './data/users';
+import { customerPassword, demoUsers, staffPassword } from './data/users';
 import { hashPassword } from '@better-auth/utils/password';
 import { games as gameSeeds, steamCover } from './data/games';
 import { cpuPerf, gpuPerf } from './data/perf';
@@ -41,6 +41,7 @@ export async function seedDatabase(db: SeedDb, rate = seedRate()): Promise<SeedS
   const { products } = buildSeedCatalog(rate);
   // scrypt — до транзакции, чтобы не держать её открытой
   const staffHash = await hashPassword(staffPassword());
+  const customerHash = await hashPassword(customerPassword());
 
   return db.transaction(async (tx) => {
     // ── Настройки ──
@@ -383,25 +384,26 @@ export async function seedDatabase(db: SeedDb, rate = seedRate()): Promise<SeedS
       .values(promoCodes.map((p) => ({ ...p, code: p.code.toUpperCase() })))
       .onConflictDoNothing({ target: schema.promoCodes.code });
 
-    // ── Демо-пользователи: вход по коду из письма/SMS (в dev — /ru/dev/inbox) ──
+    // ── Демо-пользователи: вход по логину и паролю ──
     await tx
       .insert(schema.user)
-      .values(demoUsers.map((u) => ({ ...u, emailVerified: true, phoneNumberVerified: true })))
-      .onConflictDoUpdate({ target: schema.user.id, set: { role: excluded('role') } });
+      .values(demoUsers.map((u) => ({ ...u, emailVerified: true })))
+      .onConflictDoUpdate({
+        target: schema.user.id,
+        set: { role: excluded('role'), username: excluded('username'), email: excluded('email') },
+      });
 
-    // Персонал входит в админку по паролю + TOTP (2FA подключается при первом входе)
+    // Пароли: уже заданные (сменённые после входа) seed не перезаписывает
     await tx
       .insert(schema.account)
       .values(
-        demoUsers
-          .filter((u) => u.role !== 'customer')
-          .map((u) => ({
-            id: `${u.id}-credential`,
-            accountId: u.id,
-            providerId: 'credential',
-            userId: u.id,
-            password: staffHash,
-          })),
+        demoUsers.map((u) => ({
+          id: `${u.id}-credential`,
+          accountId: u.id,
+          providerId: 'credential',
+          userId: u.id,
+          password: u.role === 'customer' ? customerHash : staffHash,
+        })),
       )
       .onConflictDoNothing();
 

@@ -19,7 +19,7 @@ export const adminAuditLog = pgTable(
   {
     id: uuid().primaryKey().defaultRandom(),
     actorId: text().references(() => user.id, { onDelete: 'set null' }),
-    actorEmail: text(),
+    actorLogin: text(),
     action: text().notNull(),
     entity: text().notNull(),
     entityId: text(),
@@ -33,9 +33,9 @@ export const adminAuditLog = pgTable(
   ],
 );
 
-/** Неудачные попытки входа в админку: после 5 подряд — блокировка на 15 минут. */
+/** Неудачные попытки входа (консоль и покупатели): после 5 подряд — блокировка на 15 минут. */
 export const adminLoginAttempts = pgTable('admin_login_attempts', {
-  /** email в нижнем регистре */
+  /** Логин в нижнем регистре; у покупателя — номер цифрами */
   key: text().primaryKey(),
   failures: integer().notNull().default(0),
   lockedUntil: timestamp({ withTimezone: true }),

@@ -33,7 +33,7 @@ export default async function ConsoleAuditPage({ params }: PageProps<'/[locale]/
           key: r.id,
           cells: {
             date: formatDate(r.createdAt, locale, { dateStyle: 'short', timeStyle: 'medium' }),
-            actor: r.actorEmail ?? '',
+            actor: r.actorLogin ?? '',
             action: <span className="font-mono text-xs">{r.action}</span>,
             entity: (
               <span className="font-mono text-xs">

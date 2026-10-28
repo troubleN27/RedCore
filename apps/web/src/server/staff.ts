@@ -29,10 +29,10 @@ export type ConsoleSection = keyof typeof sectionRoles;
 
 export interface Staff {
   id: string;
-  email: string;
+  /** Логин для входа в консоль (admin, manager) */
+  login: string;
   name: string;
   role: StaffRole;
-  twoFactorEnabled: boolean;
 }
 
 /** Консоль открывается только через секретный путь — proxy ставит служебный заголовок. */
@@ -48,37 +48,26 @@ export const getStaff = cache(async (): Promise<Staff | null> => {
   const u = session?.user as
     | {
         id: string;
-        email: string;
+        username?: string | null;
         name: string;
         role?: string;
-        twoFactorEnabled?: boolean | null;
         banned?: boolean | null;
       }
     | undefined;
   if (!u || u.banned || (u.role !== 'admin' && u.role !== 'manager')) return null;
-  return {
-    id: u.id,
-    email: u.email,
-    name: u.name,
-    role: u.role,
-    twoFactorEnabled: Boolean(u.twoFactorEnabled),
-  };
+  return { id: u.id, login: u.username ?? '', name: u.name, role: u.role };
 });
 
 export function canAccess(role: StaffRole, section: ConsoleSection): boolean {
   return (sectionRoles[section] as readonly StaffRole[]).includes(role);
 }
 
-/**
- * Гард страниц и actions консоли: сотрудник с включённой 2FA и доступом к разделу.
- * Без 2FA — только на страницу подключения; чужой раздел — 404 (не раскрываем его наличие).
- */
+/** Гард страниц и actions консоли: сотрудник с доступом к разделу; чужой раздел — 404. */
 export async function requireStaff(section: ConsoleSection): Promise<Staff> {
   const base = adminBasePath();
   if (!base) notFound();
   const staff = await getStaff();
   if (!staff) redirect(`${base}/login`);
-  if (!staff.twoFactorEnabled) redirect(`${base}/login?step=enroll`);
   if (!canAccess(staff.role, section)) notFound();
   return staff;
 }
@@ -90,7 +79,7 @@ async function clientIp(): Promise<string | null> {
 
 /** Запись в журнал аудита: каждое изменение данных из консоли и каждый вход. */
 export async function audit(
-  actor: { id: string | null; email: string | null },
+  actor: { id: string | null; login: string | null },
   action: string,
   entity: string,
   entityId?: string | null,
@@ -99,7 +88,7 @@ export async function audit(
   const db = await getDb();
   await db.insert(adminAuditLog).values({
     actorId: actor.id,
-    actorEmail: actor.email,
+    actorLogin: actor.login,
     action,
     entity,
     entityId: entityId ?? null,

@@ -58,7 +58,7 @@
   `object-src 'none'`, `frame-ancestors 'none'`, HSTS, `nosniff`, `X-Frame-Options`,
   Referrer-Policy, Permissions-Policy, COOP. CSP без nonce — осознанно: nonce сделал бы каждую
   страницу динамической и убрал пререндер каталога.
-- Консоль: секретный путь (прямой `/…/console` → 404), пароль + TOTP, блокировка 5/15 мин,
+- Консоль: секретный путь (прямой `/…/console` → 404), логин и пароль, блокировка 5/15 мин,
   роли admin/manager, журнал действий.
 - Вебхуки Stripe и Telegram проверяют подпись/секрет; MCP-ключи хранятся хэшами.
 - PII в логах AI/MCP маскируется.

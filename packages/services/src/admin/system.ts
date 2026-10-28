@@ -24,7 +24,7 @@ export async function listUsers(db: Database, filter: { q?: string; page?: numbe
   if (q) {
     const like = `%${q.replace(/[%_]/g, '')}%`;
     conditions.push(
-      or(ilike(user.name, like), ilike(user.email, like), ilike(user.phoneNumber, like))!,
+      or(ilike(user.name, like), ilike(user.username, like), ilike(user.phoneNumber, like))!,
     );
   }
   const where = conditions.length > 0 ? and(...conditions) : undefined;
@@ -33,11 +33,10 @@ export async function listUsers(db: Database, filter: { q?: string; page?: numbe
       .select({
         id: user.id,
         name: user.name,
-        email: user.email,
+        username: user.username,
         phoneNumber: user.phoneNumber,
         role: user.role,
         banned: user.banned,
-        twoFactorEnabled: user.twoFactorEnabled,
         createdAt: user.createdAt,
       })
       .from(user)

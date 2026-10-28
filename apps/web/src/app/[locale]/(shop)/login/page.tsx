@@ -4,7 +4,6 @@ import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { LoginForm } from '@/features/account/login-form';
 import { redirect } from '@/i18n/navigation';
-import { devInboxEnabled } from '@/server/dev-inbox';
 import { getSession } from '@/server/auth';
 
 // Зависит от сессии покупателя — только серверный рендер на запрос
@@ -40,7 +39,7 @@ export default async function LoginPage({ params, searchParams }: PageProps<'/[l
           <h1 className="font-display text-2xl font-bold">{t('title')}</h1>
           <p className="text-sm text-steel-300">{t('subtitle')}</p>
         </header>
-        <LoginForm next={next} showDevInbox={devInboxEnabled()} />
+        <LoginForm next={next} />
       </div>
     </div>
   );

@@ -86,20 +86,6 @@ export async function listUserOrders(db: Database, userId: string) {
     .orderBy(desc(orders.createdAt));
 }
 
-/** Привязка гостевых заказов к аккаунту после входа по тому же телефону. */
-export async function claimGuestOrders(
-  db: Database,
-  userId: string,
-  phone: string,
-): Promise<number> {
-  const claimed = await db
-    .update(orders)
-    .set({ userId })
-    .where(sql`${orders.userId} is null and ${orders.contactPhone} = ${phone}`)
-    .returning({ id: orders.id });
-  return claimed.length;
-}
-
 /**
  * SMS о событии заказа на языке заказа. Ошибка провайдера не должна
  * откатывать оплату — поэтому вызывается после транзакции, в after().

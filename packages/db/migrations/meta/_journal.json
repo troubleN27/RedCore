@@ -71,6 +71,13 @@
       "when": 1793223416185,
       "tag": "0009_remove_email",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1793225146630,
+      "tag": "0010_password_login",
+      "breakpoints": true
     }
   ]
 }

@@ -63,7 +63,7 @@ export function ConsoleNav({
   staff,
 }: {
   sections: NavSection[];
-  staff: { name: string; email: string; role: 'admin' | 'manager' };
+  staff: { name: string; login: string; role: 'admin' | 'manager' };
 }) {
   const t = useTranslations('console');
   const pathname = usePathname();
@@ -103,7 +103,7 @@ export function ConsoleNav({
       <div className="mt-auto hidden space-y-3 lg:block">
         <div className="text-xs">
           <p className="truncate font-medium text-foreground">{staff.name}</p>
-          <p className="truncate text-steel-400">{`${staff.email} · ${t(`roles.${staff.role}`)}`}</p>
+          <p className="truncate text-steel-400">{`${staff.login} · ${t(`roles.${staff.role}`)}`}</p>
         </div>
         <NextLink
           href="/"

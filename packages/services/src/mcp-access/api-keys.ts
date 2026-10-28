@@ -2,6 +2,7 @@ import { aiToolCalls, apiKeys, user, type Database } from '@redcore/db';
 import { and, count, desc, eq, isNull, sql } from 'drizzle-orm';
 import { createHash, randomBytes } from 'node:crypto';
 import { z } from 'zod';
+import { findUserIdByLogin } from '../account/users';
 import { AdminValidationError } from '../admin/catalog';
 
 // Доступ внешних MCP-клиентов (план, §9): ключи `rc_…` со scopes и журнал вызовов инструментов.
@@ -25,8 +26,8 @@ function generateKey(): string {
 const createSchema = z.object({
   name: z.string().trim().min(2).max(80),
   scopes: z.array(z.enum(apiScopes)).min(1),
-  /** Пользователь для scopes «:own» — по почте */
-  userEmail: z.email().optional(),
+  /** Пользователь для scopes «:own» — по логину (у покупателя — номер телефона) */
+  userLogin: z.string().trim().min(3).max(30).optional(),
 });
 
 /** Новый ключ: значение возвращается один раз, в базе остаётся только хэш. */
@@ -39,13 +40,9 @@ export async function createApiKey(
   if (!parsed.success)
     throw new AdminValidationError(parsed.error.issues.map((i) => i.path.join('.')));
   let userId: string | null = null;
-  if (parsed.data.userEmail) {
-    const [owner] = await db
-      .select({ id: user.id })
-      .from(user)
-      .where(eq(user.email, parsed.data.userEmail));
-    if (!owner) throw new AdminValidationError(['userEmail']);
-    userId = owner.id;
+  if (parsed.data.userLogin) {
+    userId = await findUserIdByLogin(db, parsed.data.userLogin);
+    if (!userId) throw new AdminValidationError(['userLogin']);
   }
   const key = generateKey();
   const [row] = await db
@@ -98,7 +95,7 @@ export async function listApiKeys(db: Database) {
       name: apiKeys.name,
       prefix: apiKeys.prefix,
       scopes: apiKeys.scopes,
-      userEmail: user.email,
+      userLogin: user.username,
       lastUsedAt: apiKeys.lastUsedAt,
       revokedAt: apiKeys.revokedAt,
       createdAt: apiKeys.createdAt,

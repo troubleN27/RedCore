@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       report,
       uploadedBy: staff.id,
     });
-    await audit({ id: staff.id, email: staff.email }, 'product.model3d', 'product', productId, {
+    await audit({ id: staff.id, login: staff.login }, 'product.model3d', 'product', productId, {
       filename,
       storage: 'r2',
       sizeBytes: report.sizeBytes,
