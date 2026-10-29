@@ -64,19 +64,12 @@ export const manifest: ModelEntry[] = [
     uid: '209c4aada00e4b1790d8d274bac98779',
     license: 'CC-BY-4.0',
     targetSizeMm: 40,
-    lod0Triangles: 8_000,
-    lod1Triangles: 2_000,
+    // Крышка процессора при 8 тыс. треугольников теряла форму («шипы») — оставляем запас
+    lod0Triangles: 24_000,
+    lod1Triangles: 8_000,
   },
-  {
-    key: 'cpu_am4',
-    title: 'AM4 CPU',
-    author: 'Igor.Jop',
-    uid: '912c9c42d2dc40fe95574345aae51ea0',
-    license: 'CC-BY-4.0',
-    targetSizeMm: 40,
-    lod0Triangles: 8_000,
-    lod1Triangles: 2_000,
-  },
+  // cpu_am4 (AM4 CPU, Igor.Jop) исключён: цельная сетка с текстурами (ножки процессора) не
+  // упрощается ниже 41 тыс. треугольников без потери текстур — для AM4 остаётся процедурная модель
   {
     key: 'cpu_intel',
     title: 'INTEL CPU',

@@ -38,6 +38,19 @@ function Glb({ url, m, targetSize }: { url: string; m: PartMaterials; targetSize
       if (name.startsWith('body')) node.material = m.body;
       else if (name.startsWith('rgb')) node.material = m.rgb;
       else if (name.startsWith('glass')) node.material = m.glass;
+      // Пайплайн упрощения убирает нормали — освещение тогда считается по граням в шейдере.
+      // Общие материалы сцены (body/glass) для таких сеток клонируем, чтобы не менять их у остальных
+      if (!node.geometry.getAttribute('normal')) {
+        const flat = (material: THREE.Material) => {
+          if ((material as THREE.MeshStandardMaterial).flatShading) return material;
+          const copy = material.clone() as THREE.MeshStandardMaterial;
+          copy.flatShading = true;
+          return copy;
+        };
+        node.material = Array.isArray(node.material)
+          ? node.material.map(flat)
+          : flat(node.material as THREE.Material);
+      }
     });
     // Нормализация масштаба: пайплайн приводит модели к метрам, но своя загрузка может быть в мм
     const box = new THREE.Box3().setFromObject(clone);
@@ -71,18 +84,16 @@ export function ProductModel({
   const built = builtModel(spec.glbKey);
   // На низком качестве и телефонах — облегчённый LOD1
   const url = customUrl ?? (built ? (quality === 'low' ? built.lod1 : built.lod0) : null);
-  const procedural = <ProceduralModel spec={spec} m={m} />;
+  // Center меряет содержимое один раз при монтировании — поэтому ожидание GLB (Suspense) снаружи:
+  // иначе он мерил пустую группу, и камера настраивалась на модель нулевого размера
+  const centered = (node: ReactNode) => (
+    <Center onCentered={({ boundingSphere }) => onFit?.(boundingSphere.radius)}>{node}</Center>
+  );
+  const procedural = centered(<ProceduralModel spec={spec} m={m} />);
+  if (!url) return procedural;
   return (
-    <Center onCentered={({ boundingSphere }) => onFit?.(boundingSphere.radius)}>
-      {url ? (
-        <GlbBoundary fallback={procedural}>
-          <Suspense fallback={null}>
-            <Glb url={url} m={m} targetSize={extent} />
-          </Suspense>
-        </GlbBoundary>
-      ) : (
-        procedural
-      )}
-    </Center>
+    <GlbBoundary fallback={procedural}>
+      <Suspense fallback={null}>{centered(<Glb url={url} m={m} targetSize={extent} />)}</Suspense>
+    </GlbBoundary>
   );
 }

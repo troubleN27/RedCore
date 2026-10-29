@@ -1,1 +1,106 @@
-{}
+{
+  "gpu_3fan": {
+    "lod0": "/models/gpu_3fan.glb",
+    "lod1": "/models/gpu_3fan-lod1.glb",
+    "sizeLod0": 433732,
+    "sizeLod1": 265244,
+    "triangles": 42598,
+    "trianglesLod1": 22026
+  },
+  "gpu_2fan": {
+    "lod0": "/models/gpu_2fan.glb",
+    "lod1": "/models/gpu_2fan-lod1.glb",
+    "sizeLod0": 225884,
+    "sizeLod1": 135936,
+    "triangles": 39997,
+    "trianglesLod1": 16105
+  },
+  "mb_atx": {
+    "lod0": "/models/mb_atx.glb",
+    "lod1": "/models/mb_atx-lod1.glb",
+    "sizeLod0": 448064,
+    "sizeLod1": 182424,
+    "triangles": 60228,
+    "trianglesLod1": 18418
+  },
+  "cpu_am5": {
+    "lod0": "/models/cpu_am5.glb",
+    "lod1": "/models/cpu_am5-lod1.glb",
+    "sizeLod0": 93368,
+    "sizeLod1": 48452,
+    "triangles": 23994,
+    "trianglesLod1": 7990
+  },
+  "cpu_intel": {
+    "lod0": "/models/cpu_intel.glb",
+    "lod1": "/models/cpu_intel-lod1.glb",
+    "sizeLod0": 33812,
+    "sizeLod1": 14320,
+    "triangles": 7902,
+    "trianglesLod1": 1986
+  },
+  "ram_rgb": {
+    "lod0": "/models/ram_rgb.glb",
+    "lod1": "/models/ram_rgb-lod1.glb",
+    "sizeLod0": 94004,
+    "sizeLod1": 43812,
+    "triangles": 20002,
+    "trianglesLod1": 5990
+  },
+  "ram_lowprofile": {
+    "lod0": "/models/ram_lowprofile.glb",
+    "lod1": "/models/ram_lowprofile-lod1.glb",
+    "sizeLod0": 181164,
+    "sizeLod1": 143692,
+    "triangles": 4990,
+    "trianglesLod1": 1990
+  },
+  "ssd_m2": {
+    "lod0": "/models/ssd_m2.glb",
+    "lod1": "/models/ssd_m2-lod1.glb",
+    "sizeLod0": 296080,
+    "sizeLod1": 78784,
+    "triangles": 1999,
+    "trianglesLod1": 999
+  },
+  "ssd_25": {
+    "lod0": "/models/ssd_25.glb",
+    "lod1": "/models/ssd_25-lod1.glb",
+    "sizeLod0": 17256,
+    "sizeLod1": 9772,
+    "triangles": 4000,
+    "trianglesLod1": 1499
+  },
+  "hdd_35": {
+    "lod0": "/models/hdd_35.glb",
+    "lod1": "/models/hdd_35-lod1.glb",
+    "sizeLod0": 104136,
+    "sizeLod1": 56052,
+    "triangles": 20017,
+    "trianglesLod1": 5021
+  },
+  "psu_atx": {
+    "lod0": "/models/psu_atx.glb",
+    "lod1": "/models/psu_atx-lod1.glb",
+    "sizeLod0": 53188,
+    "sizeLod1": 27464,
+    "triangles": 11978,
+    "trianglesLod1": 4008
+  },
+  "fan_120": {
+    "lod0": "/models/fan_120.glb",
+    "lod1": "/models/fan_120-lod1.glb",
+    "sizeLod0": 22388,
+    "sizeLod1": 13744,
+    "triangles": 4596,
+    "trianglesLod1": 1995
+  },
+  "case_atx": {
+    "lod0": "/models/case_atx.glb",
+    "lod1": "/models/case_atx-lod1.glb",
+    "sizeLod0": 207984,
+    "sizeLod1": 96572,
+    "triangles": 55566,
+    "trianglesLod1": 25654
+  }
+}

@@ -5,7 +5,9 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import {
   center,
   dedup,
+  flatten,
   getBounds,
+  join,
   meshopt,
   prune,
   simplify,
@@ -19,7 +21,7 @@ import { outDir, rawModelFile, registryFile } from './paths';
 
 // Сборка базовых моделей: из исходника Sketchfab получаем LOD0 и LOD1 для сайта.
 // Шаги: очистка (prune/dedup/weld) → роли материалов → масштаб в метры и центр →
-// упрощение meshoptimizer до целевого полигонажа → текстуры WebP (2K / 512 px) → meshopt-сжатие.
+// упрощение meshoptimizer до целевого полигонажа → текстуры WebP (1K / 512 px) → meshopt-сжатие.
 
 export interface BuiltModel {
   lod0: string;
@@ -67,6 +69,22 @@ function normalize(doc: Document, targetSizeMm: number) {
   }
 }
 
+/**
+ * Исходники Sketchfab «разрезаны» по нормалям и касательным (1,3–1,8 вершины на треугольник):
+ * для упростителя каждое такое ребро — граница, и сетка почти не упрощается. Убираем их,
+ * склеиваем вершины, упрощаем. Нормали не пересчитываем: сайт рисует такие модели с плоским
+ * затенением (flatShading — нормали считает шейдер), а пересчитанные плоские нормали снова
+ * разрезали бы вершины и раздули файл.
+ */
+function dropNormals(doc: Document) {
+  for (const mesh of doc.getRoot().listMeshes()) {
+    for (const prim of mesh.listPrimitives()) {
+      prim.setAttribute('NORMAL', null);
+      prim.setAttribute('TANGENT', null);
+    }
+  }
+}
+
 export async function buildLod(
   input: string,
   entry: ModelEntry,
@@ -81,6 +99,8 @@ export async function buildLod(
   await doc.transform(
     prune(),
     dedup(),
+    // Сотни мелких частей по отдельности не упростить — сливаем части с общим материалом
+    ...(before > target ? [dropNormals, flatten(), join()] : []),
     weld(),
     center({ pivot: 'center' }),
     ...(before > target
@@ -88,14 +108,16 @@ export async function buildLod(
           simplify({
             simplifier: MeshoptSimplifier,
             ratio: target / before,
-            error: lod === 0 ? 0.001 : 0.01,
+            // Допуск — доля габарита модели: при 0,1% сетка почти не упрощалась, а 10% уже
+            // ломали форму (острые «шипы» на гранях)
+            error: lod === 0 ? 0.02 : 0.05,
           }),
         ]
       : []),
     textureCompress({
       encoder: sharp,
       targetFormat: 'webp',
-      resize: lod === 0 ? [2048, 2048] : [512, 512],
+      resize: lod === 0 ? [1024, 1024] : [512, 512],
     }),
     prune(),
     meshopt({ encoder: MeshoptEncoder, level: 'medium' }),

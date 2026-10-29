@@ -1,7 +1,7 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { manifest } from './manifest';
-import { rawDir, rawModelFile } from './paths';
+import { rawDir, rawModelFile, repoRoot } from './paths';
 
 // Скачивание моделей через Sketchfab Download API. Нужен личный токен:
 // https://sketchfab.com/settings/password → API Token → SKETCHFAB_API_TOKEN в .env.local.
@@ -17,6 +17,9 @@ interface ModelInfo {
 }
 
 async function main() {
+  // Токен — в корневом .env.local, как и остальные ключи проекта
+  const envFile = path.join(repoRoot, '.env.local');
+  if (existsSync(envFile)) process.loadEnvFile(envFile);
   const token = process.env.SKETCHFAB_API_TOKEN;
   if (!token) {
     console.error(

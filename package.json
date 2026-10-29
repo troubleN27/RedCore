@@ -22,7 +22,7 @@
     "db:seed": "pnpm --filter @redcore/db db:seed",
     "db:studio": "pnpm --filter @redcore/db db:studio",
     "db:reset": "pnpm --filter @redcore/db db:reset",
-    "assets:fetch": "pnpm --filter @redcore/assets fetch",
+    "assets:fetch": "pnpm --filter @redcore/assets run fetch",
     "assets:build": "pnpm --filter @redcore/assets build",
     "assets:report": "pnpm --filter @redcore/assets report",
     "fps:calibrate": "pnpm --filter @redcore/fps-tools calibrate",

@@ -27,7 +27,8 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.cloudflare.steamstatic.com https://*.stripe.com",
   "font-src 'self' data:",
-  `connect-src 'self' https://api.stripe.com https://*.stripe.com${isDev ? ' ws: wss:' : ''}`,
+  // blob: — GLTFLoader распаковывает встроенные в GLB текстуры через blob-URL и fetch
+  `connect-src 'self' blob: https://api.stripe.com https://*.stripe.com${isDev ? ' ws: wss:' : ''}`,
   'frame-src https://js.stripe.com https://hooks.stripe.com https://*.stripe.com',
   "worker-src 'self' blob:",
   "object-src 'none'",
