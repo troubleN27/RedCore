@@ -6,7 +6,7 @@
   "description": "Пайплайн 3D-моделей: скачивание со Sketchfab, оптимизация gltf-transform, бюджеты и лицензии",
   "scripts": {
     "fetch": "tsx src/fetch.ts",
-    "build": "tsx src/build.ts",
+    "models": "tsx src/build.ts",
     "report": "tsx src/report.ts",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
