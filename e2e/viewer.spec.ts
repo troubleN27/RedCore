@@ -23,6 +23,15 @@ test.describe('3D-просмотр товара', () => {
 
   test('скачанная модель (GLB) видеокарты: загрузка и отрисовка без ошибок', async ({ page }) => {
     const glb: number[] = [];
+    // Нарушение CSP (например, запрет WebAssembly для декодера meshopt) молча включает запасную
+    // процедурную модель — ловим его явно
+    await page.addInitScript(() => {
+      const w = window as unknown as { __csp: string[] };
+      w.__csp = [];
+      document.addEventListener('securitypolicyviolation', (e) =>
+        w.__csp.push(e.violatedDirective),
+      );
+    });
     page.on('response', (r) => {
       if (r.url().includes('/models/gpu_3fan')) glb.push(r.status());
     });
@@ -31,6 +40,7 @@ test.describe('3D-просмотр товара', () => {
     await expect(viewer.getByText('Схематичная модель по характеристикам товара')).toHaveCount(0);
     expect(glb).toContain(200);
     expect(errors).toEqual([]);
+    expect(await page.evaluate(() => (window as unknown as { __csp: string[] }).__csp)).toEqual([]);
   });
 
   test('смена цвета не копит ресурсы GPU', async ({ page }) => {
