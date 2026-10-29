@@ -16,7 +16,6 @@ const pages = [
   '/ru/compare',
   '/ru/login',
   '/ru/prebuilt',
-  '/ru/credits',
   '/ru/help/delivery',
 ];
 

@@ -32,7 +32,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...entry('/', 1, 'daily'),
     ...entry('/catalog', 0.9, 'daily'),
     ...entry('/prebuilt', 0.8),
-    ...entry('/credits', 0.2),
     ...['delivery', 'payment', 'warranty', 'returns'].flatMap((topic) =>
       entry(`/help/${topic}`, 0.3),
     ),

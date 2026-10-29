@@ -60,13 +60,4 @@ test.describe('3D-просмотр товара', () => {
     expect(after.geometries).toBeLessThanOrEqual(before.geometries);
     expect(after.textures).toBeLessThanOrEqual(before.textures + 1);
   });
-
-  test('страница авторов и лицензий', async ({ page }) => {
-    await page.goto('/ru/credits');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Авторы и лицензии');
-    await expect(page.getByTestId('credits-font')).toContainText('Inter');
-    await expect(page.getByTestId('credits-font')).toContainText('SIL Open Font License');
-    await page.goto('/uz/credits');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Mualliflar va litsenziyalar');
-  });
 });

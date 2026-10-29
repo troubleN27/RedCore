@@ -11,7 +11,6 @@ export const rawDir = path.join(toolingDir, 'raw');
 /** Результат: раздаётся CDN Vercel как статика */
 export const outDir = path.join(repoRoot, 'apps', 'web', 'public', 'models');
 export const registryFile = path.join(repoRoot, 'apps', 'web', 'src', 'generated', 'models.json');
-export const creditsFile = path.join(repoRoot, 'apps', 'web', 'src', 'generated', 'credits.json');
 export const licensesFile = path.join(repoRoot, 'ASSETS_LICENSES.md');
 
 export function rawModelFile(key: string): string | null {

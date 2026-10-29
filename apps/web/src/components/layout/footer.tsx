@@ -3,7 +3,7 @@ import { Logo } from '@/components/brand/logo';
 import { Link } from '@/i18n/navigation';
 import { navItems } from './nav-items';
 
-const helpKeys = ['delivery', 'payment', 'warranty', 'returns', 'credits'] as const;
+const helpKeys = ['delivery', 'payment', 'warranty', 'returns'] as const;
 
 export function Footer() {
   const t = useTranslations('footer');
@@ -45,10 +45,7 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-steel-300">
             {helpKeys.map((key) => (
               <li key={key}>
-                <Link
-                  href={key === 'credits' ? '/credits' : `/help/${key}`}
-                  className="hover:text-foreground"
-                >
+                <Link href={`/help/${key}`} className="hover:text-foreground">
                   {t(key)}
                 </Link>
               </li>

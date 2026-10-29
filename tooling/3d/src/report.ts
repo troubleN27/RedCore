@@ -2,10 +2,10 @@ import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import type { BuiltModel } from './build';
 import { budgets, manifest, sourceUrl, type ModelEntry } from './manifest';
-import { creditsFile, licensesFile, outDir, registryFile } from './paths';
+import { licensesFile, outDir, registryFile } from './paths';
 
-// Отчёт по ассетам: бюджеты (в CI падает при превышении) и атрибуция CC BY —
-// ASSETS_LICENSES.md в корне и credits.json для страницы /credits.
+// Отчёт по ассетам: бюджеты (в CI падает при превышении) и учёт источников и лицензий —
+// ASSETS_LICENSES.md в корне репозитория.
 
 export interface CreditEntry {
   kind: 'model' | 'font' | 'data';
@@ -137,7 +137,6 @@ function main() {
   }
 
   const credits = [...modelCredits(registry), ...staticCredits];
-  writeFileSync(creditsFile, `${JSON.stringify(credits, null, 2)}\n`);
   writeFileSync(
     licensesFile,
     licensesMarkdown(
@@ -157,7 +156,7 @@ function main() {
     console.error(`Бюджеты нарушены:\n${problems.map((p) => `  ✗ ${p}`).join('\n')}`);
     process.exit(1);
   }
-  console.log('✓ Бюджеты соблюдены, ASSETS_LICENSES.md и credits.json обновлены');
+  console.log('✓ Бюджеты соблюдены, ASSETS_LICENSES.md обновлён');
 }
 
 if (process.argv[1]?.endsWith('report.ts')) main();

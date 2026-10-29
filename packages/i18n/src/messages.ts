@@ -46,8 +46,6 @@ import ruAccount from '../messages/ru/account.json';
 import uzAccount from '../messages/uz/account.json';
 import ruConsole from '../messages/ru/console.json';
 import uzConsole from '../messages/uz/console.json';
-import ruCredits from '../messages/ru/credits.json';
-import uzCredits from '../messages/uz/credits.json';
 import type { Locale } from './config';
 
 // Русский словарь — эталон структуры. Узбекский обязан повторять её ключ в ключ:
@@ -67,7 +65,6 @@ const ru = {
   shop: ruShop,
   specs: ruSpecs,
   dev: ruDev,
-  credits: ruCredits,
   console: ruConsole,
   account: ruAccount,
   order: ruOrder,
@@ -97,7 +94,6 @@ const uz: Messages = {
   shop: uzShop,
   specs: uzSpecs,
   dev: uzDev,
-  credits: uzCredits,
   console: uzConsole,
   account: uzAccount,
   order: uzOrder,
