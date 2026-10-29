@@ -217,7 +217,7 @@ AI-клиентам по Model Context Protocol: Streamable HTTP на `/api/mcp`
 
 ## Безопасность
 
-- Заголовки на всех ответах: CSP (Stripe, CDN Steam и R2 — по списку, `object-src 'none'`,
+- Заголовки на всех ответах: CSP (Stripe и CDN Steam — по списку, `object-src 'none'`,
   `frame-ancestors 'none'`), HSTS, `nosniff`, `X-Frame-Options: DENY`, Referrer-Policy,
   Permissions-Policy, COOP. CSP без nonce — чтобы каталог и карточки оставались пререндеренными.
 - Консоль — только по секретному пути, логин и пароль, блокировка после 5 попыток, роли, аудит.

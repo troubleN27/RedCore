@@ -2,17 +2,15 @@ import { models3d, products, type Database } from '@redcore/db';
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { getBounds } from '@gltf-transform/functions';
-import { AwsClient } from 'aws4fetch';
 import { MeshoptDecoder } from 'meshoptimizer';
 import { eq } from 'drizzle-orm';
-import { randomUUID } from 'node:crypto';
 import { invalidateCatalogCache } from '../catalog/snapshot';
 
-// Своя 3D-модель товара из админки: проверка файла и хранение (R2 или база).
+// Своя 3D-модель товара из админки: проверка файла и хранение в базе.
 
 export const MODEL_LIMITS = {
-  /** Своя модель не проходит наш пайплайн — даём запас, но с жёстким потолком */
-  maxBytes: 15_000_000,
+  /** Тело запроса функции Vercel — до 4,5 МБ: файл крупнее до сервера не дойдёт */
+  maxBytes: 4_000_000,
   maxTriangles: 500_000,
 } as const;
 
@@ -73,63 +71,13 @@ export async function inspectGlb(bytes: Uint8Array): Promise<GlbReport> {
 
 // ── Хранилище ──
 
-export interface R2Config {
-  accountId: string;
-  accessKeyId: string;
-  secretAccessKey: string;
-  bucket: string;
-  publicUrl: string;
-}
-
-export function r2ConfigFromEnv(env: NodeJS.ProcessEnv = process.env): R2Config | null {
-  const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET, R2_PUBLIC_URL } = env;
-  if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY || !R2_BUCKET || !R2_PUBLIC_URL)
-    return null;
-  return {
-    accountId: R2_ACCOUNT_ID,
-    accessKeyId: R2_ACCESS_KEY_ID,
-    secretAccessKey: R2_SECRET_ACCESS_KEY,
-    bucket: R2_BUCKET,
-    publicUrl: R2_PUBLIC_URL.replace(/\/$/, ''),
-  };
-}
-
-function r2Client(config: R2Config) {
-  return new AwsClient({
-    accessKeyId: config.accessKeyId,
-    secretAccessKey: config.secretAccessKey,
-    service: 's3',
-    region: 'auto',
-  });
-}
-
-/** Presigned PUT: браузер грузит файл прямо в R2, минуя лимит тела запроса функции (4,5 МБ на Vercel). */
-export async function presignModelUpload(
-  config: R2Config,
-  filename: string,
-): Promise<{ key: string; uploadUrl: string; publicUrl: string }> {
-  const key = `models/${randomUUID()}-${filename.replace(/[^a-zA-Z0-9._-]/g, '_').slice(-80)}`;
-  const url = new URL(
-    `https://${config.accountId}.r2.cloudflarestorage.com/${config.bucket}/${key}`,
-  );
-  url.searchParams.set('X-Amz-Expires', '600');
-  const signed = await r2Client(config).sign(
-    new Request(url, { method: 'PUT', headers: { 'Content-Type': 'model/gltf-binary' } }),
-    {
-      aws: { signQuery: true },
-    },
-  );
-  return { key, uploadUrl: signed.url, publicUrl: `${config.publicUrl}/${key}` };
-}
-
 /** Привязка модели к товару: записываем модель и ссылку в products.model3d. */
 export async function attachModel(
   db: Database,
   input: {
     productId: string;
     filename: string;
-    bytes?: Uint8Array;
-    r2PublicUrl?: string;
+    bytes: Uint8Array;
     report: GlbReport;
     uploadedBy: string;
   },
@@ -140,16 +88,15 @@ export async function attachModel(
       .values({
         productId: input.productId,
         filename: input.filename,
-        storage: input.r2PublicUrl ? 'r2' : 'db',
-        url: input.r2PublicUrl ?? '',
-        data: input.r2PublicUrl ? null : (input.bytes ?? null),
+        url: '',
+        data: input.bytes,
         sizeBytes: input.report.sizeBytes,
         triangles: input.report.triangles,
         uploadedBy: input.uploadedBy,
       })
       .returning({ id: models3d.id });
-    const url = input.r2PublicUrl ?? `/api/models/${row!.id}`;
-    if (!input.r2PublicUrl) await tx.update(models3d).set({ url }).where(eq(models3d.id, row!.id));
+    const url = `/api/models/${row!.id}`;
+    await tx.update(models3d).set({ url }).where(eq(models3d.id, row!.id));
     await tx
       .update(products)
       .set({
@@ -170,12 +117,12 @@ export async function detachModel(db: Database, productId: string) {
   invalidateCatalogCache();
 }
 
-/** Файл модели из базы (режим без R2). */
+/** Файл модели из базы. */
 export async function getStoredModel(db: Database, id: string) {
   if (!/^[0-9a-f-]{36}$/.test(id)) return null;
   const [row] = await db
-    .select({ data: models3d.data, filename: models3d.filename, storage: models3d.storage })
+    .select({ data: models3d.data, filename: models3d.filename })
     .from(models3d)
     .where(eq(models3d.id, id));
-  return row?.storage === 'db' && row.data ? row : null;
+  return row?.data ? row : null;
 }

@@ -10,43 +10,15 @@ import { Button } from '@/components/ui/button';
 import { detachModelAction } from '@/server/console-actions';
 
 type UploadError = 'not_glb' | 'too_large' | 'too_many_triangles' | 'empty' | 'invalid' | 'failed';
-const MAX_BYTES = 15_000_000;
+// Совпадает с MODEL_LIMITS.maxBytes на сервере: тело запроса функции Vercel — до 4,5 МБ
+const MAX_BYTES = 4_000_000;
 
-/**
- * Загрузка своей GLB. С R2: presign → PUT прямо в бакет → commit (сервер проверяет файл).
- * Без R2: multipart в /api/console/models, файл хранится в базе.
- */
+/** Загрузка своей GLB: multipart в /api/console/models, файл хранится в базе. */
 async function upload(
   productId: string,
   file: File,
-  r2: boolean,
 ): Promise<{ ok: true } | { ok: false; error: UploadError }> {
   if (file.size > MAX_BYTES) return { ok: false, error: 'too_large' };
-  if (r2) {
-    const presign = await fetch('/api/console/models/presign', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ filename: file.name, size: file.size }),
-    });
-    if (!presign.ok) return { ok: false, error: 'failed' };
-    const { uploadUrl, publicUrl } = (await presign.json()) as {
-      uploadUrl: string;
-      publicUrl: string;
-    };
-    const put = await fetch(uploadUrl, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'model/gltf-binary' },
-      body: file,
-    });
-    if (!put.ok) return { ok: false, error: 'failed' };
-    const commit = await fetch('/api/console/models/commit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productId, filename: file.name, publicUrl }),
-    });
-    const body = (await commit.json().catch(() => ({}))) as { error?: UploadError };
-    return commit.ok ? { ok: true } : { ok: false, error: body.error ?? 'failed' };
-  }
   const form = new FormData();
   form.set('productId', productId);
   form.set('file', file);
@@ -58,11 +30,9 @@ async function upload(
 export function ModelUpload({
   productId,
   current,
-  r2,
 }: {
   productId: string;
   current: { sizeBytes?: number; triangles?: number } | null;
-  r2: boolean;
 }) {
   const t = useTranslations('console.products.form');
   const locale = useLocale();
@@ -95,7 +65,7 @@ export function ModelUpload({
           if (!file) return;
           setError(null);
           startTransition(async () => {
-            const result = await upload(productId, file, r2);
+            const result = await upload(productId, file);
             if (!result.ok) {
               setError(result.error);
               return;

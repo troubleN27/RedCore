@@ -1,0 +1,1 @@
+ALTER TABLE "models_3d" DROP COLUMN "storage";

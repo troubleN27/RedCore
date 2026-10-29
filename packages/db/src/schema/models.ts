@@ -5,17 +5,13 @@ const bytea = customType<{ data: Uint8Array; driverData: Uint8Array }>({
   dataType: () => 'bytea',
 });
 
-/**
- * Свои 3D-модели, загруженные из админки. Файл лежит в R2 (url) или — без R2, в dev и
- * на демо-стенде — прямо в базе (data) и отдаётся через /api/models/<id>.
- */
+/** Свои 3D-модели, загруженные из админки: файл хранится в базе (data) и отдаётся через /api/models/<id>. */
 export const models3d = pgTable(
   'models_3d',
   {
     id: uuid().primaryKey().defaultRandom(),
     productId: uuid().references(() => products.id, { onDelete: 'set null' }),
     filename: text().notNull(),
-    storage: text({ enum: ['r2', 'db'] }).notNull(),
     url: text().notNull(),
     data: bytea(),
     sizeBytes: integer().notNull(),

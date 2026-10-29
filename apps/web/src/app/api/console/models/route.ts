@@ -1,19 +1,15 @@
 import { getDb } from '@redcore/db';
-import { attachModel, inspectGlb, ModelValidationError, r2ConfigFromEnv } from '@redcore/services';
+import { attachModel, inspectGlb, ModelValidationError } from '@redcore/services';
 import { revalidatePath } from 'next/cache';
 import { notFound, staffForApi } from '@/server/console-api';
 import { audit } from '@/server/staff';
 
 export const runtime = 'nodejs';
 
-/**
- * Загрузка своей GLB без R2 (dev, демо): файл приходит multipart и хранится в базе.
- * С настроенным R2 этот путь закрыт — браузер грузит напрямую по presigned-ссылке.
- */
+/** Загрузка своей GLB: файл приходит multipart и хранится в базе, отдаётся через /api/models/<id>. */
 export async function POST(request: Request) {
   const staff = await staffForApi('products');
   if (!staff) return notFound();
-  if (r2ConfigFromEnv()) return Response.json({ error: 'use_presign' }, { status: 409 });
 
   const form = await request.formData();
   const productId = String(form.get('productId') ?? '');
@@ -36,7 +32,7 @@ export async function POST(request: Request) {
       sizeBytes: report.sizeBytes,
       triangles: report.triangles,
     });
-    revalidatePath('/[locale]/p/[slug]', 'page');
+    revalidatePath('/[locale]/(shop)/p/[slug]', 'page');
     return Response.json({ ok: true, url: result.url, report });
   } catch (error) {
     if (error instanceof ModelValidationError)

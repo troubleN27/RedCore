@@ -21,7 +21,6 @@
     "@redcore/db": "workspace:*",
     "@redcore/domain": "workspace:*",
     "@redcore/i18n": "workspace:*",
-    "aws4fetch": "^1.0.20",
     "drizzle-orm": "^0.45.4",
     "grammy": "1.46.0",
     "kysely": "0.29.7",

@@ -1,12 +1,7 @@
 import { getDb } from '@redcore/db';
 import { specFormFields, type ComponentType, type SpecField } from '@redcore/domain';
 import { formatDate, isLocale } from '@redcore/i18n';
-import {
-  getAdminProduct,
-  listBrandOptions,
-  listCategoryOptions,
-  r2ConfigFromEnv,
-} from '@redcore/services';
+import { getAdminProduct, listBrandOptions, listCategoryOptions } from '@redcore/services';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ProductArt } from '@/components/brand/product-art';
@@ -111,7 +106,6 @@ export default async function ConsoleProductPage({
             <ModelUpload
               productId={data.product.id}
               current={data.product.model3d?.customUrl ? data.product.model3d : null}
-              r2={Boolean(r2ConfigFromEnv())}
             />
           </div>
         </Panel>

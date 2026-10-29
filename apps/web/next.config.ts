@@ -15,20 +15,19 @@ loadEnvConfig(
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const isDev = process.env.NODE_ENV !== 'production';
-const r2Public = process.env.R2_PUBLIC_URL ? new URL(process.env.R2_PUBLIC_URL).origin : '';
 
 /**
  * CSP без nonce: nonce сделал бы каждую страницу динамической (каталог и карточки товаров
  * пререндерятся ради скорости). Inline-скрипты Next разрешены, всё остальное — по списку:
- * Stripe (Payment Element, 3-D Secure), обложки игр со Steam CDN, свои GLB и картинки в R2.
+ * Stripe (Payment Element, 3-D Secure) и обложки игр со Steam CDN; свои GLB отдаёт сам сайт.
  */
 const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline' https://js.stripe.com${isDev ? " 'unsafe-eval'" : ''}`,
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: blob: https://cdn.cloudflare.steamstatic.com https://*.stripe.com ${r2Public}`.trim(),
+  "img-src 'self' data: blob: https://cdn.cloudflare.steamstatic.com https://*.stripe.com",
   "font-src 'self' data:",
-  `connect-src 'self' https://api.stripe.com https://*.stripe.com https://*.r2.cloudflarestorage.com ${r2Public}${isDev ? ' ws: wss:' : ''}`.trim(),
+  `connect-src 'self' https://api.stripe.com https://*.stripe.com${isDev ? ' ws: wss:' : ''}`,
   'frame-src https://js.stripe.com https://hooks.stripe.com https://*.stripe.com',
   "worker-src 'self' blob:",
   "object-src 'none'",

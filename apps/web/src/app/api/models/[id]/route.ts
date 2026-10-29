@@ -3,7 +3,7 @@ import { getStoredModel } from '@redcore/services';
 
 export const runtime = 'nodejs';
 
-/** Своя модель из базы (режим без R2). Файл неизменяем — у новой загрузки новый id. */
+/** Своя модель из базы. Файл неизменяем — у новой загрузки новый id. */
 export async function GET(_request: Request, { params }: RouteContext<'/api/models/[id]'>) {
   const { id } = await params;
   const model = await getStoredModel(await getDb(), id);

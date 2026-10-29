@@ -181,7 +181,7 @@
       "created": "Mahsulot yaratildi",
       "duplicate": "SKU yoki manzil band",
       "model": "3D-model",
-      "modelHint": ".glb fayl, 15 MB va 500 000 uchburchakkacha. Masshtab detal oʻlchamiga avtomatik keltiriladi; body*, rgb*, glass* nomli materiallar ijro rangiga boʻyaladi.",
+      "modelHint": ".glb fayl, 4 MB va 500 000 uchburchakkacha. Masshtab detal oʻlchamiga avtomatik keltiriladi; body*, rgb*, glass* nomli materiallar ijro rangiga boʻyaladi.",
       "modelCurrent": "Oʻz modeli: {size} KB, {triangles} uchburchak",
       "modelNone": "Oʻz modeli yoʻq — xususiyatlar boʻyicha bazaviy yoki protsedurali model koʻrsatiladi.",
       "modelUpload": "GLB yuklash",
@@ -191,7 +191,7 @@
       "modelRemoved": "Oʻz modeli olib tashlandi",
       "modelErrors": {
         "not_glb": "Bu GLB fayl emas.",
-        "too_large": "Fayl 15 MB dan katta.",
+        "too_large": "Fayl 4 MB dan katta.",
         "too_many_triangles": "500 000 dan ortiq uchburchak — modelni soddalashtiring.",
         "empty": "Faylda geometriya yoʻq.",
         "invalid": "Fayl buzilgan yoki oʻqilmaydi.",

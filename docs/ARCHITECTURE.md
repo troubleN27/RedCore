@@ -23,7 +23,7 @@
                    packages/domain (без IO)           packages/db (Drizzle)
                    совместимость · БП · FPS ·         Neon Postgres (или PGlite локально)
                    подбор · 3D-раскладка · деньги ·   внешние: Stripe · Gemini ·
-                   статусы заказа · анализ баланса    Upstash · R2 · Telegram
+                   статусы заказа · анализ баланса    Upstash · Telegram
 ```
 
 ## Принципы
@@ -54,7 +54,7 @@
 
 ## Безопасность
 
-- Заголовки (`next.config.ts`): CSP со списком источников (Stripe, CDN Steam, R2),
+- Заголовки (`next.config.ts`): CSP со списком источников (Stripe, CDN Steam),
   `object-src 'none'`, `frame-ancestors 'none'`, HSTS, `nosniff`, `X-Frame-Options`,
   Referrer-Policy, Permissions-Policy, COOP. CSP без nonce — осознанно: nonce сделал бы каждую
   страницу динамической и убрал пререндер каталога.
