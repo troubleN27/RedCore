@@ -17,6 +17,7 @@ const pages = [
   '/ru/login',
   '/ru/prebuilt',
   '/ru/credits',
+  '/ru/help/delivery',
 ];
 
 test.describe('доступность (axe)', () => {

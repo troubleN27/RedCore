@@ -1,18 +1,112 @@
 {
+  "page": {
+    "demo": "Namunaviy shartlar: RedCore doʻkoni — oʻquv loyihasi, haqiqiy muddat va narxlar farq qilishi mumkin.",
+    "updated": "2026-yil 29-oktyabrda yangilangan",
+    "contacts": "Savollar qoldimi? Oʻng pastki burchakdagi AI-yordamchiga yozing yoki qoʻngʻiroq qiling: +998 71 200 00 00, har kuni 10:00 dan 20:00 gacha.",
+    "nav": "Xaridorlarga",
+    "zonesTitle": "Yetkazib berish hududlari va narxi",
+    "zone": "Hudud",
+    "price": "Narxi",
+    "freeFrom": "Bepul",
+    "eta": "Muddat",
+    "cod": "Qabul qilganda toʻlash",
+    "etaDays": "{min}–{max} kun",
+    "etaSame": "{days} kun",
+    "free": "bepul",
+    "yes": "bor",
+    "no": "yoʻq",
+    "dash": "—"
+  },
   "delivery": {
     "title": "Yetkazib berish",
-    "text": "Oʻzbekistonning barcha 14 hududiga yetkazamiz: Toshkent boʻylab — 1–2 kun, hududlarga — 2–5 kun. Toshkentdagi doʻkondan olib ketish bepul. Yetkazish narxi hududga bogʻliq va zona uchun koʻrsatilgan summadan bepul. Qabul qilganda toʻlash hamma hududlarda mavjud emas — zonalar va shartlar quyida."
+    "text": "Oʻzbekistonning barcha 14 hududiga yetkazib beramiz: Toshkent boʻylab — 1–2 kun, hududlarga — 2–5 kun. Toshkentdagi doʻkondan olib ketish bepul. Yetkazib berish narxi hududga bogʻliq va hudud uchun belgilangan summadan boshlab bepul. Qabul qilganda toʻlash hamma hududlarda mavjud emas — hududlar va shartlar roʻyxati quyida.",
+    "intro": "Butlovchi qismlar va tayyor kompyuterlarni butun Oʻzbekiston boʻylab yetkazib beramiz. Katta buyurtmalar (korpuslar, tayyor yigʻmalar, monitorlar) ikki qavatli gofrokarton va zichlagichga qadoqlanadi.",
+    "sections": {
+      "pickup": {
+        "title": "Olib ketish — bepul",
+        "body": "RedCore doʻkoni: Toshkent, Amir Temur koʻchasi, 108 (moʻljal — «Next» savdo markazi).\nBarcha mahsulotlar omborda boʻlsa, buyurtma tasdiqlangandan keyin 2 soat ichida tayyor boʻladi.\nBuyurtma 5 kun saqlanadi. Olishda butligini va tashqi koʻrinishini tekshiring — mutaxassis yigʻilgan kompyuterni yoqib, sinab koʻrishga yordam beradi."
+      },
+      "tashkent": {
+        "title": "Toshkent boʻylab kuryer",
+        "body": "Ertasi kuni yetkazamiz, soat 16:00 gacha berilgan buyurtma — shu kuni (yakshanbadan tashqari).\nKuryer kelishidan bir soat oldin qoʻngʻiroq qiladi. Qavatga koʻtarish — bepul.\nTayyor kompyuterni yigʻilgan holda olib kelamiz va sizning oldingizda yoqamiz."
+      },
+      "regions": {
+        "title": "Oʻzbekiston hududlari",
+        "body": "Barcha 14 hududga hamkor yetkazib berish xizmatlari orqali joʻnatamiz, muddat — 2–5 ish kuni.\nBuyurtma holatlariga obuna boʻlgan boʻlsangiz, kuzatuv raqami Telegramga keladi.\nHar bir hudud uchun narx va bepul yetkazib berish chegarasi — quyidagi jadvalda."
+      },
+      "check": {
+        "title": "Qabul qilishda",
+        "body": "— Hujjatlarni imzolashdan oldin qadoq butunligini tekshiring.\n— Shikastlangan joʻnatmani qabul qilmasligingiz mumkin — oʻrniga yangisini oʻz hisobimizdan yuboramiz.\n— Qutilarni 10 kun saqlang: qaytarishda kerak boʻladi."
+      }
+    }
   },
   "payment": {
     "title": "Toʻlov",
-    "text": "Bank kartasi bilan onlayn (Visa, Mastercard) — buyurtma tasdiqlangandan keyin toʻlanadi, holat avtomatik oʻzgaradi. Qabul qilganda naqd yoki karta bilan — yetkazish zonasida mavjud boʻlsa. Narxlar QQS bilan soʻmda koʻrsatilgan."
+    "text": "Bank kartasi orqali onlayn (Visa, Mastercard) — buyurtma tasdiqlangandan keyin toʻlanadi, holat avtomatik oʻzgaradi. Qabul qilganda naqd yoki karta bilan — yetkazib berish hududida mavjud boʻlsa. Narxlar QQS bilan soʻmda koʻrsatilgan.",
+    "intro": "Saytdagi barcha narxlar soʻmda va QQS bilan koʻrsatilgan. Yetkazib berish va xizmatlar bilan yakuniy summa buyurtmani tasdiqlashdan oldin koʻrinadi.",
+    "sections": {
+      "card": {
+        "title": "Onlayn karta bilan",
+        "body": "Visa va Mastercard — Stripe himoyalangan shakli orqali (3-D Secure).\nMahsulotlar 30 daqiqaga band qilinadi — shu vaqt ichida buyurtma sahifasida toʻlang.\nBank tasdiqlagandan keyin «Toʻlangan» holati avtomatik paydo boʻladi.\nDemo rejim: test toʻlovi ishlaydi, pul yechilmaydi — 4242 4242 4242 4242 kartasidan foydalaning."
+      },
+      "cod": {
+        "title": "Qabul qilganda",
+        "body": "Naqd, Uzcard yoki Humo bilan — kuryerga yoki doʻkonda.\nOlib ketish, Toshkent va koʻpchilik hududlar uchun mavjud («Yetkazib berish» sahifasidagi jadvalga qarang).\n30 mln soʻmdan qimmat buyurtmalar uchun oldindan toʻlov kerak boʻlishi mumkin — menejer siz bilan bogʻlanadi."
+      },
+      "promo": {
+        "title": "Promokodlar",
+        "body": "Promokod savatda kiritiladi; chegirma darhol qayta hisoblanadi.\nBitta buyurtma — bitta promokod. Kod shartlarida koʻrsatilgan boʻlsa, chegirma aksiya narxlari bilan qoʻshilmaydi."
+      },
+      "docs": {
+        "title": "Hujjatlar",
+        "body": "Elektron chekni Stripe toʻlov tizimi toʻlovda koʻrsatilgan pochtaga yuboradi.\nYuridik shaxslar uchun hisob-faktura va yopuvchi hujjatlar beramiz — buyurtma berishdan oldin bizga yozing."
+      }
+    }
   },
   "warranty": {
     "title": "Kafolat",
-    "text": "Barcha mahsulotlarga ishlab chiqaruvchi kafolati amal qiladi; muddat mahsulot kartasida koʻrsatilgan (odatda 12–36 oy). Kafolat boʻyicha murojaat uchun buyurtma raqami kerak. Diagnostika doʻkon servis markazida 3 ish kuni ichida oʻtkaziladi, taʼmirlash yoki almashtirish — ishlab chiqaruvchi servis markazi qaroriga koʻra. Kafolat mexanik shikastlanish, mustaqil taʼmirlash izlari va kuchlanishni oshirib overklok qilishga tatbiq etilmaydi."
+    "text": "Barcha mahsulotlarga ishlab chiqaruvchi kafolati amal qiladi; muddat mahsulot kartasida koʻrsatilgan (odatda 12–36 oy). Kafolat boʻyicha murojaat uchun buyurtma raqami kerak. Diagnostika doʻkon servis markazida 3 ish kuni ichida oʻtkaziladi, taʼmirlash yoki almashtirish — ishlab chiqaruvchi servis markazi qarori bilan. Kafolat mexanik shikastlanishlar, mustaqil taʼmirlash izlari va kuchlanishni oshirib tezlatishga tatbiq etilmaydi.",
+    "intro": "Barcha mahsulotlarga ishlab chiqaruvchining rasmiy kafolati amal qiladi. Muddat har bir mahsulot kartasida koʻrsatilgan — odatda 12 dan 36 oygacha.",
+    "sections": {
+      "terms": {
+        "title": "Muddatlar",
+        "body": "— Protsessorlar, videokartalar, ona platalar — 24–36 oy.\n— Xotira va SSD — 36–60 oy (ayrim brendlarda umrbod).\n— Quvvat bloklari — modelga qarab 36–120 oy.\n— RedCore yigʻgan tayyor kompyuterlar — yigʻish va barcha butlovchilarga 24 oy."
+      },
+      "how": {
+        "title": "Qanday murojaat qilish kerak",
+        "body": "Mahsulotni doʻkonga olib keling yoki kuryerga topshiring va buyurtma raqamini ayting (RC-…).\nDiagnostika — 3 ish kunigacha. Nosozlik tasdiqlansa, ishlab chiqaruvchi servis markazi qarori bilan mahsulotni taʼmirlaymiz yoki almashtiramiz — odatda 21 kungacha.\nTayyor kompyuter taʼmirlanayotganda, mavjud boʻlsa, vaqtincha butlovchilar beramiz."
+      },
+      "excluded": {
+        "title": "Kafolat amal qilmaydi",
+        "body": "— mexanik shikastlanishlar, suyuqlik va korroziya izlari;\n— mustaqil taʼmirlash, qayta kavsharlash, buzilgan kafolat plombalari;\n— ishlab chiqaruvchi ruxsat bergandan yuqori kuchlanish bilan tezlatish;\n— stabilizator yoki UPSsiz kuchlanish sakrashlaridan shikastlanish."
+      },
+      "assembly": {
+        "title": "Doʻkonda yigʻish",
+        "body": "«Kompyuter yigʻish» xizmatini buyurtma qilgan boʻlsangiz, berishdan oldin tizimni 2 soat yuklama ostida sinaymiz.\nYigʻish sifatiga (kabel joylashuvi, mahkamlash, termointerfeys) — alohida 12 oylik kafolat."
+      }
+    }
   },
   "returns": {
     "title": "Qaytarish",
-    "text": "Sifatli mahsulotni qabul qilganingizdan keyin 10 kun ichida qaytarish mumkin, agar qadoq, toʻplam va tovar koʻrinishi saqlangan boʻlsa. Karta bilan toʻlangan pul 3–10 ish kunida oʻsha kartaga qaytariladi. Nuqsonli mahsulot kafolat boʻyicha qabul qilinadi. Doʻkon yigʻgan kompyuter toʻliq qaytariladi; soz kompyuter qaytarilganda yigʻish xizmati haqi qaytarilmaydi."
+    "text": "Sifatli mahsulotni olingandan keyin 10 kun ichida qaytarish mumkin, agar qadoq, butlik va tovar koʻrinishi saqlangan boʻlsa. Karta bilan toʻlangan pul 3–10 ish kunida oʻsha kartaga qaytariladi. Nuqsonli mahsulot kafolat boʻyicha qabul qilinadi. Doʻkon yigʻgan kompyuter toʻliq qaytariladi; soz kompyuter qaytarilganda yigʻish xizmati qoplanmaydi.",
+    "intro": "Mahsulot mos kelmasa, uni qaytarish yoki almashtirish mumkin. Muddat — olingandan keyin 10 kun.",
+    "sections": {
+      "conditions": {
+        "title": "Qaytarish shartlari",
+        "body": "— mahsulot ishlatilmagan va plombalari buzilgan holda tizimga oʻrnatilmagan;\n— zavod qadogʻi, plyonkalar, butlik va hujjatlar saqlangan;\n— olingandan keyin 10 kundan koʻp vaqt oʻtmagan."
+      },
+      "process": {
+        "title": "Qanday qaytarish mumkin",
+        "body": "AI-yordamchiga yozing yoki qoʻngʻiroq qilib, buyurtma raqamini ayting — qaytarishni kelishib olamiz.\nMahsulotni doʻkonga olib keling yoki kuryerga topshiring (Toshkent boʻylab — bepul, hududlardan — mahsulot soz boʻlsa, xaridor hisobidan).\nTekshiruvdan keyin qaytarishni 1 ish kuni ichida rasmiylashtiramiz."
+      },
+      "money": {
+        "title": "Pulni qaytarish",
+        "body": "Karta bilan toʻlov — pul 3–10 ish kunida oʻsha kartaga qaytadi (muddat bankka bogʻliq).\nQabul qilganda toʻlov — doʻkonda naqd yoki Uzcard/Humo kartasiga oʻtkazma orqali."
+      },
+      "exceptions": {
+        "title": "Alohida holatlar",
+        "body": "— Nuqsonli mahsulot kafolat boʻyicha qabul qilinadi — «Kafolat» sahifasiga qarang.\n— Doʻkon yigʻgan tayyor kompyuter toʻliq qaytariladi; soz kompyuter qaytarilganda yigʻish xizmati narxi qoplanmaydi.\n— Faollashtirilgan litsenziyali dasturiy taʼminot qaytarilmaydi."
+      }
+    }
   }
 }

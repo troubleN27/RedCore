@@ -45,3 +45,18 @@ test('health отвечает', async ({ request }) => {
   expect(response.ok()).toBe(true);
   expect(await response.json()).toMatchObject({ ok: true });
 });
+
+test('страницы для покупателей: из подвала, с таблицей зон доставки и на узбекском', async ({
+  page,
+}) => {
+  await page.goto('/ru');
+  await page.getByRole('contentinfo').getByRole('link', { name: 'Доставка' }).click();
+  await expect(page).toHaveURL(/\/ru\/help\/delivery$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Доставка');
+  await expect(page.getByTestId('delivery-zones').locator('tbody tr')).not.toHaveCount(0);
+  await page.getByRole('link', { name: 'Гарантия' }).first().click();
+  await expect(page.getByTestId('help-warranty')).toBeVisible();
+  await page.goto('/uz/help/returns');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Qaytarish');
+  expect((await page.goto('/ru/help/nichego'))?.status()).toBe(404);
+});

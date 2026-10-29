@@ -45,13 +45,12 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-steel-300">
             {helpKeys.map((key) => (
               <li key={key}>
-                {key === 'credits' ? (
-                  <Link href="/credits" className="hover:text-foreground">
-                    {t(key)}
-                  </Link>
-                ) : (
-                  t(key)
-                )}
+                <Link
+                  href={key === 'credits' ? '/credits' : `/help/${key}`}
+                  className="hover:text-foreground"
+                >
+                  {t(key)}
+                </Link>
               </li>
             ))}
           </ul>

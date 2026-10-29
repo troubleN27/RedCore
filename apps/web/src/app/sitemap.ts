@@ -33,6 +33,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...entry('/catalog', 0.9, 'daily'),
     ...entry('/prebuilt', 0.8),
     ...entry('/credits', 0.2),
+    ...['delivery', 'payment', 'warranty', 'returns'].flatMap((topic) =>
+      entry(`/help/${topic}`, 0.3),
+    ),
     ...snapshot.categories.flatMap((c) => entry(`/catalog/${c.slug}`, 0.8, 'daily')),
     ...snapshot.products.flatMap((p) => entry(`/p/${p.slug}`, p.isFeatured ? 0.7 : 0.6)),
   ];
