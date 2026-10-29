@@ -3,6 +3,10 @@ packages:
   - packages/*
   - tooling/*
 
+# Хранилище пакетов pnpm — внутри проекта (в .gitignore), а не в корне диска D:\.
+# Должно быть на том же диске, что и проект: pnpm ставит жёсткие ссылки в node_modules.
+storeDir: .pnpm-store
+
 # Скрипты установки разрешены только этим зависимостям (нативные бинарники).
 # @swc/core и @parcel/watcher приносит next-intl, unrs-resolver — eslint-import-resolver.
 allowBuilds:
