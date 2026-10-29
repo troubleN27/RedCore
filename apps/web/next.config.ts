@@ -23,7 +23,8 @@ const isDev = process.env.NODE_ENV !== 'production';
  */
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' https://js.stripe.com${isDev ? " 'unsafe-eval'" : ''}`,
+  // wasm-unsafe-eval — только WebAssembly (декодер meshopt для GLB); eval для JS по-прежнему запрещён
+  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://js.stripe.com${isDev ? " 'unsafe-eval'" : ''}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.cloudflare.steamstatic.com https://*.stripe.com",
   "font-src 'self' data:",
