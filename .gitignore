@@ -32,3 +32,6 @@ Thumbs.db
 
 # лог сервера E2E в CI
 next-server.log
+
+# Исходники видео для hero — на сайт идут только обработанные hero.mp4, hero-mobile.mp4 и hero-poster-blur.webp
+apps/web/public/videos/Gaming_PC_*
