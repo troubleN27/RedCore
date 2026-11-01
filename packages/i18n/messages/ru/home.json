@@ -6,13 +6,6 @@
     "ctaPrimary": "Открыть конфигуратор",
     "ctaSecondary": "Перейти в каталог"
   },
-  "buildCard": {
-    "label": "Сборка недели",
-    "power": "Потребление",
-    "powerValue": "{watts} / {psu} Вт",
-    "total": "Итого",
-    "open": "Смотреть сборку"
-  },
   "features": {
     "title": "Почему RedCore",
     "compat": {

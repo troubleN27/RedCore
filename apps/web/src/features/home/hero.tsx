@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { HeroVideo } from './hero-video';
 
-export function Hero({ buildCard }: { buildCard?: React.ReactNode }) {
+export function Hero() {
   const t = useTranslations('home.hero');
 
   return (
@@ -31,7 +31,7 @@ export function Hero({ buildCard }: { buildCard?: React.ReactNode }) {
         <span className="absolute top-[80%] left-0 h-px w-1/5 animate-speed-line bg-linear-to-r from-transparent via-white/30 to-transparent [animation-delay:2s]" />
       </div>
 
-      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-14 px-4 pt-16 pb-20 sm:px-6 md:pt-24 lg:grid-cols-[1.1fr_1fr] lg:px-8 lg:pb-28">
+      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] px-4 pt-16 pb-20 sm:px-6 md:pt-24 lg:px-8 lg:pb-28">
         <div className="animate-fade-up space-y-7">
           <p className="inline-flex items-center gap-3 label-caps text-brand-bright">
             <span aria-hidden="true" className="h-px w-10 bg-brand-bright shadow-glow-sm" />
@@ -55,8 +55,6 @@ export function Hero({ buildCard }: { buildCard?: React.ReactNode }) {
             </Button>
           </div>
         </div>
-
-        <div className="animate-fade-up [animation-delay:150ms]">{buildCard}</div>
       </div>
     </section>
   );

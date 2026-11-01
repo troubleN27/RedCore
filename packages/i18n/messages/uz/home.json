@@ -6,13 +6,6 @@
     "ctaPrimary": "Konfiguratorni ochish",
     "ctaSecondary": "Katalogga oʻtish"
   },
-  "buildCard": {
-    "label": "Hafta yigʻmasi",
-    "power": "Isteʼmol",
-    "powerValue": "{watts} / {psu} Vt",
-    "total": "Jami",
-    "open": "Yigʻmani koʻrish"
-  },
   "features": {
     "title": "Nega RedCore",
     "compat": {

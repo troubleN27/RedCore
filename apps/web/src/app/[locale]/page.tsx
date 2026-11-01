@@ -5,43 +5,26 @@ import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { CategoryTile } from '@/features/catalog/category-tile';
 import { ProductGrid } from '@/features/catalog/product-grid';
-import { BuildCard } from '@/features/home/build-card';
 import { Features } from '@/features/home/features';
 import { Hero } from '@/features/home/hero';
 import { Link } from '@/i18n/navigation';
-import { getChipNames, getPerf, getSnapshot } from '@/server/catalog';
+import { getChipNames, getSnapshot } from '@/server/catalog';
 
 export const revalidate = 300;
 
 export default async function HomePage({ params }: PageProps<'/[locale]'>) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  const [snapshot, perf, chipNames, t] = await Promise.all([
+  const [snapshot, chipNames, t] = await Promise.all([
     getSnapshot(locale),
-    getPerf(),
     getChipNames(),
     getTranslations({ locale, namespace: 'shop.home' }),
   ]);
   const prebuilts = getPrebuilts(snapshot);
-  const weekly = snapshot.bySlug.get('redcore-ultra') ?? prebuilts[0];
-  const components = (weekly ? (snapshot.prebuiltComponents.get(weekly.slug) ?? []) : [])
-    .map((slug) => snapshot.bySlug.get(slug))
-    .filter((p) => p !== undefined);
 
   return (
     <>
-      <Hero
-        buildCard={
-          weekly && (
-            <BuildCard
-              prebuilt={weekly}
-              components={components}
-              categories={snapshot.categories}
-              perf={perf}
-            />
-          )
-        }
-      />
+      <Hero />
       <Features />
       <section className="mx-auto mt-16 max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between gap-4">
