@@ -25,7 +25,7 @@ test.describe('AI-ассистент', () => {
     page,
   }) => {
     const panel = await openWidget(page, '/ru');
-    const reply = await ask(panel, 'Игровой ПК до 15 млн сум');
+    const reply = await ask(panel, 'Игровой ПК до 20 млн сум');
     await expect(reply).toHaveAttribute('data-agent', 'consultant');
     await expect(reply.getByTestId('chat-fallback')).toBeVisible();
     await expect(reply.getByTestId('chat-build')).toHaveCount(3);

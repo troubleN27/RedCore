@@ -4,6 +4,7 @@ import type { Orientation, Placement } from '@redcore/domain';
 import type { ReactNode } from 'react';
 import type { PartMaterials } from '../materials';
 import { AioPump, AioRadiator, ProceduralModel } from '../parts/procedural';
+import { GlbPart } from './glb-part';
 
 const HALF = Math.PI / 2;
 
@@ -44,13 +45,18 @@ export function Orient({
   }
 }
 
-/** Деталь сборки в осях корпуса: у СЖО помпа и радиатор рисуются отдельно. */
+/**
+ * Деталь сборки в осях корпуса: скачанная модель, если она есть для подтипа, иначе —
+ * процедурная. У СЖО помпа и радиатор рисуются отдельно.
+ */
 export function PlacedModel({ placement, m }: { placement: Placement; m: PartMaterials }) {
-  const { spec, part, orientation } = placement;
+  const { spec, part, orientation, size } = placement;
   let body: ReactNode;
   if (spec.kind === 'cooler-aio' && part === 'pump') body = <AioPump spec={spec} m={m} />;
   else if (spec.kind === 'cooler-aio' && part === 'radiator')
     body = <AioRadiator spec={spec} m={m} />;
   else body = <ProceduralModel spec={spec} m={m} />;
-  return <Orient orientation={orientation}>{body}</Orient>;
+  const procedural = <Orient orientation={orientation}>{body}</Orient>;
+  if (part) return procedural;
+  return <GlbPart glbKey={spec.glbKey} size={size} m={m} fallback={procedural} />;
 }

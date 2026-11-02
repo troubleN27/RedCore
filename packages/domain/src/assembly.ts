@@ -338,7 +338,8 @@ export function layoutBuild(build: Build): AssemblyLayout {
   // Вентиляторы: сначала передняя стенка, затем верх (если там нет радиатора), затем тыл
   const topTaken = placements.some((p) => p.part === 'radiator');
   const fanSlots: { position: Vec3; orientation: Orientation; installFrom: Vec3 }[] = [];
-  const frontX = d / 2 - T - 0.016;
+  // За передней панелью с запасом: у настоящих корпусов (модель Meshify C) она толще 3 см
+  const frontX = d / 2 - T - 0.045;
   for (let i = 0; i < 3; i++) {
     fanSlots.push({
       position: [frontX, h / 2 - 0.1 - i * 0.135, 0.005],

@@ -17,6 +17,15 @@ const pages = [
   '/ru/login',
   '/ru/prebuilt',
   '/ru/help/delivery',
+  '/ru/about',
+  '/ru/contacts',
+  '/ru/why-redcore',
+  '/ru/offer',
+  '/ru/privacy',
+  '/ru/faq',
+  '/ru/new',
+  '/ru/catalog/group/monitors',
+  '/ru/catalog/gaming-laptops',
 ];
 
 test.describe('доступность (axe)', () => {

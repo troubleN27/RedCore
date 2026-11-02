@@ -18,8 +18,22 @@ import { cpuPerf, gpuPerf } from './data/perf';
 import { headsets, keyboards, mice, monitors, mousepads, webcams } from './data/peripherals';
 import { caseFans, cases, coolers, powerSupplies } from './data/power-cases-cooling';
 import { prebuilts } from './data/prebuilts';
+import {
+  moreCaseFans,
+  moreHeadsets,
+  moreKeyboards,
+  moreMemory,
+  moreMice,
+  moreMousepads,
+  moreStorage,
+  moreWebcams,
+} from './data/catalog-extras';
+import { monitorArms, moreGamingMonitors, officeMonitors } from './data/displays';
+import { chairs, desks } from './data/furniture';
+import { gamingLaptops, workLaptops } from './data/laptops';
 import type { ProductSeed } from './data/types';
 import { describe, describePrebuilt } from './descriptions';
+import { marketPriceUzs } from './data/market-prices';
 import { prebuiltPriceUzs, seedRate, stockFor, usdToUzs } from './pricing';
 
 export type SeedProduct = AnyCatalogProduct & {
@@ -48,6 +62,10 @@ const skuPrefix: Record<ComponentType, string> = {
   headset: 'HS',
   mousepad: 'PAD',
   webcam: 'CAM',
+  laptop: 'NB',
+  monitor_arm: 'ARM',
+  chair: 'CHR',
+  desk: 'DSK',
   prebuilt: 'PC',
 };
 
@@ -67,6 +85,10 @@ const warranty: Record<ComponentType, number> = {
   headset: 24,
   mousepad: 12,
   webcam: 24,
+  laptop: 24,
+  monitor_arm: 24,
+  chair: 12,
+  desk: 12,
   prebuilt: 24,
 };
 
@@ -81,7 +103,9 @@ export function slugify(text: string): string {
 
 export const productKey = (brand: string, name: string) => `${brand} ${name}`;
 
-const categoryByType = new Map(categories.map((c) => [c.type, c.slug]));
+/** Раздел по умолчанию для типа — первый раздел этого типа (игровые мониторы, игровые ноутбуки) */
+const categoryByType = new Map<ComponentType, string>();
+for (const c of categories) if (!categoryByType.has(c.type)) categoryByType.set(c.type, c.slug);
 
 const ASSEMBLY_UZS = 350_000;
 const PREBUILT_MAX_STOCK = 5;
@@ -102,6 +126,22 @@ export const seedLists: ProductSeed[][] = [
   headsets,
   mousepads,
   webcams,
+  // Пополнение и новые разделы — после основных списков, чтобы SKU прежних товаров не менялись
+  moreGamingMonitors,
+  officeMonitors,
+  monitorArms,
+  moreKeyboards,
+  moreMice,
+  moreHeadsets,
+  moreMousepads,
+  moreWebcams,
+  moreCaseFans,
+  moreMemory,
+  moreStorage,
+  gamingLaptops,
+  workLaptops,
+  chairs,
+  desks,
 ];
 
 export function buildPerfIndex(): PerfIndex {
@@ -137,15 +177,18 @@ export function buildSeedCatalog(rate = seedRate()): { products: SeedProduct[]; 
       name: item.name,
       brand: item.brand,
       componentType: item.type,
-      priceUzs: usdToUzs(item.usd, rate),
+      priceUzs: marketPriceUzs[slug] ?? usdToUzs(item.usd, rate),
       stockQty: item.stock ?? stockFor(slug),
       specs,
       perfKey: item.type === 'gpu' ? (specs as { chip: string }).chip : (item.perfKey ?? null),
     } as AnyCatalogProduct;
     const product: SeedProduct = {
       ...base,
-      categorySlug: categoryByType.get(item.type)!,
-      compareAtPriceUzs: item.compareAtUsd ? usdToUzs(item.compareAtUsd, rate) : null,
+      categorySlug: item.category ?? categoryByType.get(item.type)!,
+      // Старая цена — с той же скидкой в процентах, что и в долларах
+      compareAtPriceUzs: item.compareAtUsd
+        ? Math.ceil((base.priceUzs * item.compareAtUsd) / item.usd / 10_000) * 10_000
+        : null,
       warrantyMonths: item.warrantyMonths ?? warranty[item.type],
       featured: item.featured ?? false,
       shortDescription: { ru: describe(base, 'ru'), uz: describe(base, 'uz') },

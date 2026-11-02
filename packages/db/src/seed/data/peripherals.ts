@@ -56,6 +56,7 @@ export const monitors = products('monitor', [
     brand: 'ASUS',
     name: 'TUF Gaming VG27AQ5A 27" QHD 210 Hz',
     usd: 210,
+    featured: true,
     specs: {
       sizeInch: 27,
       resolution: QHD,
@@ -85,6 +86,7 @@ export const monitors = products('monitor', [
   {
     brand: 'Dell',
     name: 'S2725DS 27" IPS QHD 100 Hz',
+    category: 'office-monitors',
     usd: 230,
     specs: {
       sizeInch: 27,
@@ -267,6 +269,7 @@ export const keyboards = products('keyboard', [
     brand: 'Wooting',
     name: '60HE+',
     usd: 175,
+    featured: true,
     specs: {
       formFactor: '60',
       switchType: 'Lekker L60 (magnetic)',

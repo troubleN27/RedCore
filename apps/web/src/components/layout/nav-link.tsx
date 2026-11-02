@@ -16,7 +16,7 @@ export function NavLink({ href, className, children, ...props }: NavLinkProps) {
       href={href}
       aria-current={isActive ? 'page' : undefined}
       className={cn(
-        'group relative rounded-md px-3 py-2 text-sm font-medium text-steel-300 transition-colors duration-200 hover:text-foreground',
+        'group relative rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap text-steel-300 transition-colors duration-200 hover:text-foreground',
         isActive && 'text-foreground',
         className,
       )}

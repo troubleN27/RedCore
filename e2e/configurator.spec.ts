@@ -26,7 +26,7 @@ function issue(page: Page, code: string) {
 
 /** Тот же черновик на узбекском: состав хранится в браузере, тексты — из словаря uz. */
 async function expectUzbek(page: Page, code: string, text: string) {
-  await page.goto('/uz/configurator');
+  await page.goto('/uz/configurator?demo=0');
   await expect(issue(page, code)).toContainText(text);
   await expect(page.getByTestId('build-summary').getByTestId('build-status')).toHaveText(
     'Mos kelmaslik bor',
@@ -35,7 +35,7 @@ async function expectUzbek(page: Page, code: string, text: string) {
 
 test.describe('конфигуратор: несовместимость на RU и UZ', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/ru/configurator');
+    await page.goto('/ru/configurator?demo=0');
     await page.evaluate(() => localStorage.removeItem('redcore-configurator'));
     await page.reload();
   });
@@ -89,7 +89,7 @@ test.describe('конфигуратор: несовместимость на RU 
     ).toBeVisible();
     await expect(summary.getByTestId('psu-load')).toHaveText(/Загрузка БП \d+%/);
     await expect(page.getByTestId('step-psu')).toHaveAttribute('data-state', 'error');
-    await page.goto('/uz/configurator');
+    await page.goto('/uz/configurator?demo=0');
     await expect(page.getByTestId('build-summary').getByTestId('psu-load')).toHaveText(
       /Quvvat bloki yuklamasi \d+%/,
     );
@@ -101,7 +101,7 @@ test.describe('конфигуратор: сохранение и ссылка', 
     page,
     browser,
   }) => {
-    await page.goto('/ru/configurator');
+    await page.goto('/ru/configurator?demo=0');
     await page.evaluate(() => localStorage.removeItem('redcore-configurator'));
     await page.reload();
     await pick(page, 'cpu', 'Ryzen 7 9800X3D');
@@ -139,7 +139,7 @@ test.describe('конфигуратор: сохранение и ссылка', 
   });
 
   test('вся сборка добавляется в корзину', async ({ page }) => {
-    await page.goto('/ru/configurator');
+    await page.goto('/ru/configurator?demo=0');
     await page.evaluate(() => localStorage.removeItem('redcore-configurator'));
     await page.reload();
     await pick(page, 'cpu', 'Ryzen 7 9800X3D');

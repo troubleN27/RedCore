@@ -101,7 +101,7 @@ describe('схемы характеристик', () => {
 
   it('isComponentType', () => {
     expect(isComponentType('gpu')).toBe(true);
-    expect(isComponentType('laptop')).toBe(false);
+    expect(isComponentType('toaster')).toBe(false);
   });
 });
 

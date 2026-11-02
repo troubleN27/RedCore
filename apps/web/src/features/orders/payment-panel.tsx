@@ -259,9 +259,6 @@ function MockForm({
 
   return (
     <div className="space-y-4" data-testid="mock-payment">
-      <p className="rounded-md border border-info/30 bg-info/5 px-3 py-2 text-xs text-steel-300">
-        {t('mock.hint')}
-      </p>
       {threeDS ? (
         <div
           className="space-y-3 rounded-lg border border-warning/40 bg-warning/5 p-4"

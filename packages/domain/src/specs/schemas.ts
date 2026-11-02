@@ -1,10 +1,16 @@
 import { z } from 'zod';
 import {
+  armMounts,
+  chairArmrests,
+  chairMaterials,
   colors,
   componentTypes,
   cpuFamilies,
+  deskHeights,
   fanSizes,
   gpuVendors,
+  laptopOs,
+  laptopPanels,
   memoryTypes,
   motherboardFormFactors,
   psuFormFactors,
@@ -229,6 +235,10 @@ export const monitorSpecsSchema = z.object({
   curved: z.boolean(),
   hdr: z.enum(['none', 'hdr400', 'hdr600', 'hdr1000', 'true-black-400']),
   adaptiveSync: z.boolean(),
+  /** USB-C с передачей видео и зарядкой ноутбука — важно для офисных мониторов */
+  usbC: z.boolean().optional(),
+  /** Подставка с регулировкой по высоте */
+  heightAdjust: z.boolean().optional(),
 });
 
 export const keyboardSpecsSchema = z.object({
@@ -271,6 +281,51 @@ export const webcamSpecsSchema = z.object({
   microphone: z.boolean(),
 });
 
+export const laptopSpecsSchema = z.object({
+  /** Модель процессора как у производителя: «Core i7-14650HX», «Apple M4» */
+  cpu: z.string().min(2),
+  /** Видеокарта: «GeForce RTX 4060 Laptop» или встроенная графика */
+  gpu: z.string().min(2),
+  ramGb: positiveInt(),
+  storageGb: positiveInt(),
+  screenInch: z.number().positive(),
+  resolution: z.object({ width: positiveInt(), height: positiveInt() }),
+  refreshHz: positiveInt(),
+  panel: z.enum(laptopPanels),
+  weightKg: z.number().positive(),
+  batteryWh: positiveInt(),
+  os: z.enum(laptopOs),
+  color,
+});
+
+export const monitorArmSpecsSchema = z.object({
+  monitors: int().min(1).max(4),
+  maxSizeInch: positiveInt(),
+  /** Нагрузка на один монитор */
+  maxLoadKg: z.number().positive(),
+  mount: z.enum(armMounts),
+  gasSpring: z.boolean(),
+  color,
+});
+
+export const chairSpecsSchema = z.object({
+  material: z.enum(chairMaterials),
+  armrests: z.enum(chairArmrests),
+  maxLoadKg: positiveInt(),
+  reclineDeg: positiveInt(),
+  lumbar: z.boolean(),
+  footrest: z.boolean(),
+  color,
+});
+
+export const deskSpecsSchema = z.object({
+  widthMm: positiveInt(),
+  depthMm: positiveInt(),
+  heightAdjust: z.enum(deskHeights),
+  rgb: z.boolean(),
+  color,
+});
+
 export const prebuiltSpecsSchema = z.object({
   purpose: z.enum(['gaming', 'esports', 'workstation', 'office', 'sff']),
   /** Целевое разрешение для игровых сборок */
@@ -293,6 +348,10 @@ export const specSchemas = {
   headset: headsetSpecsSchema,
   mousepad: mousepadSpecsSchema,
   webcam: webcamSpecsSchema,
+  laptop: laptopSpecsSchema,
+  monitor_arm: monitorArmSpecsSchema,
+  chair: chairSpecsSchema,
+  desk: deskSpecsSchema,
   prebuilt: prebuiltSpecsSchema,
 } as const satisfies Record<ComponentType, z.ZodType>;
 

@@ -168,6 +168,39 @@ export const promoCodes = [
     },
     description: { ru: '15% на периферию', uz: 'Periferiyaga 15%' },
   },
+  // Акции главной страницы (секция «Скидки и акции»)
+  {
+    code: 'GPU20',
+    type: 'percent' as const,
+    value: 20,
+    maxDiscountUzs: 3_000_000,
+    endsAt: new Date('2027-01-01T00:00:00+05:00'),
+    appliesTo: { componentTypes: ['gpu'] },
+    description: { ru: '20% на видеокарты', uz: 'Videokartalarga 20%' },
+  },
+  {
+    code: 'RYZENROG',
+    type: 'percent' as const,
+    value: 10,
+    endsAt: new Date('2027-01-01T00:00:00+05:00'),
+    appliesTo: {
+      componentTypes: ['cpu', 'motherboard'],
+      requiresComponentTypes: ['cpu', 'motherboard'],
+    },
+    description: {
+      ru: '10% на комплект процессор + материнская плата',
+      uz: 'Protsessor + ona plata toʻplamiga 10%',
+    },
+  },
+  {
+    code: 'PADGIFT',
+    type: 'percent' as const,
+    value: 100,
+    maxDiscountUzs: 1_000_000,
+    endsAt: new Date('2027-01-01T00:00:00+05:00'),
+    appliesTo: { componentTypes: ['mousepad'], requiresComponentTypes: ['mouse'] },
+    description: { ru: 'Коврик в подарок к мыши', uz: 'Sichqonchaga gilamcha sovgʻa' },
+  },
   {
     code: 'SUMMER2026',
     type: 'percent' as const,

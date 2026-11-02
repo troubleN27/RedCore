@@ -32,7 +32,7 @@ export function GameCover({ game, className }: { game: FpsGameView; className?: 
   );
   if (!game.coverUrl || failed) return fallback;
   return (
-    // Обложки Steam — внешние картинки фиксированного размера: оптимизатор Next не нужен
+    // Обложки — готовые картинки 460×215 (public/games): оптимизатор Next не нужен
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={game.coverUrl}

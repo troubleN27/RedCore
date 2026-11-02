@@ -1,7 +1,5 @@
 {
   "page": {
-    "demo": "Namunaviy shartlar: RedCore doʻkoni — oʻquv loyihasi, haqiqiy muddat va narxlar farq qilishi mumkin.",
-    "updated": "2026-yil 29-oktyabrda yangilangan",
     "contacts": "Savollar qoldimi? Oʻng pastki burchakdagi AI-yordamchiga yozing yoki qoʻngʻiroq qiling: +998 71 200 00 00, har kuni 10:00 dan 20:00 gacha.",
     "nav": "Xaridorlarga",
     "zonesTitle": "Yetkazib berish hududlari va narxi",
@@ -47,7 +45,7 @@
     "sections": {
       "card": {
         "title": "Onlayn karta bilan",
-        "body": "Visa va Mastercard — Stripe himoyalangan shakli orqali (3-D Secure).\nMahsulotlar 30 daqiqaga band qilinadi — shu vaqt ichida buyurtma sahifasida toʻlang.\nBank tasdiqlagandan keyin «Toʻlangan» holati avtomatik paydo boʻladi.\nDemo rejim: test toʻlovi ishlaydi, pul yechilmaydi — 4242 4242 4242 4242 kartasidan foydalaning."
+        "body": "Visa va Mastercard — Stripe himoyalangan shakli orqali (3-D Secure).\nMahsulotlar 30 daqiqaga band qilinadi — shu vaqt ichida buyurtma sahifasida toʻlang.\nBank tasdiqlagandan keyin «Toʻlangan» holati avtomatik paydo boʻladi."
       },
       "cod": {
         "title": "Qabul qilganda",

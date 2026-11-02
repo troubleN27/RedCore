@@ -42,7 +42,12 @@ export function ProductCard({
         aria-hidden="true"
         prefetch={priority}
       >
-        <ProductArt type={product.componentType} brand={product.brand} />
+        <ProductArt
+          type={product.componentType}
+          brand={product.brand}
+          slug={product.slug}
+          priority={priority}
+        />
       </Link>
       <div className="absolute top-5 right-5 z-10 flex flex-col gap-1">
         {product.isFeatured && <Badge variant="solid">{tc('badges.hit')}</Badge>}

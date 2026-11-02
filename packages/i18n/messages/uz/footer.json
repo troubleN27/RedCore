@@ -1,13 +1,32 @@
 {
+  "company": "REDCORE",
+  "about": "Biz haqimizda",
+  "contacts": "Kontaktlar",
+  "why": "Nega RedCore?",
+  "offer": "Ommaviy oferta",
+  "privacy": "Maxfiylik siyosati",
   "shop": "Doʻkon",
   "help": "Yordam",
   "delivery": "Yetkazib berish",
   "payment": "Toʻlov",
   "warranty": "Kafolat",
   "returns": "Qaytarish",
-  "contacts": "Aloqa",
+  "faq": "FAQ",
+  "phonesTitle": "Telefonlar va manzillar",
+  "phones": {
+    "sales": "Savdo boʻlimi",
+    "service": "Servis markazi",
+    "orders": "Buyurtmalar boʻyicha yordam"
+  },
+  "showroom": "Shourum",
+  "showroomAddress": "Toshkent, Mirobod tumani",
   "address": "Toshkent, Oʻzbekiston",
   "hours": "Har kuni 10:00 dan 20:00 gacha",
   "rights": "© {year} RedCore. Barcha huquqlar himoyalangan.",
-  "demo": "Namoyish loyihasi: toʻlov Stripe test rejimida ishlaydi."
+  "socialTitle": "Biz ijtimoiy tarmoqlarda",
+  "social": {
+    "instagram": "RedCore Instagramda",
+    "youtube": "RedCore YouTubeda",
+    "telegram": "RedCore Telegramda"
+  }
 }

@@ -113,6 +113,7 @@ export function CartView() {
                   <ProductArt
                     type={line.componentType as ComponentType}
                     brand={line.brand}
+                    slug={line.slug}
                     size="sm"
                     className="w-16 shrink-0"
                   />

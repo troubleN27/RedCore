@@ -21,9 +21,25 @@ function read(params: Params, key: string): string | undefined {
   return Array.isArray(value) ? value[0] : value;
 }
 
+/**
+ * Фильтры, общие для всех разделов: цена и производитель. Это поля товара, а не характеристики,
+ * поэтому их нет в category_filters — они добавляются к фильтрам раздела первыми.
+ */
+export const commonFilters: FilterDefinition[] = [
+  { key: 'price', type: 'range', unit: 'uzs', isCompatibilityKey: false },
+  { key: 'brand', type: 'enum', unit: null, isCompatibilityKey: false },
+];
+
 /** Значение характеристики товара по ключу фильтра (строка для перечислений). */
 export function specValue(product: ProductSummary, key: string): unknown {
-  return (product.specs as Record<string, unknown>)[key];
+  if (key === 'price') return product.priceUzs;
+  if (key === 'brand') return product.brand;
+  const value = (product.specs as Record<string, unknown>)[key];
+  // Разрешение экрана хранится объектом { width, height } — в фильтре это «2560x1440»
+  if (value && typeof value === 'object' && 'width' in value && 'height' in value) {
+    return `${String(value.width)}x${String(value.height)}`;
+  }
+  return value;
 }
 
 const toNumber = (value: string | undefined) => {
@@ -203,7 +219,7 @@ export function listCategoryPage(
 ): CatalogPage | null {
   const category = snapshot.categories.find((c) => c.slug === categorySlug);
   if (!category) return null;
-  const definitions = snapshot.filters.get(categorySlug) ?? [];
+  const definitions = [...commonFilters, ...(snapshot.filters.get(categorySlug) ?? [])];
   const query = parseCatalogQuery(params, definitions);
   const inCategory = snapshot.products.filter((p) => p.categorySlug === categorySlug);
   const filtered = sortProducts(

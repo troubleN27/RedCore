@@ -1,28 +1,67 @@
 {
   "hero": {
-    "eyebrow": "Kompyuter texnikasi doʻkoni · Toshkent",
-    "title": "Orzuingizdagi kompyuterni 3D formatda yigʻing",
-    "subtitle": "Real vaqtda moslik tekshiruvi, animatsion 3D yigʻish, top oʻyinlarda FPS bahosi va AI-maslahatchi — kuchli kompyuterni xatosiz yigʻish uchun hammasi bor.",
-    "ctaPrimary": "Konfiguratorni ochish",
-    "ctaSecondary": "Katalogga oʻtish"
+    "eyebrow": "Kompyuter texnikasi doʻkoni",
+    "title": "Ideal kompyuteringizni yigʻing",
+    "subtitle": "Moslik tekshiruvi, halol FPS bahosi va AI-maslahatchi bilan butlovchi qismlar va tayyor yigʻmalar — oʻyin, ish va oʻqish uchun.",
+    "ctaPrimary": "Katalogga oʻtish",
+    "ctaSecondary": "AI bilan tanlash"
   },
-  "features": {
-    "title": "Nega RedCore",
-    "compat": {
-      "title": "Real vaqtda moslik",
-      "text": "Soket, xotira, oʻlchamlar, quvvat bloki — har bir detalni tekshiramiz va muammo nimada ekanini tushuntiramiz."
+  "configurator": {
+    "eyebrow": "3D-konfigurator",
+    "title": "Yigʻmangiz qanday jonlanishini koʻring",
+    "text": "Qismlarni tanlang — yigʻma ekranda jonlanadi. Konfigurator moslikni darhol tekshiradi va kompyuteringiz qanday koʻrinishini koʻrsatadi.",
+    "points": {
+      "animation": "Har bir qism animatsiya bilan oʻz joyiga oʻrnatiladi",
+      "explore": "Yigʻmani aylantiring, yaqinlashtiring va qismlarga ajrating",
+      "compat": "Moslikda xato qilib boʻlmaydi",
+      "share": "RGB-yoritish va ulashish uchun yigʻma surati"
     },
-    "threeD": {
-      "title": "Toʻliq 3D",
-      "text": "Har bir detal animatsiya bilan oʻz joyiga oʻrnatiladi: aylantiring, yaqinlashtiring, yigʻmani qismlarga ajrating."
-    },
-    "fps": {
-      "title": "FPS kalkulyatori",
-      "text": "Eng ogʻir va mashhur 20 ta oʻyinda istalgan grafika sozlamalarida FPS bahosi."
-    },
-    "ai": {
-      "title": "AI-maslahatchi",
-      "text": "Vazifa va byudjetga mos yigʻmani faqat mavjud mahsulotlardan tanlab beradi."
+    "cta": "Konfiguratorni ochish"
+  },
+  "banners": {
+    "slides": {
+      "wooting": "Magnit kalitli Wooting 80HE klaviaturasi",
+      "gpu": "ASUS ROG Strix RTX 5090 videokartasi",
+      "monitor": "Oʻyin uchun OLED monitor",
+      "headset": "Simsiz oʻyin garniturasi",
+      "mouse": "Oʻyin sichqonchasi"
     }
+  },
+  "promos": {
+    "title": "Chegirmalar va aksiyalar",
+    "subtitle": "Promokodni nusxalang va buyurtma rasmiylashtirishda kiriting.",
+    "until": "2026-yil 31-dekabrgacha",
+    "copy": "Nusxalash",
+    "copiedShort": "Nusxalandi",
+    "copied": "{code} promokodi nusxalandi",
+    "copyLabel": "{code} promokodini nusxalash",
+    "items": {
+      "gpu": {
+        "title": "Videokartalarga 20% chegirma",
+        "text": "Grafikani yangilang: istalgan videokartaga −20%, chegirma 3 000 000 soʻmgacha.",
+        "cta": "Videokartalarni koʻrish",
+        "alt": "20% chegirmali ASUS ROG Strix videokartasi"
+      },
+      "kit": {
+        "title": "Chegirmali toʻplam",
+        "text": "Protsessor va ona plata bitta buyurtmada — ikkalasiga 10% chegirma.",
+        "cta": "Protsessorlarni koʻrish",
+        "alt": "AMD Ryzen protsessori va ASUS ROG ona platasi — chegirmali toʻplam"
+      },
+      "pad": {
+        "title": "Gilamcha sovgʻa",
+        "text": "Oʻyin sichqonchasini xarid qiling — unga oʻyin gilamchasini bepul beramiz (1 000 000 soʻmgacha).",
+        "cta": "Sichqonchalarni koʻrish",
+        "alt": "Logitech G Pro X Superlight oʻyin sichqonchasi va sovgʻa gilamcha"
+      }
+    }
+  },
+  "reviews": {
+    "title": "Bizga geymerlar va mutaxassislar ishonadi",
+    "subtitle": "RedCore'da kompyuter yigʻgan xaridorlar nima deydi.",
+    "average": "Oʻrtacha baho",
+    "basedOn": "{count, plural, other {# ta sharh asosida}}",
+    "verified": "Xarid tasdiqlangan",
+    "about": "Mahsulot haqida sharh"
   }
 }

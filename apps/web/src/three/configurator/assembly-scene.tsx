@@ -1,12 +1,19 @@
 'use client';
 
 import type { AssemblyLayout, PcComponentType } from '@redcore/domain';
-import { AdaptiveDpr, CameraControls, ContactShadows, PerformanceMonitor } from '@react-three/drei';
+import {
+  AdaptiveDpr,
+  CameraControls,
+  ContactShadows,
+  PerformanceMonitor,
+  useGLTF,
+} from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
-import { useCallback, useEffect, useRef, type RefObject } from 'react';
+import { Suspense, useCallback, useEffect, useRef, type ReactNode, type RefObject } from 'react';
 import * as THREE from 'three';
 import { useMaterialLibrary, type Quality } from '../materials';
+import { allModelUrls } from '../model-registry';
 import { lowerQuality, qualitySettings } from '../quality';
 import { Studio } from '../studio';
 import { AssemblyParts, Ghost, type ViewMode } from './assembly-parts';
@@ -49,6 +56,19 @@ export interface AssemblySceneProps {
   snapshot: RefObject<(() => string) | null>;
   onDegrade: (q: Quality) => void;
   onContextLost: () => void;
+  /** Все 3D-модели загружены, сборка показана */
+  onReady?: () => void;
+}
+
+/**
+ * Ждёт загрузки всех скачанных моделей и только потом показывает сборку: иначе на несколько
+ * секунд появлялась схематичная сборка, а затем детали подменялись настоящими. Заодно при
+ * замене детали её модель уже в кэше — сцена не «мигает».
+ */
+function ModelsReady({ children, onReady }: { children: ReactNode; onReady?: () => void }) {
+  useGLTF(allModelUrls, true, true);
+  useEffect(() => onReady?.(), [onReady]);
+  return <>{children}</>;
 }
 
 // Обзор — со стороны стекла и чуть спереди; крупные планы — почти в лоб стеклу
@@ -238,7 +258,11 @@ export default function AssemblyScene(props: AssemblySceneProps) {
       {/* Свет со стороны стекла: без него плата в тени стенок корпуса */}
       <directionalLight position={[0.6, 0.8, 2.2]} intensity={2} />
       <Studio front />
-      <Assembly {...props} />
+      <Suspense fallback={null}>
+        <ModelsReady onReady={props.onReady}>
+          <Assembly {...props} />
+        </ModelsReady>
+      </Suspense>
       <CameraRig
         layout={props.layout}
         cameraSlot={props.cameraSlot}

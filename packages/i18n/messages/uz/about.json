@@ -1,0 +1,382 @@
+{
+  "teaser": {
+    "eyebrow": "Kompaniya haqida",
+    "title": "RedCore — qalb bilan yigʻilgan texnika",
+    "text": "2019-yildan beri Toshkentda butlovchi qismlarni sotamiz va kompyuterlar yigʻamiz. Har bir yigʻmani topshirishdan oldin yuklama ostida sinaymiz, barcha texnikaga rasmiy kafolat beramiz.",
+    "more": "Batafsil",
+    "photoAlt": "RedCore shourumi va ustaxonasi: qismlar vitrinalari va yigʻuvchilarning ish joylari"
+  },
+  "stats": {
+    "years": {
+      "value": "7 yil",
+      "label": "bozorda"
+    },
+    "builds": {
+      "value": "5 000+",
+      "label": "yigʻilgan kompyuter"
+    },
+    "clients": {
+      "value": "20 000+",
+      "label": "mamnun mijoz"
+    },
+    "regions": {
+      "value": "14",
+      "label": "yetkazib berish hududi"
+    }
+  },
+  "page": {
+    "title": "RedCore kompaniyasi haqida",
+    "description": "Toshkentdagi kompyuter texnikasi doʻkoni va kompyuter yigʻish ustaxonasi: tarix, jamoa, shourum va kontaktlar.",
+    "intro": "RedCore — Toshkentdagi kompyuter texnikasi doʻkoni va kompyuter yigʻish ustaxonasi. Oʻqish va ishdan tortib top oʻyinlar va montajgacha — istalgan vazifa uchun kompyuter yigʻishga yordam beramiz.",
+    "historyTitle": "Bizning tariximiz",
+    "history": {
+      "y2019": {
+        "year": "2019",
+        "title": "Boshlanish",
+        "text": "Kichik qismlar doʻkoni va doʻstlari uchun kompyuter yigʻgan uch nafar ishqiboz."
+      },
+      "y2021": {
+        "year": "2021",
+        "title": "Oʻz ustaxonamiz",
+        "text": "Yigʻish ustaxonasini ochdik: har bir yigʻmani stress-test qilamiz va kabellarni ozoda joylaymiz."
+      },
+      "y2024": {
+        "year": "2024",
+        "title": "Shourum va yetkazib berish",
+        "text": "Shourumga koʻchdik va buyurtmalarni Oʻzbekistonning barcha hududlariga yetkazishni boshladik."
+      },
+      "y2026": {
+        "year": "2026",
+        "title": "3D-konfigurator",
+        "text": "3D, moslik tekshiruvi, FPS kalkulyatori va AI-maslahatchi bilan onlayn konfiguratorni ishga tushirdik."
+      }
+    },
+    "numbersTitle": "RedCore raqamlarda",
+    "servicesTitle": "Biz nima qilamiz",
+    "services": {
+      "parts": {
+        "title": "Butlovchi qismlar va periferiya",
+        "text": "Protsessorlar, videokartalar, platalar, xotira, monitorlar va oʻyin joyi uchun hamma narsa — faqat original mahsulot."
+      },
+      "assembly": {
+        "title": "Kompyuter yigʻish va sinash",
+        "text": "Kompyuterni 1–2 kunda yigʻamiz, yuklama ostida tekshiramiz va drayverlarni oʻrnatamiz."
+      },
+      "warranty": {
+        "title": "Rasmiy kafolat",
+        "text": "Barcha texnikaga ishlab chiqaruvchi kafolati va RedCore yigʻmasiga 24 oy."
+      },
+      "delivery": {
+        "title": "Yetkazib berish va olib ketish",
+        "text": "Butun Oʻzbekiston boʻylab yetkazib berish yoki Toshkentdagi shourumdan olib ketish."
+      }
+    },
+    "valuesTitle": "Bizning tamoyillarimiz",
+    "values": {
+      "prices": {
+        "title": "Halol narxlar",
+        "text": "Yashirin ustamalarsiz narxlar, aksiya shartlari — ochiq."
+      },
+      "compat": {
+        "title": "Tekshirilgan moslik",
+        "text": "Har bir yigʻmani toʻlovdan oldin soket, oʻlcham va quvvat boʻyicha tekshiramiz."
+      },
+      "test": {
+        "title": "Topshirishdan oldin sinov",
+        "text": "Birorta kompyuter protsessor va videokarta stress-testisiz chiqmaydi."
+      },
+      "support": {
+        "title": "Xariddan keyin qoʻllab-quvvatlash",
+        "text": "Sozlash, yangilash va kafolat masalalarida yordam beramiz."
+      }
+    },
+    "teamTitle": "Jamoa",
+    "team": {
+      "founder": {
+        "name": "Aziz Karimov",
+        "role": "Asoschi"
+      },
+      "builder": {
+        "name": "Temur Rahimov",
+        "role": "Bosh yigʻuvchi"
+      },
+      "consultant": {
+        "name": "Dilnoza Yusupova",
+        "role": "Maslahatchi"
+      },
+      "support": {
+        "name": "Sardor Aliyev",
+        "role": "Mijozlarni qoʻllab-quvvatlash"
+      }
+    },
+    "contactsTitle": "Shourum va kontaktlar",
+    "address": "Manzil",
+    "addressValue": "Toshkent, Mirobod tumani",
+    "hours": "Ish vaqti",
+    "hoursValue": "Har kuni 10:00 dan 20:00 gacha",
+    "phone": "Telefon",
+    "phoneValue": "+998 71 000-00-00",
+    "telegram": "Telegram",
+    "telegramValue": "Buyurtma bildirishnomalari — buyurtma sahifasida obuna",
+    "ctaTitle": "Kompyuteringizni yigʻishga tayyormisiz?",
+    "ctaText": "Kompyuterni 3D-konfiguratorda yigʻing yoki katalogdan qismlarni tanlang.",
+    "ctaConfigurator": "Konfiguratorni ochish",
+    "ctaCatalog": "Katalogga oʻtish"
+  },
+  "contactsPage": {
+    "title": "Kontaktlar",
+    "description": "RedCore'ning Toshkentdagi shourumi manzili, ish vaqti, boʻlimlar telefonlari va rekvizitlari.",
+    "intro": "Shourumga keling, qoʻngʻiroq qiling yoki yozing — texnika tanlash, yigʻish va buyurtma berishda yordam beramiz.",
+    "mainTitle": "Shourum",
+    "departmentsTitle": "Boʻlimlar",
+    "departments": {
+      "sales": {
+        "title": "Savdo boʻlimi",
+        "text": "Qismlar va tayyor kompyuterlarni tanlash, buyurtma rasmiylashtirish.",
+        "phone": "+998 71 000-00-01",
+        "hours": "Har kuni 10:00–20:00"
+      },
+      "service": {
+        "title": "Servis markazi",
+        "text": "Kafolat, diagnostika va kompyuterlarni yangilash.",
+        "phone": "+998 71 000-00-02",
+        "hours": "Du–Sh 10:00–19:00"
+      },
+      "orders": {
+        "title": "Buyurtmalar boʻyicha yordam",
+        "text": "Buyurtma holati, yetkazib berish, toʻlov va qaytarish.",
+        "phone": "+998 71 000-00-03",
+        "hours": "Har kuni 09:00–21:00"
+      }
+    },
+    "routeTitle": "Qanday borish mumkin",
+    "route": "«Oybek» metro bekatidan piyoda 10 daqiqa. Shourum yonida bepul avtoturargoh bor.",
+    "requisitesTitle": "Rekvizitlar",
+    "requisites": {
+      "company": "«RedCore» MChJ",
+      "address": "Manzil: Toshkent, Mirobod tumani"
+    },
+    "chatTitle": "Javob hoziroq kerakmi?",
+    "chatText": "AI-maslahatchi mahsulotlar, yigʻish va buyurtma haqidagi savollarga kecha-kunduz javob beradi.",
+    "chatButton": "AI-maslahatchiga yozish"
+  },
+  "whyPage": {
+    "title": "Nega REDCORE",
+    "description": "Nega RedCore'dan xarid qilishadi: moslik tekshiruvi, har bir yigʻmani sinash, kafolat, halol narxlar va Oʻzbekiston boʻylab yetkazib berish.",
+    "intro": "Biz shunchaki texnika sotmaymiz — kompyuteringiz tez, jim va uzoq ishlashi uchun javob beramiz.",
+    "reasonsTitle": "Bizni tanlashning 6 sababi",
+    "reasons": {
+      "compat": {
+        "title": "Kutilmagan holatlarsiz moslik",
+        "text": "Konfigurator soket, xotira, oʻlcham va quvvatni toʻlovdan oldin tekshiradi — mos kelmaydigan yigʻmani rasmiylashtirib boʻlmaydi."
+      },
+      "test": {
+        "title": "Har bir yigʻmani stress-test qilish",
+        "text": "Topshirishdan oldin protsessor va videokartani bir necha soat yuklama ostida sinaymiz va haroratni tekshiramiz."
+      },
+      "warranty": {
+        "title": "24 oy kafolat",
+        "text": "Qismlarga ishlab chiqaruvchining rasmiy kafolati va bizning yigʻmamizga 24 oy."
+      },
+      "prices": {
+        "title": "Halol narxlar",
+        "text": "Katalogdagi narx — yakuniy: yashirin ustamalar va majburiy xizmatlarsiz."
+      },
+      "delivery": {
+        "title": "Butun mamlakat boʻylab yetkazib berish",
+        "text": "Oʻzbekistonning barcha 14 hududiga yuboramiz, Toshkent boʻylab — 1 kunda."
+      },
+      "support": {
+        "title": "Xariddan keyin yordam",
+        "text": "Sozlash, yangilash va kafolat holatlarida yordam beramiz — AI-maslahatchi esa 24/7 aloqada."
+      }
+    },
+    "stepsTitle": "Kompyuteringizni qanday yigʻamiz",
+    "steps": {
+      "s1": {
+        "title": "Tanlash",
+        "text": "Kompyuterni 3D-konfiguratorda yoki maslahatchi bilan yigʻasiz."
+      },
+      "s2": {
+        "title": "Tekshirish",
+        "text": "Muhandis yigʻmaning mosligi va muvozanatini yana bir bor tekshiradi."
+      },
+      "s3": {
+        "title": "Yigʻish",
+        "text": "Ozoda montaj va kabellarni joylash, BIOS yangilash."
+      },
+      "s4": {
+        "title": "Sinov",
+        "text": "Stress-test, harorat va shovqinni oʻlchash, drayverlarni oʻrnatish."
+      },
+      "s5": {
+        "title": "Topshirish",
+        "text": "Ishonchli qadoqlash, yetkazib berish yoki shourumdan olib ketish."
+      }
+    },
+    "numbersTitle": "RedCore raqamlarda",
+    "ctaTitle": "Oʻzingiz ishonch hosil qiling",
+    "ctaText": "Kompyuteringizni 3D-konfiguratorda yigʻing — moslik tekshiruvi kiritilgan.",
+    "ctaConfigurator": "Konfiguratorni ochish",
+    "ctaCatalog": "Katalogga oʻtish"
+  },
+  "legalPage": {
+    "seeAlso": "Shuningdek qarang",
+    "offer": {
+      "title": "Ommaviy oferta",
+      "description": "RedCore internet-doʻkonida tovarlarni sotish shartlari: buyurtma, toʻlov, yetkazib berish, kafolat va qaytarish.",
+      "sections": {
+        "general": {
+          "title": "1. Umumiy qoidalar",
+          "body": "Ushbu hujjat «RedCore» MChJ (keyingi oʻrinlarda — Sotuvchi) tomonidan sayt orqali tovarlar oldi-sotdi shartnomasini quyidagi shartlarda tuzish taklifidir.\nBuyurtma berish orqali xaridor oferta shartlari bilan tanishganini va ularni toʻliq qabul qilishini tasdiqlaydi."
+        },
+        "subject": {
+          "title": "2. Shartnoma predmeti",
+          "body": "Sotuvchi tovarlarni xaridor mulkiga topshiradi, xaridor esa ularni toʻlaydi va qabul qiladi.\nTovarning tavsifi, xususiyatlari va narxi katalogdagi sahifasida koʻrsatilgan."
+        },
+        "order": {
+          "title": "3. Buyurtma berish",
+          "body": "— Buyurtma saytda, AI-maslahatchi orqali yoki telefon orqali beriladi.\n— Sotuvchi buyurtmani tasdiqlaydi va tovarni omborda band qiladi.\n— Tovar mavjud boʻlmasa, sotuvchi bu haqda xabar beradi va almashtirish yoki pulni qaytarishni taklif qiladi."
+        },
+        "price": {
+          "title": "4. Narx va toʻlov",
+          "body": "Narxlar soʻmda koʻrsatilgan va barcha soliqlarni oʻz ichiga oladi.\nToʻlov saytda karta orqali yoki qabul qilishda amalga oshiriladi. Narx buyurtma berilgan paytda belgilanadi."
+        },
+        "delivery": {
+          "title": "5. Yetkazib berish va qabul qilish",
+          "body": "Yetkazib berish muddati va narxi hududga bogʻliq va «Yetkazib berish» sahifasida koʻrsatilgan.\nQabul qilishda xaridor tovarning toʻliqligi va tashqi koʻrinishini tekshiradi."
+        },
+        "returns": {
+          "title": "6. Kafolat va qaytarish",
+          "body": "Kafolat muddatlari va qaytarish tartibi «Kafolat» va «Qaytarish» sahifalarida tavsiflangan va Oʻzbekiston Respublikasi qonunchiligiga mos keladi."
+        },
+        "liability": {
+          "title": "7. Tomonlarning javobgarligi",
+          "body": "Tomonlar majburiyatlarni bajarmaganlik uchun Oʻzbekiston Respublikasi qonunchiligiga muvofiq javob beradi.\nNizolar muzokaralar yoʻli bilan, kelishuvga erishilmasa — sotuvchi joylashgan joydagi sudda hal qilinadi."
+        },
+        "seller": {
+          "title": "8. Sotuvchi rekvizitlari",
+          "body": "«RedCore» MChJ\nManzil: Toshkent, Mirobod tumani"
+        }
+      }
+    },
+    "privacy": {
+      "title": "Maxfiylik siyosati",
+      "description": "RedCore xaridorlarning shaxsiy maʼlumotlarini qanday yigʻadi, ishlatadi va himoya qiladi.",
+      "sections": {
+        "data": {
+          "title": "1. Qanday maʼlumotlarni yigʻamiz",
+          "body": "— Ism, telefon raqami va yetkazib berish manzili — buyurtmani rasmiylashtirish va yetkazish uchun.\n— Buyurtmalar tarixi va saqlangan yigʻmalar — shaxsiy kabinet uchun.\n— Texnik maʼlumotlar (qurilma turi, til) — sayt ishlashi uchun."
+        },
+        "purpose": {
+          "title": "2. Ulardan nima uchun foydalanamiz",
+          "body": "— Buyurtmani rasmiylashtirish, toʻlash va yetkazib berish uchun.\n— Buyurtma holati haqida xabar berish uchun, jumladan obuna boʻlgan boʻlsangiz Telegramda.\n— Sayt va tavsiyalarni yaxshilash uchun."
+        },
+        "sharing": {
+          "title": "3. Maʼlumotlarni kimga beramiz",
+          "body": "Faqat buyurtmani bajarish uchun zarur boʻlganlarga: toʻlov xizmati (Stripe), yetkazib berish xizmati va Telegram — agar bildirishnomalarga oʻzingiz obuna boʻlgan boʻlsangiz.\nBiz shaxsiy maʼlumotlarni uchinchi shaxslarga sotmaymiz."
+        },
+        "storage": {
+          "title": "4. Saqlash va himoya",
+          "body": "Maʼlumotlar shifrlangan ulanishli himoyalangan serverlarda saqlanadi. Parollar faqat qaytarib boʻlmaydigan xesh koʻrinishida saqlanadi.\nMaʼlumotlar soʻrov boʻyicha yoki majburiyatlarni bajarish uchun zarur muddat tugagach oʻchiriladi."
+        },
+        "cookies": {
+          "title": "5. Cookies",
+          "body": "Sayt akkauntga kirish, til tanlash va savat ishlashi uchun cookies'dan foydalanadi. Reklama va kuzatuv cookies'lari yoʻq."
+        },
+        "rights": {
+          "title": "6. Sizning huquqlaringiz",
+          "body": "Maʼlumotlaringiz nusxasini soʻrashingiz, ularni tuzatish yoki oʻchirish, shuningdek qayta ishlashga roziligingizni qaytarib olishingiz mumkin — +998 71 000-00-03 telefoni orqali yordam xizmatiga murojaat qiling."
+        }
+      }
+    }
+  },
+  "faqPage": {
+    "title": "Koʻp beriladigan savollar",
+    "description": "RedCore'da buyurtma, toʻlov, yetkazib berish, kafolat, kompyuter yigʻish va konfigurator haqidagi koʻp beriladigan savollarga javoblar.",
+    "intro": "Bizga eng koʻp beriladigan savollarga javoblarni jamladik. Savolingizni topmadingizmi — AI-maslahatchidan soʻrang yoki bizga qoʻngʻiroq qiling.",
+    "groups": {
+      "order": {
+        "title": "Buyurtma va toʻlov",
+        "items": {
+          "q1": {
+            "q": "Qanday buyurtma beraman?",
+            "a": "Mahsulotlar yoki tayyor yigʻmani savatga qoʻshing va «Rasmiylashtirishga oʻtish» tugmasini bosing. Telefon, yetkazib berish va toʻlov usulini koʻrsating — buyurtma darhol shaxsiy kabinetda paydo boʻladi."
+          },
+          "q2": {
+            "q": "Qanday toʻlov usullari bor?",
+            "a": "Saytda karta orqali yoki qabul qilishda naqd pul yoki karta bilan. Narx buyurtma berilgan paytda belgilanadi."
+          },
+          "q3": {
+            "q": "Promokodni qanday qoʻllayman?",
+            "a": "Promokodni savatdagi «Promokod» maydoniga kiriting. Amaldagi aksiyalar va kodlar bosh sahifadagi «Chegirmalar va aksiyalar» boʻlimida."
+          }
+        }
+      },
+      "delivery": {
+        "title": "Yetkazib berish",
+        "items": {
+          "q1": {
+            "q": "Qayerga yetkazib berasiz?",
+            "a": "Oʻzbekistonning barcha 14 hududiga. Har bir hudud uchun narx va muddatlar — «Yetkazib berish» sahifasida."
+          },
+          "q2": {
+            "q": "Toshkent boʻylab buyurtmani qancha kutaman?",
+            "a": "Odatda 1 kun. Tayyor yigʻmalar — 1–2 kun: joʻnatishdan oldin har bir kompyuterni sinaymiz."
+          },
+          "q3": {
+            "q": "Buyurtmani oʻzim olib ketsam boʻladimi?",
+            "a": "Ha, Toshkentdagi shourumdan — har kuni 10:00 dan 20:00 gacha. Rasmiylashtirishda «Olib ketish»ni tanlang."
+          }
+        }
+      },
+      "warranty": {
+        "title": "Kafolat va qaytarish",
+        "items": {
+          "q1": {
+            "q": "Mahsulotlarga qanday kafolat bor?",
+            "a": "Qismlarga ishlab chiqaruvchining rasmiy kafolati va RedCore yigʻmasiga 24 oy."
+          },
+          "q2": {
+            "q": "Mahsulotni qaytarsa boʻladimi?",
+            "a": "Ha, 10 kun ichida, agar mahsulot ishlatilmagan va qadogʻi saqlangan boʻlsa. Batafsil — «Qaytarish» sahifasida."
+          }
+        }
+      },
+      "build": {
+        "title": "Yigʻish va konfigurator",
+        "items": {
+          "q1": {
+            "q": "Moslik tekshiruvi qanday ishlaydi?",
+            "a": "Konfigurator soketlar, xotira turi va hajmi, korpus oʻlchamlari va quvvat bloki quvvatini tekshiradi. Qismlar mos kelmasa, sababini tushuntiradi va almashtirishni taklif qiladi."
+          },
+          "q2": {
+            "q": "FPS kalkulyatori qanchalik aniq?",
+            "a": "Bu taxminan 15% xatolikka ega baho: u mashhur oʻyinlardagi videokarta va protsessor testlariga asoslangan. Haqiqiy FPS drayverlar, sozlamalar va oʻyin versiyasiga bogʻliq."
+          },
+          "q3": {
+            "q": "Oʻz qismlarimdan kompyuter yigʻib berasizmi?",
+            "a": "Ha, servis markazimiz qismlaringizdan kompyuterni yigʻib, sinab beradi. Narxini telefon orqali aniqlang."
+          }
+        }
+      },
+      "account": {
+        "title": "Akkaunt",
+        "items": {
+          "q1": {
+            "q": "Buyurtma uchun roʻyxatdan oʻtish shartmi?",
+            "a": "Yoʻq, buyurtmani roʻyxatdan oʻtmasdan berish mumkin. Akkaunt buyurtmalar tarixini koʻrish va yigʻmalarni saqlash uchun kerak."
+          },
+          "q2": {
+            "q": "Buyurtma holatini qanday bilaman?",
+            "a": "Shaxsiy kabinetda, buyurtma tasdigʻidagi havola orqali yoki AI-maslahatchidan. Buyurtma sahifasida Telegram bildirishnomalariga obuna boʻlish mumkin."
+          }
+        }
+      }
+    },
+    "moreTitle": "Javob topmadingizmi?",
+    "moreText": "AI-maslahatchi mahsulotlar, yigʻish yoki buyurtma haqidagi savolga bir necha soniyada javob beradi.",
+    "chatButton": "AI-maslahatchidan soʻrash",
+    "contactsLink": "Kontaktlar"
+  }
+}

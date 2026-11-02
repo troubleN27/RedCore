@@ -16,6 +16,10 @@ export const componentTypes = [
   'headset',
   'mousepad',
   'webcam',
+  'laptop',
+  'monitor_arm',
+  'chair',
+  'desk',
   'prebuilt',
 ] as const;
 export type ComponentType = (typeof componentTypes)[number];
@@ -70,4 +74,11 @@ export type PcieGen = (typeof pcieGenerations)[number];
 export const colors = ['black', 'white', 'silver', 'gray', 'red', 'pink'] as const;
 
 export const gpuVendors = ['nvidia', 'amd', 'intel'] as const;
+
+export const laptopPanels = ['IPS', 'OLED', 'Mini-LED'] as const;
+export const laptopOs = ['windows', 'macos', 'none'] as const;
+export const armMounts = ['clamp', 'grommet', 'clamp-grommet', 'wall'] as const;
+export const chairMaterials = ['eco-leather', 'leather', 'fabric', 'mesh'] as const;
+export const chairArmrests = ['2d', '3d', '4d'] as const;
+export const deskHeights = ['fixed', 'manual', 'electric'] as const;
 export type GpuVendor = (typeof gpuVendors)[number];

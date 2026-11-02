@@ -616,6 +616,128 @@ function Webcam({ m }: Props<'webcam'>) {
   );
 }
 
+function Laptop({ spec, m }: Props<'laptop'>) {
+  const width = spec.diagonal * Math.cos(Math.atan(1 / spec.aspect));
+  const height = width / spec.aspect;
+  const depth = height + 0.03;
+  // Крышка открыта на ~110°: поворот вокруг задней кромки корпуса
+  const tilt = -0.35;
+  return (
+    <group>
+      <Box
+        size={[width + 0.02, 0.018, depth]}
+        position={[0, 0.009, 0]}
+        material={m.body}
+        radius={0.004}
+      />
+      <Box
+        size={[width * 0.9, 0.002, depth * 0.45]}
+        position={[0, 0.019, -depth * 0.12]}
+        material={m.plastic}
+        castShadow={false}
+      />
+      <Box
+        size={[width * 0.32, 0.001, depth * 0.22]}
+        position={[0, 0.0185, depth * 0.3]}
+        material={m.plastic}
+        castShadow={false}
+      />
+      <group position={[0, 0.018, -depth / 2]} rotation={[tilt, 0, 0]}>
+        <Box
+          size={[width + 0.02, height + 0.02, 0.008]}
+          position={[0, (height + 0.02) / 2, -0.004]}
+          material={m.body}
+          radius={0.003}
+        />
+        <mesh position={[0, (height + 0.02) / 2, 0.0002]} material={m.screen}>
+          <planeGeometry args={[width, height]} />
+        </mesh>
+      </group>
+    </group>
+  );
+}
+
+function MonitorArm({ spec, m }: Props<'monitor-arm'>) {
+  const offsets =
+    spec.monitors === 1 ? [0] : spec.monitors === 2 ? [-0.32, 0.32] : [-0.55, 0, 0.55];
+  return (
+    <group>
+      <Box size={[0.08, 0.02, 0.1]} position={[0, 0.01, 0]} material={m.aluminium} radius={0.004} />
+      <mesh position={[0, 0.25, 0]} material={m.aluminium} castShadow>
+        <cylinderGeometry args={[0.018, 0.018, 0.48, 24]} />
+      </mesh>
+      {offsets.map((x) => (
+        <group key={x}>
+          <Box
+            size={[Math.max(0.05, Math.abs(x)) + 0.04, 0.025, 0.03]}
+            position={[x / 2, 0.42, 0.04]}
+            material={m.body}
+            radius={0.006}
+          />
+          <Box size={[0.1, 0.1, 0.012]} position={[x, 0.42, 0.08]} material={m.aluminium} />
+        </group>
+      ))}
+    </group>
+  );
+}
+
+function Chair({ m }: Props<'chair'>) {
+  return (
+    <group>
+      {Array.from({ length: 5 }, (_, i) => {
+        const angle = (i / 5) * Math.PI * 2;
+        // Луч крестовины от центра наружу
+        return (
+          <group key={i} rotation={[0, -angle, 0]}>
+            <Box size={[0.32, 0.03, 0.05]} position={[0.16, 0.07, 0]} material={m.plastic} />
+          </group>
+        );
+      })}
+      <mesh position={[0, 0.25, 0]} material={m.aluminium} castShadow>
+        <cylinderGeometry args={[0.025, 0.03, 0.34, 24]} />
+      </mesh>
+      <Box size={[0.52, 0.1, 0.5]} position={[0, 0.47, 0]} material={m.body} radius={0.04} />
+      <group position={[0, 0.5, -0.24]} rotation={[-0.15, 0, 0]}>
+        <Box size={[0.5, 0.8, 0.1]} position={[0, 0.42, 0]} material={m.body} radius={0.05} />
+        <Box size={[0.26, 0.14, 0.06]} position={[0, 0.88, 0.02]} material={m.body} radius={0.03} />
+      </group>
+      {[-1, 1].map((side) => (
+        <Box
+          key={side}
+          size={[0.07, 0.04, 0.32]}
+          position={[side * 0.3, 0.68, 0.02]}
+          material={m.plastic}
+          radius={0.015}
+        />
+      ))}
+    </group>
+  );
+}
+
+function Desk({ spec, m }: Props<'desk'>) {
+  const [w, d] = spec.size;
+  const height = 0.75;
+  return (
+    <group>
+      <Box size={[w, 0.03, d]} position={[0, height, 0]} material={m.body} radius={0.006} />
+      {spec.rgb && (
+        <Box
+          size={[w + 0.004, 0.006, d + 0.004]}
+          position={[0, height - 0.012, 0]}
+          material={m.rgb}
+          castShadow={false}
+        />
+      )}
+      {[-1, 1].map((side) => (
+        <group key={side} position={[side * (w / 2 - 0.08), 0, 0]}>
+          <Box size={[0.06, height, 0.06]} position={[0, height / 2, 0]} material={m.aluminium} />
+          <Box size={[0.06, 0.03, d * 0.85]} position={[0, 0.015, 0]} material={m.aluminium} />
+        </group>
+      ))}
+    </group>
+  );
+}
+
 export function ProceduralModel({ spec, m }: { spec: ModelSpec; m: PartMaterials }): ReactNode {
   switch (spec.kind) {
     case 'case':
@@ -650,5 +772,13 @@ export function ProceduralModel({ spec, m }: { spec: ModelSpec; m: PartMaterials
       return <Mousepad spec={spec} m={m} />;
     case 'webcam':
       return <Webcam spec={spec} m={m} />;
+    case 'laptop':
+      return <Laptop spec={spec} m={m} />;
+    case 'monitor-arm':
+      return <MonitorArm spec={spec} m={m} />;
+    case 'chair':
+      return <Chair spec={spec} m={m} />;
+    case 'desk':
+      return <Desk spec={spec} m={m} />;
   }
 }

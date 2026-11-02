@@ -9,7 +9,7 @@ import { builtModel } from './model-registry';
 import { ProceduralModel } from './parts/procedural';
 
 /** Если GLB не загрузилась (404, битый файл) — показываем процедурную модель, а не ошибку. */
-class GlbBoundary extends Component<
+export class GlbBoundary extends Component<
   { fallback: ReactNode; children: ReactNode },
   { failed: boolean }
 > {
@@ -23,12 +23,19 @@ class GlbBoundary extends Component<
 }
 
 /**
- * GLB-модель. Для «покраски» в цвет исполнения узлы с материалом body получают общий
- * материал корпуса; RGB-узлы (материал rgb*) — общий излучающий материал.
+ * Клон GLB из кэша useGLTF с общими материалами сцены: узлы с материалом body красятся в цвет
+ * исполнения, rgb* — общий излучающий материал, glass* — стекло.
  */
-function Glb({ url, m, targetSize }: { url: string; m: PartMaterials; targetSize: number }) {
+export function useGlbClone(
+  url: string,
+  m: PartMaterials,
+  { keepCached = false }: { keepCached?: boolean } = {},
+): THREE.Object3D {
   const { scene } = useGLTF(url, true, true);
-  const object = useMemo(() => {
+  // Клон делит геометрию с кэшем useGLTF — освобождаем только при уходе со страницы. В сборке
+  // модели остаются в кэше: при замене детали иначе грузились бы заново, копя память видеокарты
+  useEffect(() => (keepCached ? undefined : () => void useGLTF.clear(url)), [url, keepCached]);
+  return useMemo(() => {
     const clone = scene.clone(true);
     clone.traverse((node) => {
       if (!(node instanceof THREE.Mesh)) return;
@@ -52,16 +59,22 @@ function Glb({ url, m, targetSize }: { url: string; m: PartMaterials; targetSize
           : flat(node.material as THREE.Material);
       }
     });
+    return clone;
+  }, [scene, m]);
+}
+
+/** GLB-модель товара, приведённая к размеру сцены просмотра. */
+function Glb({ url, m, targetSize }: { url: string; m: PartMaterials; targetSize: number }) {
+  const source = useGlbClone(url, m);
+  const object = useMemo(() => {
+    const clone = source;
     // Нормализация масштаба: пайплайн приводит модели к метрам, но своя загрузка может быть в мм
     const box = new THREE.Box3().setFromObject(clone);
     const extent = Math.max(...box.getSize(new THREE.Vector3()).toArray());
     if (extent > 0 && (extent > targetSize * 3 || extent < targetSize / 3))
       clone.scale.setScalar(targetSize / extent);
     return clone;
-  }, [scene, m, targetSize]);
-
-  // Клон делит геометрию с кэшем useGLTF — освобождаем только при уходе со страницы
-  useEffect(() => () => void useGLTF.clear(url), [url]);
+  }, [source, targetSize]);
   return <primitive object={object} />;
 }
 

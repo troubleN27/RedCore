@@ -1,6 +1,6 @@
 import type { GameData, Preset, Resolution } from '@redcore/domain';
 
-// 20 игр калькулятора FPS (план, §13; актуально на октябрь 2026).
+// 24 игры калькулятора FPS (план, §13; актуально на октябрь 2026).
 // G — FPS эталонной RTX 5070 при 1440p по пресетам Низкие/Средние/Высокие/Ультра (без RT и апскейла),
 // 1080p и 4K получаются коэффициентами разрешения. C — потолок Ryzen 7 9800X3D по пресетам.
 // Числа — стартовая оценка по сводкам публичных обзоров; админ правит их в консоли, а
@@ -201,7 +201,7 @@ const inputs: GameInput[] = [
     vram: 11,
     ram: [16, 16],
     supports: all,
-    steamAppId: null,
+    steamAppId: 3764200,
     hue: 355,
   },
   {
@@ -228,7 +228,7 @@ const inputs: GameInput[] = [
     vram: 9,
     ram: [16, 16],
     supports: all,
-    steamAppId: null,
+    steamAppId: 4435490,
     hue: 100,
   },
   {
@@ -336,11 +336,67 @@ const inputs: GameInput[] = [
     hue: 30,
     res: [1.3, 0.55],
   },
+  {
+    slug: 'borderlands-4',
+    name: 'Borderlands 4',
+    g1440: [96, 78, 62, 50],
+    cpu: [165, 152, 140, 128],
+    alpha: 0.8,
+    vram: 9,
+    ram: [16, 32],
+    supports: all,
+    steamAppId: 1285190,
+    hue: 45,
+  },
+  {
+    slug: 'arc-raiders',
+    name: 'ARC Raiders',
+    g1440: [190, 160, 134, 114],
+    cpu: [240, 224, 208, 194],
+    alpha: 0.85,
+    vram: 7,
+    ram: [12, 16],
+    supports: all,
+    steamAppId: 1808500,
+    hue: 185,
+  },
+  {
+    slug: 'doom-the-dark-ages',
+    name: 'DOOM: The Dark Ages',
+    g1440: [132, 116, 101, 88],
+    cpu: [262, 246, 230, 214],
+    alpha: 0.6,
+    vram: 9,
+    ram: [16, 32],
+    supports: all,
+    steamAppId: 3017860,
+    hue: 15,
+  },
+  {
+    slug: 'kingdom-come-deliverance-2',
+    name: 'Kingdom Come: Deliverance II',
+    g1440: [150, 124, 100, 80],
+    cpu: [205, 188, 172, 156],
+    alpha: 0.85,
+    vram: 8,
+    ram: [16, 16],
+    supports: { dlss: true, fsr: true, xess: true, frameGen: false },
+    steamAppId: 1771300,
+    hue: 95,
+  },
 ];
 
 export const games: GameSeed[] = inputs.map((input, i) => game(input, i));
 
-/** Обложка с CDN Steam (у игр не из Steam — загрузка из пресс-кита в консоли). */
-export function steamCover(appId: number | null): string | null {
+/**
+ * Обложка — копия на сайте: `public/games/<slug>.jpg` (460×215, как у Steam). Адреса
+ * обложек на CDN Steam меняются, у новых игр по стандартному адресу отдаётся заглушка.
+ */
+export function gameCover(game: Pick<GameSeed, 'slug'>): string {
+  return `/games/${game.slug}.jpg`;
+}
+
+/** Прежняя ссылка на CDN Steam — её синхронизация заменяет копией на сайте. */
+export function steamCoverUrl(appId: number | null): string | null {
   return appId ? `https://cdn.cloudflare.steamstatic.com/steam/apps/${appId}/header.jpg` : null;
 }

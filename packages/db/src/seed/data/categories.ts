@@ -47,6 +47,10 @@ export const categories: CategorySeed[] = [
       { key: 'vramGb', type: 'range', unit: 'GB' },
       { key: 'lengthMm', type: 'range', unit: 'mm', compat: true },
       { key: 'tbpW', type: 'range', unit: 'W' },
+      { key: 'vramType', type: 'enum' },
+      { key: 'fans', type: 'enum' },
+      { key: 'rgb', type: 'boolean' },
+      { key: 'color', type: 'enum' },
     ],
   },
   {
@@ -85,6 +89,8 @@ export const categories: CategorySeed[] = [
       { key: 'capacityGb', type: 'range', unit: 'GB' },
       { key: 'speedMts', type: 'range', unit: 'MT/s' },
       { key: 'rgb', type: 'boolean' },
+      { key: 'casLatency', type: 'range' },
+      { key: 'profile', type: 'enum' },
     ],
   },
   {
@@ -98,6 +104,8 @@ export const categories: CategorySeed[] = [
       { key: 'kind', type: 'enum' },
       { key: 'interface', type: 'enum', compat: true },
       { key: 'capacityGb', type: 'range', unit: 'GB' },
+      { key: 'formFactor', type: 'enum' },
+      { key: 'readMbs', type: 'range', unit: 'MB/s' },
     ],
   },
   {
@@ -115,6 +123,7 @@ export const categories: CategorySeed[] = [
       { key: 'efficiency', type: 'enum' },
       { key: 'formFactor', type: 'enum', compat: true },
       { key: 'modular', type: 'enum' },
+      { key: 'atxVersion', type: 'enum' },
     ],
   },
   {
@@ -129,6 +138,8 @@ export const categories: CategorySeed[] = [
       { key: 'maxGpuLengthMm', type: 'range', unit: 'mm', compat: true },
       { key: 'maxCoolerHeightMm', type: 'range', unit: 'mm', compat: true },
       { key: 'color', type: 'enum' },
+      { key: 'glassPanel', type: 'boolean' },
+      { key: 'dualChamber', type: 'boolean' },
     ],
   },
   {
@@ -149,6 +160,7 @@ export const categories: CategorySeed[] = [
       { key: 'tdpRatingW', type: 'range', unit: 'W' },
       { key: 'heightMm', type: 'range', unit: 'mm', compat: true },
       { key: 'radiatorMm', type: 'enum', unit: 'mm', compat: true },
+      { key: 'rgb', type: 'boolean' },
     ],
   },
   {
@@ -165,6 +177,7 @@ export const categories: CategorySeed[] = [
       { key: 'sizeMm', type: 'enum', unit: 'mm', compat: true },
       { key: 'lighting', type: 'enum' },
       { key: 'packCount', type: 'range' },
+      { key: 'noiseDb', type: 'range', unit: 'dB' },
     ],
   },
   {
@@ -172,12 +185,68 @@ export const categories: CategorySeed[] = [
     type: 'monitor',
     kind: 'peripheral',
     icon: 'monitor',
-    ru: { name: 'Мониторы', description: 'Игровые мониторы IPS и OLED с высокой частотой.' },
-    uz: { name: 'Monitorlar', description: 'Yuqori chastotali IPS va OLED oʻyin monitorlari.' },
+    ru: {
+      name: 'Игровые мониторы',
+      description: 'Игровые мониторы IPS и OLED с высокой частотой обновления.',
+    },
+    uz: {
+      name: 'Oʻyin monitorlari',
+      description: 'Yuqori yangilanish chastotali IPS va OLED oʻyin monitorlari.',
+    },
     filters: [
       { key: 'sizeInch', type: 'range', unit: '″' },
       { key: 'refreshHz', type: 'range', unit: 'Hz' },
       { key: 'panel', type: 'enum' },
+      { key: 'resolution', type: 'enum' },
+      { key: 'responseMs', type: 'range', unit: 'ms' },
+      { key: 'hdr', type: 'enum' },
+      { key: 'curved', type: 'boolean' },
+    ],
+  },
+  {
+    slug: 'office-monitors',
+    type: 'monitor',
+    kind: 'peripheral',
+    icon: 'monitor',
+    ru: {
+      name: 'Офисные мониторы',
+      description:
+        'Мониторы для работы, учёбы и дизайна: чёткая картинка, USB-C, удобная подставка.',
+    },
+    uz: {
+      name: 'Ofis monitorlari',
+      description: 'Ish, oʻqish va dizayn uchun monitorlar: aniq tasvir, USB-C, qulay tagliklar.',
+    },
+    filters: [
+      { key: 'sizeInch', type: 'range', unit: '″' },
+      { key: 'resolution', type: 'enum' },
+      { key: 'panel', type: 'enum' },
+      { key: 'refreshHz', type: 'range', unit: 'Hz' },
+      { key: 'usbC', type: 'boolean' },
+      { key: 'heightAdjust', type: 'boolean' },
+    ],
+  },
+  {
+    slug: 'monitor-arms',
+    type: 'monitor_arm',
+    kind: 'peripheral',
+    icon: 'monitor-up',
+    ru: {
+      name: 'Кронштейны для мониторов',
+      description: 'Кронштейны на один, два и три монитора: освобождают стол и подстраивают экран.',
+    },
+    uz: {
+      name: 'Monitor kronshteynlari',
+      description:
+        'Bir, ikki va uch monitor uchun kronshteynlar: stolni boʻshatadi va ekranni moslaydi.',
+    },
+    filters: [
+      { key: 'monitors', type: 'enum' },
+      { key: 'maxSizeInch', type: 'range', unit: '″' },
+      { key: 'maxLoadKg', type: 'range', unit: 'kg' },
+      { key: 'mount', type: 'enum' },
+      { key: 'gasSpring', type: 'boolean' },
+      { key: 'color', type: 'enum' },
     ],
   },
   {
@@ -191,6 +260,8 @@ export const categories: CategorySeed[] = [
       { key: 'formFactor', type: 'enum' },
       { key: 'connection', type: 'enum' },
       { key: 'hotSwap', type: 'boolean' },
+      { key: 'switchType', type: 'enum' },
+      { key: 'rgb', type: 'boolean' },
     ],
   },
   {
@@ -203,6 +274,9 @@ export const categories: CategorySeed[] = [
     filters: [
       { key: 'connection', type: 'enum' },
       { key: 'weightG', type: 'range', unit: 'g' },
+      { key: 'maxDpi', type: 'range', unit: 'dpi' },
+      { key: 'buttons', type: 'range' },
+      { key: 'rgb', type: 'boolean' },
     ],
   },
   {
@@ -215,6 +289,7 @@ export const categories: CategorySeed[] = [
     filters: [
       { key: 'connection', type: 'enum' },
       { key: 'surround', type: 'boolean' },
+      { key: 'microphone', type: 'boolean' },
     ],
   },
   {
@@ -242,6 +317,106 @@ export const categories: CategorySeed[] = [
     filters: [
       { key: 'resolution', type: 'enum' },
       { key: 'fps', type: 'range' },
+    ],
+  },
+  {
+    slug: 'gaming-laptops',
+    type: 'laptop',
+    kind: 'peripheral',
+    icon: 'laptop',
+    ru: {
+      name: 'Игровые ноутбуки',
+      description: 'Ноутбуки с GeForce RTX и быстрыми экранами для игр где угодно.',
+    },
+    uz: {
+      name: 'Oʻyin noutbuklari',
+      description: 'GeForce RTX va tezkor ekranli noutbuklar — istalgan joyda oʻyin uchun.',
+    },
+    filters: [
+      { key: 'gpu', type: 'enum' },
+      { key: 'cpu', type: 'enum' },
+      { key: 'ramGb', type: 'enum', unit: 'GB' },
+      { key: 'storageGb', type: 'enum', unit: 'GB' },
+      { key: 'screenInch', type: 'enum', unit: '″' },
+      { key: 'refreshHz', type: 'range', unit: 'Hz' },
+      { key: 'resolution', type: 'enum' },
+      { key: 'panel', type: 'enum' },
+      { key: 'weightKg', type: 'range', unit: 'kg' },
+      { key: 'os', type: 'enum' },
+    ],
+  },
+  {
+    slug: 'laptops',
+    type: 'laptop',
+    kind: 'peripheral',
+    icon: 'laptop',
+    ru: {
+      name: 'Ноутбуки для работы и учёбы',
+      description:
+        'Лёгкие ноутбуки с долгой работой от батареи: MacBook, Zenbook, ThinkPad и другие.',
+    },
+    uz: {
+      name: 'Ish va oʻqish uchun noutbuklar',
+      description:
+        'Batareyadan uzoq ishlaydigan yengil noutbuklar: MacBook, Zenbook, ThinkPad va boshqalar.',
+    },
+    filters: [
+      { key: 'gpu', type: 'enum' },
+      { key: 'cpu', type: 'enum' },
+      { key: 'ramGb', type: 'enum', unit: 'GB' },
+      { key: 'storageGb', type: 'enum', unit: 'GB' },
+      { key: 'screenInch', type: 'enum', unit: '″' },
+      { key: 'refreshHz', type: 'range', unit: 'Hz' },
+      { key: 'resolution', type: 'enum' },
+      { key: 'panel', type: 'enum' },
+      { key: 'weightKg', type: 'range', unit: 'kg' },
+      { key: 'os', type: 'enum' },
+    ],
+  },
+  {
+    slug: 'gaming-chairs',
+    type: 'chair',
+    kind: 'peripheral',
+    icon: 'armchair',
+    ru: {
+      name: 'Игровые кресла',
+      description: 'Эргономичные игровые кресла с регулировками для долгих сессий.',
+    },
+    uz: {
+      name: 'Oʻyin kreslolari',
+      description: 'Uzoq seanslar uchun sozlanadigan ergonomik oʻyin kreslolari.',
+    },
+    filters: [
+      { key: 'material', type: 'enum' },
+      { key: 'armrests', type: 'enum' },
+      { key: 'maxLoadKg', type: 'range', unit: 'kg' },
+      { key: 'reclineDeg', type: 'range', unit: '°' },
+      { key: 'lumbar', type: 'boolean' },
+      { key: 'footrest', type: 'boolean' },
+      { key: 'color', type: 'enum' },
+    ],
+  },
+  {
+    slug: 'gaming-desks',
+    type: 'desk',
+    kind: 'peripheral',
+    icon: 'lamp-desk',
+    ru: {
+      name: 'Игровые столы',
+      description:
+        'Столы для игрового места: с регулировкой высоты, подсветкой и местом под два монитора.',
+    },
+    uz: {
+      name: 'Oʻyin stollari',
+      description:
+        'Oʻyin joyi uchun stollar: balandligi sozlanadigan, yoritgichli va ikki monitorga joyli.',
+    },
+    filters: [
+      { key: 'widthMm', type: 'range', unit: 'mm' },
+      { key: 'depthMm', type: 'range', unit: 'mm' },
+      { key: 'heightAdjust', type: 'enum' },
+      { key: 'rgb', type: 'boolean' },
+      { key: 'color', type: 'enum' },
     ],
   },
   {

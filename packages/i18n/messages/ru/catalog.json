@@ -1,9 +1,6 @@
 {
   "title": "Каталог",
   "subtitle": "Комплектующие, периферия и готовые компьютеры с проверкой совместимости.",
-  "components": "Комплектующие",
-  "peripherals": "Периферия",
-  "prebuilt": "Готовые ПК",
   "fromPrice": "от {price}",
   "productCount": "{count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}}",
   "found": "Найдено: {count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}}",
@@ -39,5 +36,42 @@
   "home": "Главная",
   "metaCategory": "{name} — купить в Ташкенте по цене от {price} | RedCore",
   "metaCategoryDescription": "{name} в наличии: {count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}} с проверкой совместимости, доставкой по Узбекистану и гарантией.",
-  "productsHeading": "Товары"
+  "productsHeading": "Товары",
+  "groups": {
+    "components": {
+      "name": "Комплектующие",
+      "description": "Всё для сборки ПК: процессоры, видеокарты, платы, память, накопители, питание и охлаждение."
+    },
+    "monitors": {
+      "name": "Мониторы",
+      "description": "Игровые и офисные мониторы, кронштейны для удобного рабочего места."
+    },
+    "peripherals": {
+      "name": "Периферия",
+      "description": "Клавиатуры, мыши, гарнитуры, коврики и веб-камеры."
+    },
+    "laptops": {
+      "name": "Ноутбуки",
+      "description": "Игровые ноутбуки и ноутбуки для работы и учёбы."
+    },
+    "furniture": {
+      "name": "Геймерская мебель",
+      "description": "Игровые кресла и столы для долгих игровых сессий и работы."
+    },
+    "prebuilt": {
+      "name": "Готовые ПК",
+      "description": "Собранные и протестированные компьютеры RedCore."
+    }
+  },
+  "viewAll": "Смотреть все",
+  "menuLabel": "Разделы каталога",
+  "allCatalog": "Весь каталог",
+  "popularInGroup": "Популярное в разделе «{name}»",
+  "showMore": "Ещё {count}",
+  "showLess": "Свернуть",
+  "activeFilters": "Выбранные фильтры",
+  "removeFilter": "Убрать фильтр «{label}»",
+  "resetAll": "Сбросить всё",
+  "rangeChip": "{label}: {range}",
+  "openGroup": "Открыть раздел «{name}»"
 }

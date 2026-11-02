@@ -37,7 +37,8 @@
       "min_order": "Buyurtma summasi bu promokod uchun minimal summadan kam.",
       "usage_limit": "Promokod endi amal qilmaydi: foydalanish limiti tugagan.",
       "per_user_limit": "Siz bu promokoddan allaqachon foydalangansiz.",
-      "not_applicable": "Promokod savatdagi mahsulotlarga tegishli emas."
+      "not_applicable": "Promokod savatdagi mahsulotlarga tegishli emas.",
+      "requires_items": "Aksiya shartlari bajarilmagan: ushbu promokod uchun kerakli mahsulotlarni savatga qoʻshing."
     }
   },
   "checkout": "Rasmiylashtirishga oʻtish",

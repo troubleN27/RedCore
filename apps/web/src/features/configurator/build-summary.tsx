@@ -2,7 +2,7 @@
 
 import type { PcComponentType } from '@redcore/domain';
 import { formatPrice } from '@redcore/i18n';
-import { Trash2Icon, XIcon } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { PriceTag } from '@/components/brand/price-tag';
 import { Button } from '@/components/ui/button';
@@ -17,14 +17,12 @@ export function BuildSummary({
   onSlotClick,
   onRemove,
   onSaved,
-  onClear,
 }: {
   state: BuildState;
   savedId: string | null;
   onSlotClick: (slot: PcComponentType) => void;
   onRemove: (slot: PcComponentType, slug: string) => void;
   onSaved: (publicId: string) => void;
-  onClear: () => void;
 }) {
   const t = useTranslations('configurator');
   const locale = useLocale();
@@ -42,19 +40,6 @@ export function BuildSummary({
         <h2 id="summary-title" className="label-caps text-brand-bright">
           {t('summary.title')}
         </h2>
-        {lines.length > 0 && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="xs"
-            onClick={() => {
-              if (window.confirm(t('actions.clearConfirm'))) onClear();
-            }}
-          >
-            <Trash2Icon />
-            {t('actions.clear')}
-          </Button>
-        )}
       </div>
 
       <div className="space-y-5 p-5">

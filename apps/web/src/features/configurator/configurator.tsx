@@ -15,6 +15,7 @@ import { FpsPanel } from '@/features/fps/fps-panel';
 import type { FpsGameView } from '@/features/fps/types';
 import type { FpsModel } from '@redcore/domain';
 import { BuildScene } from './build-scene';
+import { demoBuild } from './demo-build';
 import { BuildSummary } from './build-summary';
 import { CandidateList } from './candidate-list';
 import { BuildStatusLabel } from './compat-view';
@@ -61,6 +62,20 @@ export function Configurator({
     router.replace(pathname, { scroll: false });
   }, [shared, router, pathname, t]);
 
+  // Пустой конфигуратор открывается готовой сборкой из деталей со скачанными 3D-моделями.
+  // Только при открытии страницы: после «Сбросить сборку» конфигуратор остаётся пустым.
+  // `?demo=0` — открыть пустым (автотесты)
+  const demoChecked = useRef(false);
+  useEffect(() => {
+    if (!hydrated || shared || demoChecked.current) return;
+    demoChecked.current = true;
+    if (useConfiguratorStore.getState().items.length > 0) return;
+    if (new URLSearchParams(window.location.search).get('demo') === '0') return;
+    const slugs = new Set(products.map((p) => p.slug));
+    const items = demoBuild.filter((item) => slugs.has(item.slug));
+    if (items.length > 0) useConfiguratorStore.getState().load(items, null);
+  }, [hydrated, shared, products]);
+
   useEffect(() => {
     if (viewTracked) return;
     viewTracked = true;
@@ -101,7 +116,7 @@ export function Configurator({
       </aside>
 
       <div className="min-w-0">
-        <BuildScene state={state} activeSlot={activeSlot} />
+        <BuildScene state={state} activeSlot={activeSlot} onReset={store.clear} />
         <div ref={candidatesRef} className="scroll-mt-24">
           <CandidateList
             key={activeSlot}
@@ -125,7 +140,6 @@ export function Configurator({
           onSlotClick={(slot) => goToSlot(slot)}
           onRemove={(slot, slug) => store.remove(slot, slug)}
           onSaved={store.markSaved}
-          onClear={store.clear}
         />
         <div className="mt-4">
           <FpsPanel build={state.build} perf={perf} games={fps.games} model={fps.model} />

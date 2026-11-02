@@ -7,6 +7,7 @@ import { migrate } from 'drizzle-orm/pglite/migrator';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { migrationsFolder } from '../migrator';
 import * as schema from '../schema';
+import { categories } from './data/categories';
 import { DEFAULT_USD_UZS_RATE } from './pricing';
 import { seedDatabase, type SeedDb, type SeedStats } from './seed';
 
@@ -30,7 +31,7 @@ describe('seed в Postgres (PGlite)', () => {
   it('заполняет каталог и справочники', async () => {
     expect(stats.products).toBeGreaterThanOrEqual(180);
     expect(await total(schema.products)).toBe(stats.products);
-    expect(await total(schema.categories)).toBe(16);
+    expect(await total(schema.categories)).toBe(categories.length);
     expect(await total(schema.productTranslations)).toBe(stats.products * 2);
     expect(await total(schema.deliveryZones)).toBe(15);
     expect(await total(schema.prebuiltComponents)).toBe(stats.prebuiltComponents);
@@ -107,7 +108,7 @@ describe('seed в Postgres (PGlite)', () => {
       .select({ price: schema.products.priceUzs })
       .from(schema.products)
       .where(eq(schema.products.slug, 'amd-ryzen-7-9800x3d'));
-    expect(row!.price).toBe(6_420_000);
+    expect(row!.price).toBe(5_860_000);
   });
 
   it('курс seed записан в настройки', async () => {

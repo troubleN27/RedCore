@@ -14,6 +14,9 @@ export interface BuiltModel {
 
 const models = registry as Record<string, BuiltModel>;
 
+/** Все собранные модели (LOD0) — сцена сборки загружает их заранее, разом. */
+export const allModelUrls = Object.values(models).map((m) => m.lod0);
+
 export function builtModel(key: string | null | undefined): BuiltModel | null {
   return key ? (models[key] ?? null) : null;
 }

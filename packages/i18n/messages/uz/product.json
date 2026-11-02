@@ -19,7 +19,6 @@
   "delivery": "Toshkent boʻylab yetkazib berish — 1 kun, Oʻzbekiston boʻylab — 2–5 kun. Doʻkondan olib ketish bepul.",
   "payment": "Karta orqali onlayn yoki qabul qilishda toʻlash.",
   "addedToCart": "{name} — savatda",
-  "cartSoon": "Buyurtma berish 4-bosqichda paydo boʻladi",
   "addToFavorites": "Sevimlilarga",
   "removeFromFavorites": "Sevimlilardan olib tashlash",
   "addToCompare": "Solishtirish",
@@ -66,5 +65,6 @@
     "unsupported": "Bu qurilmada 3D mavjud emas: WebGL qoʻllab-quvvatlanmaydi.",
     "lost": "Videokarta 3D sahnani tashlab yubordi — tiklanmoqda…",
     "open": "3D ni ochish"
-  }
+  },
+  "openCart": "Savatga oʻtish"
 }

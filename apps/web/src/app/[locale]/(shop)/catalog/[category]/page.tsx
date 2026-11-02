@@ -4,8 +4,10 @@ import { SearchXIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { ActiveFilters } from '@/features/catalog/active-filters';
 import { Breadcrumbs, breadcrumbJsonLd } from '@/features/catalog/breadcrumbs';
 import { FiltersPanel } from '@/features/catalog/filters-panel';
+import { groupOfCategory } from '@/features/catalog/groups';
 import { MobileFilters } from '@/features/catalog/mobile-filters';
 import { Pagination } from '@/features/catalog/pagination';
 import { ProductGrid } from '@/features/catalog/product-grid';
@@ -63,9 +65,18 @@ export default async function CategoryPage({
     const qs = params.toString();
     return `/catalog/${slug}${qs ? `?${qs}` : ''}`;
   };
+  const group = groupOfCategory(slug, snapshot.categories);
+  // Группа в цепочке — только если в ней больше одного раздела (иначе ссылка ведёт «на себя»)
+  const groupCrumb =
+    group && group.categories.length > 1
+      ? { label: t(`groups.${group.key}.name`), href: `/catalog/group/${group.key}` }
+      : null;
   const jsonLd = breadcrumbJsonLd([
     { name: t('home'), url: absoluteUrl(`/${locale}`) },
     { name: t('title'), url: absoluteUrl(`/${locale}/catalog`) },
+    ...(groupCrumb
+      ? [{ name: groupCrumb.label, url: absoluteUrl(`/${locale}${groupCrumb.href}`) }]
+      : []),
     { name: page.category.name, url: absoluteUrl(`/${locale}/catalog/${slug}`) },
   ]);
 
@@ -74,7 +85,11 @@ export default async function CategoryPage({
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(jsonLd)} />
       <header className="space-y-3">
         <Breadcrumbs
-          items={[{ label: t('title'), href: '/catalog' }, { label: page.category.name }]}
+          items={[
+            { label: t('title'), href: '/catalog' },
+            ...(groupCrumb ? [groupCrumb] : []),
+            { label: page.category.name },
+          ]}
         />
         <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
           {page.category.name}
@@ -99,6 +114,13 @@ export default async function CategoryPage({
               <SortSelect value={page.query.sort} />
             </div>
           </div>
+
+          <ActiveFilters
+            facets={page.facets}
+            selection={page.query.filters}
+            inStockOnly={page.query.inStockOnly}
+            chipNames={chipNames}
+          />
 
           {page.items.length > 0 ? (
             <>

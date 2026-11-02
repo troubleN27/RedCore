@@ -64,6 +64,14 @@ const numericUnits: Record<string, { unit: keyof SpecsDict['units']; digits?: nu
   sizeInch: { unit: '″', digits: 1 },
   maxDpi: { unit: 'dpi' },
   fps: { unit: 'fps' },
+  screenInch: { unit: '″', digits: 1 },
+  maxSizeInch: { unit: '″' },
+  ramGb: { unit: 'GB' },
+  weightKg: { unit: 'kg', digits: 2 },
+  maxLoadKg: { unit: 'kg', digits: 1 },
+  batteryWh: { unit: 'Wh' },
+  depthMm: { unit: 'mm' },
+  reclineDeg: { unit: '°' },
 };
 
 /** Подпись единицы из фильтров категории (unit в БД — латинский код). */
@@ -73,7 +81,7 @@ export function unitLabel(unit: string | null, dict: SpecsDict): string {
 }
 
 function withUnit(value: string, unit: string): string {
-  return unit === '″' ? `${value}${unit}` : `${value}${NBSP}${unit}`;
+  return unit === '″' || unit === '°' ? `${value}${unit}` : `${value}${NBSP}${unit}`;
 }
 
 function fill(template: string, params: Record<string, string | number>): string {
@@ -105,7 +113,7 @@ export function formatSpecValue(
   if (typeof value === 'boolean') return value ? dict.boolean.true : dict.boolean.false;
 
   if (typeof value === 'number') {
-    if (key === 'capacityGb') return capacityLabel(value, ctx);
+    if (key === 'capacityGb' || key === 'storageGb') return capacityLabel(value, ctx);
     if (key === 'pcieGen') return `${value}.0`;
     if (key === 'pcieLanes') return `x${value}`;
     if (key === 'casLatency') return `CL${value}`;
@@ -201,5 +209,9 @@ export const cardHighlights: Record<string, string[]> = {
   headset: ['connection', 'microphone'],
   mousepad: ['surface'],
   webcam: ['resolution', 'fps'],
+  laptop: ['gpu', 'ramGb', 'screenInch'],
+  monitor_arm: ['monitors', 'maxSizeInch', 'mount'],
+  chair: ['material', 'armrests', 'maxLoadKg'],
+  desk: ['widthMm', 'heightAdjust'],
   prebuilt: ['purpose', 'targetResolution'],
 };

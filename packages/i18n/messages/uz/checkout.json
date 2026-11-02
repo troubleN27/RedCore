@@ -35,8 +35,8 @@
   },
   "payment": {
     "card": "Karta bilan onlayn",
-    "cardHint": "Visa, Mastercard · Stripe himoyalangan shakli (test rejimi)",
-    "cardMockHint": "Demo toʻlov: pul yechilmaydi",
+    "cardHint": "Visa, Mastercard · Stripe himoyalangan shakli",
+    "cardMockHint": "Visa, Mastercard · himoyalangan karta toʻlovi",
     "cardDisabled": "Karta bilan toʻlov hozircha mavjud emas",
     "cod": "Qabul qilganda",
     "codHint": "Naqd, Uzcard yoki Humo — kuryerga yoki doʻkonda",

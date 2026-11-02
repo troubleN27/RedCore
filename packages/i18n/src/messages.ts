@@ -1,3 +1,5 @@
+import ruAbout from '../messages/ru/about.json';
+import uzAbout from '../messages/uz/about.json';
 import ruCatalog from '../messages/ru/catalog.json';
 import ruAi from '../messages/ru/ai.json';
 import ruFps from '../messages/ru/fps.json';
@@ -75,6 +77,7 @@ const ru = {
   policies: ruPolicies,
   ai: ruAi,
   telegram: ruTelegram,
+  about: ruAbout,
 };
 
 export type Messages = typeof ru;
@@ -104,6 +107,7 @@ const uz: Messages = {
   policies: uzPolicies,
   ai: uzAi,
   telegram: uzTelegram,
+  about: uzAbout,
 };
 
 export const messages: Record<Locale, Messages> = { ru, uz };

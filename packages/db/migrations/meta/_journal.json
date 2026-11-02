@@ -92,6 +92,13 @@
       "when": 1793232139256,
       "tag": "0012_remove_r2",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1793560977103,
+      "tag": "0013_catalog_types",
+      "breakpoints": true
     }
   ]
 }

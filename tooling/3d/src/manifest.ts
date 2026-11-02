@@ -154,6 +154,16 @@ export const manifest: ModelEntry[] = [
     materials: { rgb: 'rgb', light: 'rgb' },
   },
   {
+    key: 'cooler_air',
+    title: 'Cooler Master CPU Cooler',
+    author: 'BlenderFace1',
+    uid: 'e54651982f524644a2144b52a6b36e89',
+    license: 'CC-BY-4.0',
+    targetSizeMm: 159,
+    lod0Triangles: 40_000,
+    lod1Triangles: 12_000,
+  },
+  {
     key: 'case_atx',
     title: 'Fractal Design Meshify C',
     author: 'MUSHROOM_BUILDS',

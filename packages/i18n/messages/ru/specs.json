@@ -1,5 +1,7 @@
 {
   "labels": {
+    "price": "Цена",
+    "brand": "Производитель",
     "socket": "Сокет",
     "family": "Поколение",
     "cores": "Ядра",
@@ -116,7 +118,28 @@
     "fps": "Кадров в секунду",
     "autofocus": "Автофокус",
     "purpose": "Назначение",
-    "targetResolution": "Целевое разрешение"
+    "targetResolution": "Целевое разрешение",
+    "armrests": "Подлокотники",
+    "batteryWh": "Аккумулятор",
+    "cpu": "Процессор",
+    "depthMm": "Глубина",
+    "footrest": "Подставка для ног",
+    "gasSpring": "Газлифт",
+    "gpu": "Видеокарта",
+    "heightAdjust": "Регулировка высоты",
+    "lumbar": "Поясничная поддержка",
+    "material": "Материал",
+    "maxLoadKg": "Макс. нагрузка",
+    "maxSizeInch": "Макс. диагональ",
+    "monitors": "Количество мониторов",
+    "mount": "Крепление",
+    "os": "Операционная система",
+    "ramGb": "Оперативная память",
+    "reclineDeg": "Наклон спинки",
+    "screenInch": "Диагональ экрана",
+    "storageGb": "Накопитель",
+    "usbC": "USB-C",
+    "weightKg": "Вес"
   },
   "units": {
     "GHz": "ГГц",
@@ -136,14 +159,22 @@
     "″": "″",
     "dpi": "DPI",
     "fps": "кадр/с",
-    "slots": "слота"
+    "slots": "слота",
+    "uzs": "сум",
+    "kg": "кг",
+    "°": "°",
+    "Wh": "Вт·ч"
   },
   "boolean": {
     "true": "Да",
     "false": "Нет"
   },
   "values": {
-    "vendor": { "nvidia": "NVIDIA", "amd": "AMD", "intel": "Intel" },
+    "vendor": {
+      "nvidia": "NVIDIA",
+      "amd": "AMD",
+      "intel": "Intel"
+    },
     "family": {
       "ryzen-5000": "Ryzen 5000",
       "ryzen-7000": "Ryzen 7000",
@@ -162,8 +193,18 @@
       "red": "Красный",
       "pink": "Розовый"
     },
-    "wifi": { "none": "Нет", "wifi6": "Wi-Fi 6", "wifi6e": "Wi-Fi 6E", "wifi7": "Wi-Fi 7" },
-    "profile": { "none": "Нет", "xmp": "Intel XMP", "expo": "AMD EXPO", "xmp-expo": "XMP и EXPO" },
+    "wifi": {
+      "none": "Нет",
+      "wifi6": "Wi-Fi 6",
+      "wifi6e": "Wi-Fi 6E",
+      "wifi7": "Wi-Fi 7"
+    },
+    "profile": {
+      "none": "Нет",
+      "xmp": "Intel XMP",
+      "expo": "AMD EXPO",
+      "xmp-expo": "XMP и EXPO"
+    },
     "kind": {
       "nvme": "NVMe SSD",
       "sata-ssd": "SATA SSD",
@@ -184,7 +225,11 @@
       "platinum": "80 PLUS Platinum",
       "titanium": "80 PLUS Titanium"
     },
-    "modular": { "full": "Полностью модульный", "semi": "Полумодульный", "none": "Немодульный" },
+    "modular": {
+      "full": "Полностью модульный",
+      "semi": "Полумодульный",
+      "none": "Немодульный"
+    },
     "formFactor": {
       "mid-tower": "Mid-Tower",
       "full-tower": "Full-Tower",
@@ -199,8 +244,15 @@
       "65": "65%",
       "60": "60%"
     },
-    "lighting": { "none": "Без подсветки", "rgb": "RGB", "argb": "ARGB" },
-    "connector": { "3pin": "3-pin", "4pin": "4-pin PWM" },
+    "lighting": {
+      "none": "Без подсветки",
+      "rgb": "RGB",
+      "argb": "ARGB"
+    },
+    "connector": {
+      "3pin": "3-pin",
+      "4pin": "4-pin PWM"
+    },
     "hdr": {
       "none": "Нет",
       "hdr400": "DisplayHDR 400",
@@ -213,8 +265,17 @@
       "wireless": "Беспроводное",
       "tri-mode": "Радио, Bluetooth и провод"
     },
-    "surface": { "cloth": "Ткань", "hybrid": "Гибридное", "hard": "Жёсткое", "glass": "Стекло" },
-    "resolution": { "1080p": "1080p (Full HD)", "1440p": "1440p (QHD)", "4k": "4K (UHD)" },
+    "surface": {
+      "cloth": "Ткань",
+      "hybrid": "Гибридное",
+      "hard": "Жёсткое",
+      "glass": "Стекло"
+    },
+    "resolution": {
+      "1080p": "1080p (Full HD)",
+      "1440p": "1440p (QHD)",
+      "4k": "4K (UHD)"
+    },
     "purpose": {
       "gaming": "Игры",
       "esports": "Киберспорт",
@@ -222,7 +283,44 @@
       "office": "Офис",
       "sff": "Компактный ПК"
     },
-    "targetResolution": { "1080p": "1080p", "1440p": "1440p", "2160p": "4K" }
+    "targetResolution": {
+      "1080p": "1080p",
+      "1440p": "1440p",
+      "2160p": "4K"
+    },
+    "os": {
+      "windows": "Windows 11",
+      "macos": "macOS",
+      "none": "Без ОС"
+    },
+    "mount": {
+      "clamp": "Струбцина",
+      "grommet": "Через отверстие",
+      "clamp-grommet": "Струбцина или отверстие",
+      "wall": "На стену"
+    },
+    "material": {
+      "eco-leather": "Экокожа",
+      "leather": "Натуральная кожа",
+      "fabric": "Ткань",
+      "mesh": "Сетка"
+    },
+    "armrests": {
+      "2d": "2D",
+      "3d": "3D",
+      "4d": "4D"
+    },
+    "heightAdjust": {
+      "fixed": "Фиксированная",
+      "manual": "Ручная",
+      "electric": "Электропривод"
+    },
+    "monitors": {
+      "1": "1 монитор",
+      "2": "2 монитора",
+      "3": "3 монитора",
+      "4": "4 монитора"
+    }
   },
   "format": {
     "pcie8": "{count} × 8-pin",

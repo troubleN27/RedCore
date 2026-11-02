@@ -113,7 +113,7 @@ export function SearchBox({ className, autoFocus }: { className?: string; autoFo
   const showList = open && hasQuery && data !== null;
 
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn('relative z-30', className)}>
       <div className="relative">
         <SearchIcon
           aria-hidden="true"
@@ -137,7 +137,12 @@ export function SearchBox({ className, autoFocus }: { className?: string; autoFo
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
           onKeyDown={onKeyDown}
-          className="h-10 w-full rounded-md border border-graphite-800 bg-graphite-950/80 pr-9 pl-9 text-sm outline-none placeholder:text-steel-400 focus-visible:border-brand-bright/60 focus-visible:ring-2 focus-visible:ring-ring/40"
+          // Справа место под крестик и индикатор загрузки — только когда что-то введено,
+          // иначе в узком поле шапки обрезается подсказка
+          className={cn(
+            'h-10 w-full rounded-md border border-graphite-800 bg-graphite-950/80 pl-9 text-sm outline-none placeholder:text-steel-400 focus-visible:border-brand-bright/60 focus-visible:ring-2 focus-visible:ring-ring/40',
+            query ? 'pr-9' : 'pr-3',
+          )}
         />
         {loading && (
           <Loader2Icon
@@ -151,7 +156,8 @@ export function SearchBox({ className, autoFocus }: { className?: string; autoFo
         <div
           id={listId}
           role="listbox"
-          className="absolute inset-x-0 top-full z-50 mt-2 overflow-hidden rounded-lg border border-graphite-800 bg-popover shadow-panel"
+          // Список шире поля: в шапке поле узкое, а названия товаров длинные
+          className="absolute top-full right-0 z-50 mt-2 max-h-[min(32rem,calc(100svh-6rem))] w-[min(36rem,calc(100vw-2rem))] min-w-full overflow-y-auto rounded-lg border border-graphite-800 bg-popover shadow-panel"
         >
           {options.length === 0 ? (
             <p className="px-4 py-3 text-sm text-steel-300">
@@ -197,7 +203,7 @@ export function SearchBox({ className, autoFocus }: { className?: string; autoFo
               return (
                 <div key={option.href} {...common}>
                   <Icon className="size-4 shrink-0 text-metal" />
-                  <span className="min-w-0 flex-1 truncate">
+                  <span className="line-clamp-2 min-w-0 flex-1 leading-snug">
                     <span className="text-steel-400">{option.item.brand} </span>
                     {option.item.name}
                   </span>

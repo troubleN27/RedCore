@@ -4,9 +4,12 @@ import { GitCompareArrowsIcon, HeartIcon, ShoppingCartIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { useRouter } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { COMPARE_LIMIT, useShopStore } from '@/stores/shop-store';
 import { useStoreHydrated } from '@/stores/store-hydrator';
+
+const CART_HREF = '/cart';
 
 export function FavoriteButton({ slug, className }: { slug: string; className?: string }) {
   const t = useTranslations('product');
@@ -90,6 +93,7 @@ export function AddToCartButton({
   const t = useTranslations('product');
   const tc = useTranslations('common');
   const add = useShopStore((s) => s.addToCart);
+  const router = useRouter();
 
   return (
     <Button
@@ -99,7 +103,9 @@ export function AddToCartButton({
       className={className}
       onClick={() => {
         add(slug);
-        toast.success(t('addedToCart', { name }), { description: t('cartSoon') });
+        toast.success(t('addedToCart', { name }), {
+          action: { label: t('openCart'), onClick: () => router.push(CART_HREF) },
+        });
       }}
     >
       <ShoppingCartIcon />

@@ -4,9 +4,16 @@ import type { AgentName, ChatPlace } from '@redcore/ai';
 import { BotIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSelectedLayoutSegments } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ChatPanel } from './chat-panel';
+
+const OPEN_EVENT = 'redcore:open-chat';
+
+/** Открывает плавающий AI-ассистент из любого места страницы (например, кнопкой в hero). */
+export function openChatWidget() {
+  window.dispatchEvent(new Event(OPEN_EVENT));
+}
 
 /** Место на сайте по сегментам маршрута: от него зависят агент и контекст запроса. */
 function placeOf(
@@ -29,6 +36,13 @@ export function ChatWidget() {
   const segments = useSelectedLayoutSegments();
   const [open, setOpen] = useState(false);
   const where = placeOf(segments);
+
+  useEffect(() => {
+    const show = () => setOpen(true);
+    window.addEventListener(OPEN_EVENT, show);
+    return () => window.removeEventListener(OPEN_EVENT, show);
+  }, []);
+
   if (!where) return null;
 
   return (

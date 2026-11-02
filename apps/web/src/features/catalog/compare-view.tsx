@@ -88,7 +88,12 @@ export function CompareView() {
                   className="bg-graphite-950 p-4 text-left font-normal"
                 >
                   <div className="space-y-3">
-                    <ProductArt type={product.componentType} brand={product.brand} size="sm" />
+                    <ProductArt
+                      type={product.componentType}
+                      brand={product.brand}
+                      slug={product.slug}
+                      size="sm"
+                    />
                     <Link
                       href={`/p/${product.slug}`}
                       className="line-clamp-2 font-medium hover:text-brand-bright"

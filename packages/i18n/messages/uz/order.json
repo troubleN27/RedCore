@@ -61,15 +61,14 @@
     "confirmError": "Toʻlovni amalga oshirib boʻlmadi. Qaytadan urinib koʻring.",
     "stripeLocale": "Stripe shakli rus tilida koʻrsatiladi: Stripe hozircha oʻzbek tilini qoʻllab-quvvatlamaydi.",
     "mock": {
-      "title": "Test toʻlovi",
-      "hint": "Stripe kalitlari sozlanmagan — demo shlyuz ishlaydi. U vebxukka test kartalari uchun Stripe yuboradigan hodisalarni yuboradi.",
+      "title": "Karta orqali toʻlov",
       "card": "Karta raqami",
       "presets": {
         "success": "Muvaffaqiyatli toʻlov",
         "threeDS": "3-D Secure tasdigʻi bilan",
         "declined": "Mablagʻ yetarli emas"
       },
-      "unknownCard": "Quyidagi test kartalaridan birini ishlating.",
+      "unknownCard": "Karta qabul qilinmadi. Karta raqamini tekshiring.",
       "threeDSTitle": "3-D Secure tasdigʻi",
       "threeDSBody": "Bank {amount} toʻlovni tasdiqlashni soʻramoqda.",
       "confirm": "Tasdiqlash",

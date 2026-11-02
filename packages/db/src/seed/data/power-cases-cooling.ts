@@ -73,7 +73,6 @@ export const powerSupplies = products('psu', [
     brand: 'Corsair',
     name: 'RM850e ATX3.1 850W 80+ Gold',
     usd: 115,
-    featured: true,
     specs: psu({ wattage: 850, efficiency: 'gold', lengthMm: 140, connectors: conn(3, 1, 2, 7) }),
   },
   {
@@ -432,7 +431,6 @@ export const coolers = products('cooler', [
     brand: 'Thermalright',
     name: 'Peerless Assassin 120 SE',
     usd: 40,
-    featured: true,
     specs: {
       kind: 'air',
       sockets: [...ALL_SOCKETS],

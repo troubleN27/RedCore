@@ -402,6 +402,39 @@ export async function getApprovedReviews(db: Database, productId: string, locale
     .limit(20);
 }
 
+/** Отзывы для главной: опубликованные, с оценкой от 4, на языке страницы — лучшие и свежие первыми. */
+export async function getHomeReviews(db: Database, locale: 'ru' | 'uz', limit = 6) {
+  return db
+    .select({
+      id: reviews.id,
+      authorName: reviews.authorName,
+      rating: reviews.rating,
+      text: reviews.text,
+      verifiedPurchase: reviews.verifiedPurchase,
+      createdAt: reviews.createdAt,
+      productSlug: products.slug,
+      productName: products.name,
+      brandName: brands.name,
+    })
+    .from(reviews)
+    .innerJoin(products, eq(products.id, reviews.productId))
+    .innerJoin(brands, eq(brands.id, products.brandId))
+    .where(
+      and(eq(reviews.status, 'approved'), eq(reviews.locale, locale), sql`${reviews.rating} >= 4`),
+    )
+    .orderBy(desc(reviews.rating), desc(reviews.createdAt))
+    .limit(limit);
+}
+
+/** Сводка по всем опубликованным отзывам (на любом языке): средняя оценка и количество. */
+export async function getReviewSummary(db: Database) {
+  const [row] = await db
+    .select({ count: count(), average: sql<string | null>`avg(${reviews.rating})` })
+    .from(reviews)
+    .where(eq(reviews.status, 'approved'));
+  return { count: row?.count ?? 0, average: row?.average ? Number(row.average) : 0 };
+}
+
 export const reviewInputSchema = z.object({
   rating: z.number().int().min(1).max(5),
   text: z.string().trim().min(10).max(2000),

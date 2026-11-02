@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { enumLabel, unitLabel } from '../product/spec-format';
+import { PriceFilter } from './price-filter';
 import { useCatalogParams } from './use-catalog-params';
 
 interface FiltersPanelProps {
@@ -21,7 +22,10 @@ interface FiltersPanelProps {
 }
 
 /** URL-параметр «только в наличии» */
-const STOCK_PARAM = 'stock';
+export const STOCK_PARAM = 'stock';
+
+/** Сколько значений списка видно сразу; остальные — по кнопке «Ещё N» */
+const VISIBLE_VALUES = 6;
 
 const rangeKey = (selected: FilterSelection[string] | undefined) =>
   selected && !Array.isArray(selected) && selected !== true
@@ -71,6 +75,41 @@ function RangeFilter({ facet, value, unit }: { facet: Facet; value?: RangeValue;
         {t('apply')}
       </button>
     </form>
+  );
+}
+
+/** Список значений перечисления: первые VISIBLE_VALUES и выбранные видны всегда, остальное — по кнопке. */
+function EnumValues({
+  facet,
+  selected,
+  render,
+}: {
+  facet: Facet;
+  selected: string[];
+  render: (item: { value: string; count: number }) => React.ReactNode;
+}) {
+  const t = useTranslations('catalog');
+  const [expanded, setExpanded] = useState(false);
+  const values = facet.values ?? [];
+  const hidden = values.length - VISIBLE_VALUES;
+  const shown =
+    expanded || hidden <= 1
+      ? values
+      : values.filter((v, i) => i < VISIBLE_VALUES || selected.includes(v.value));
+  return (
+    <div className="space-y-2">
+      <ul className="space-y-1.5">{shown.map((item) => render(item))}</ul>
+      {hidden > 1 && (
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          className="text-xs font-medium text-brand-bright hover:underline"
+        >
+          {expanded ? t('showLess') : t('showMore', { count: hidden })}
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -158,8 +197,10 @@ export function FiltersPanel({
             </legend>
 
             {facet.type === 'enum' && (
-              <ul className="space-y-1.5">
-                {facet.values!.map(({ value, count }) => {
+              <EnumValues
+                facet={facet}
+                selected={Array.isArray(selected) ? selected : []}
+                render={({ value, count }) => {
                   const checked = Array.isArray(selected) && selected.includes(value);
                   const id = `f-${facet.key}-${value}`;
                   return (
@@ -184,11 +225,21 @@ export function FiltersPanel({
                       </label>
                     </li>
                   );
-                })}
-              </ul>
+                }}
+              />
             )}
 
-            {facet.type === 'range' && (
+            {facet.type === 'range' && facet.key === 'price' && (
+              <PriceFilter
+                key={rangeKey(selected)}
+                facet={facet}
+                value={
+                  selected && !Array.isArray(selected) && selected !== true ? selected : undefined
+                }
+              />
+            )}
+
+            {facet.type === 'range' && facet.key !== 'price' && (
               <RangeFilter
                 // Новые значения из URL (сброс, «назад») пересоздают поля ввода
                 key={rangeKey(selected)}

@@ -89,11 +89,19 @@ export function FpsPanel({
               testId="panel-preset"
             />
           </div>
-          <ul className="max-h-80 divide-y divide-graphite-800 overflow-y-auto pr-1">
-            {rows.map(({ game, estimate }) => (
-              <GameFpsRow key={game.slug} game={game} estimate={estimate} compact />
-            ))}
-          </ul>
+          {/* Прокручиваемый список доступен с клавиатуры: фокус на области, стрелки листают */}
+          <div
+            role="region"
+            aria-label={t('panel.title')}
+            tabIndex={0}
+            className="max-h-80 overflow-y-auto rounded pr-1 focus-visible:outline-2 focus-visible:outline-brand-bright"
+          >
+            <ul className="divide-y divide-graphite-800">
+              {rows.map(({ game, estimate }) => (
+                <GameFpsRow key={game.slug} game={game} estimate={estimate} compact />
+              ))}
+            </ul>
+          </div>
         </>
       )}
       <Link href="/fps" className="block text-xs font-semibold text-brand-bright hover:underline">

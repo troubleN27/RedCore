@@ -67,7 +67,11 @@ export type ModelSpec =
   | (Common & { kind: 'mouse'; length: number })
   | (Common & { kind: 'headset' })
   | (Common & { kind: 'mousepad'; size: [number, number]; thickness: number })
-  | (Common & { kind: 'webcam' });
+  | (Common & { kind: 'webcam' })
+  | (Common & { kind: 'laptop'; diagonal: number; aspect: number })
+  | (Common & { kind: 'monitor-arm'; monitors: number })
+  | (Common & { kind: 'chair' })
+  | (Common & { kind: 'desk'; size: [number, number] });
 
 export type ModelKind = ModelSpec['kind'];
 
@@ -175,7 +179,8 @@ export function modelSpecFor(product: { componentType: ComponentType; specs: unk
         kind: 'cooler-air',
         finish,
         rgb: bool(s.rgb),
-        glbKey: null,
+        // Низкопрофильные кулеры — процедурные: у модели башня высотой 159 мм
+        glbKey: bool(s.lowProfile) ? null : 'cooler_air',
         height: height * MM,
         fans: Math.max(1, fans),
         fanSize: num(s.fanSizeMm, 120) * MM,
@@ -262,6 +267,35 @@ export function modelSpecFor(product: { componentType: ComponentType; specs: unk
       };
     case 'webcam':
       return { kind: 'webcam', finish: 'black', rgb: false, glbKey: null };
+    case 'laptop': {
+      const res = (s.resolution ?? {}) as { width?: number; height?: number };
+      return {
+        kind: 'laptop',
+        finish,
+        rgb: false,
+        glbKey: null,
+        diagonal: num(s.screenInch, 15.6) * 25.4 * MM,
+        aspect: num(res.width, 1920) / num(res.height, 1080),
+      };
+    }
+    case 'monitor_arm':
+      return {
+        kind: 'monitor-arm',
+        finish,
+        rgb: false,
+        glbKey: null,
+        monitors: Math.min(3, Math.max(1, num(s.monitors, 1))),
+      };
+    case 'chair':
+      return { kind: 'chair', finish, rgb: false, glbKey: null };
+    case 'desk':
+      return {
+        kind: 'desk',
+        finish,
+        rgb: bool(s.rgb),
+        glbKey: null,
+        size: [num(s.widthMm, 1400) * MM, num(s.depthMm, 700) * MM],
+      };
     default:
       // Готовая сборка показывается корпусом (полная сцена сборки — на этапе 7)
       return {
@@ -310,5 +344,13 @@ export function modelExtent(spec: ModelSpec): number {
       return 0.2;
     case 'webcam':
       return 0.1;
+    case 'laptop':
+      return spec.diagonal;
+    case 'monitor-arm':
+      return 0.45 * spec.monitors;
+    case 'chair':
+      return 1.3;
+    case 'desk':
+      return Math.max(...spec.size);
   }
 }

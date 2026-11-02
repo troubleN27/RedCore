@@ -22,13 +22,13 @@ test.describe('каталог', () => {
   test('карточка товара: характеристики, совместимое и JSON-LD', async ({ page }) => {
     await page.goto('/ru/p/amd-ryzen-7-9800x3d');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Ryzen 7 9800X3D');
-    await expect(page.getByText('6 420 000 сум').first()).toBeVisible();
+    await expect(page.getByText('5 860 000 сум').first()).toBeVisible();
     await expect(page.getByTestId('compatible-motherboard')).toBeVisible();
     const jsonLd = await page.locator('script[type="application/ld+json"]').first().textContent();
     // Product и BreadcrumbList идут одним массивом
     expect(JSON.parse(jsonLd!)[0]).toMatchObject({
       '@type': 'Product',
-      offers: { priceCurrency: 'UZS', price: 6420000 },
+      offers: { priceCurrency: 'UZS', price: 5860000 },
     });
   });
 
@@ -64,7 +64,7 @@ test.describe('каталог', () => {
   });
 
   test('неизвестная категория и товар — 404', async ({ page }) => {
-    expect((await page.goto('/ru/catalog/laptops'))?.status()).toBe(404);
+    expect((await page.goto('/ru/catalog/toasters'))?.status()).toBe(404);
     expect((await page.goto('/ru/p/no-such-product'))?.status()).toBe(404);
   });
 });
@@ -77,4 +77,37 @@ test('sitemap и robots', async ({ request }) => {
   const robots = await (await request.get('/robots.txt')).text();
   expect(robots).toContain('Sitemap:');
   expect(robots).toContain('Disallow: /api/');
+});
+
+test('каталог: меню групп, страница группы, фильтры цены и производителя', async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(isMobile, 'меню «Каталог» в шапке — на широком экране');
+  await page.goto('/ru');
+  await page.getByRole('banner').getByRole('button', { name: 'Каталог' }).click();
+  const menu = page.getByRole('region', { name: 'Разделы каталога' });
+  await menu.getByRole('link', { name: 'Мониторы', exact: true }).click();
+  await expect(page).toHaveURL(/\/ru\/catalog\/group\/monitors$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Мониторы');
+  await page
+    .getByRole('link', { name: /Офисные мониторы/ })
+    .first()
+    .click();
+  await expect(page).toHaveURL(/\/ru\/catalog\/office-monitors$/);
+  await expect(page.getByRole('navigation', { name: 'Навигационная цепочка' })).toContainText(
+    'Мониторы',
+  );
+
+  await page.goto('/ru/catalog/gaming-laptops');
+  // Флажок применяется через адрес страницы — ждём URL, а не состояние сразу после клика
+  await page.getByRole('complementary').getByText('ASUS', { exact: true }).click();
+  await expect(page).toHaveURL(/brand=ASUS/);
+  const chips = page.getByRole('group', { name: 'Выбранные фильтры' });
+  await expect(chips.getByRole('button', { name: 'Убрать фильтр «ASUS»' })).toBeVisible();
+  for (const card of await page.getByRole('main').locator('article').all()) {
+    await expect(card).toContainText('ASUS');
+  }
+  await chips.getByRole('button', { name: 'Сбросить всё' }).click();
+  await expect(page).not.toHaveURL(/brand=/);
 });

@@ -37,13 +37,14 @@ const quad = (low: number, medium: number, high: number, ultra: number) => ({
 });
 
 describe('калькулятор FPS: данные', () => {
-  it('seed: 20 игр с полными замерами, индексы GPU/CPU с видеопамятью', async () => {
+  it('seed: 24 игры с полными замерами и обложками, индексы GPU/CPU с видеопамятью', async () => {
     const data = await getFpsData(db);
-    expect(data.games).toHaveLength(20);
+    expect(data.games).toHaveLength(24);
+    expect(data.games.filter((g) => !g.coverUrl)).toEqual([]);
     expect(data.model.k).toBe(5);
     const cp = data.games.find((g) => g.slug === 'cyberpunk-2077')!;
     expect(cp.gpuFps['1440p'].ultra).toBeGreaterThan(0);
-    expect(cp.coverUrl).toContain('1091500');
+    expect(cp.coverUrl).toBe('/games/cyberpunk-2077.jpg');
     expect(data.games.find((g) => g.slug === 'elden-ring')!.fpsCap).toBe(60);
     const ref = data.gpus.find((g) => g.key === 'rtx-5070')!;
     expect(ref).toMatchObject({ index1440: 1, vramGb: 12 });
@@ -83,8 +84,8 @@ describe('калькулятор FPS: данные', () => {
     await getFpsData(db); // прогрев кэша
     const g = (k: number) => quad(200 * k, 170 * k, 140 * k, 120 * k);
     const input: GameInput = {
-      slug: 'arc-raiders',
-      name: 'ARC Raiders',
+      slug: 'test-new-game',
+      name: 'Test New Game',
       steamAppId: null,
       coverUrl: null,
       hue: 30,
@@ -105,13 +106,13 @@ describe('калькулятор FPS: данные', () => {
     };
     const saved = await saveGame(db, null, input);
     const data = await getFpsData(db);
-    expect(data.games.map((x) => x.slug)).toContain('arc-raiders');
+    expect(data.games.map((x) => x.slug)).toContain('test-new-game');
     await expect(
       saveGame(db, saved.id, { ...input, thresholds: { good: 30, playable: 60 } }),
     ).rejects.toBeInstanceOf(AdminValidationError);
     await saveGame(db, saved.id, { ...input, isActive: false });
-    expect((await getFpsData(db)).games.map((x) => x.slug)).not.toContain('arc-raiders');
-    expect((await listGamesAdmin(db)).map((x) => x.slug)).toContain('arc-raiders');
+    expect((await getFpsData(db)).games.map((x) => x.slug)).not.toContain('test-new-game');
+    expect((await listGamesAdmin(db)).map((x) => x.slug)).toContain('test-new-game');
   });
 
   it('импорт CSV: применяет корректные строки и перечисляет ошибки', async () => {

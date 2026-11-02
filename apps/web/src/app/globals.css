@@ -270,6 +270,32 @@
   animation: page-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* ── Появление при прокрутке (компонент Reveal) ──
+   Прячем, только когда скрипт включил режим (.reveal-on) и движение не ограничено */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-on [data-reveal]:not([data-revealed]),
+  .reveal-on [data-reveal-stagger]:not([data-revealed]) > * {
+    opacity: 0;
+  }
+
+  [data-reveal][data-revealed='in'],
+  [data-reveal-stagger][data-revealed='in'] > * {
+    animation: reveal-up 0.6s var(--ease-speed) both;
+    animation-delay: calc(var(--reveal-i, 0) * 90ms);
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

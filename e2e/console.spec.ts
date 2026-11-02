@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import path from 'node:path';
 import { checkout, fillCart, pickProduct, uniquePhone } from './helpers/shop';
 import { BASE, PASSWORD, staffLogin, submitPassword } from './helpers/staff';
-import { openViewer } from './helpers/viewer';
+import { waitForViewer } from './helpers/viewer';
 
 const fixtures = path.join(process.cwd(), 'e2e', 'fixtures');
 
@@ -153,11 +153,11 @@ test('загрузка своей GLB, проверка файла, показ �
     timeout: 15_000,
   });
 
-  // Витрина показывает загруженную модель вместо процедурной
-  const { viewer } = await openViewer(page, product.slug);
+  // Предпросмотр в админке показывает загруженную модель вместо процедурной
+  await page.reload();
+  const { viewer } = await waitForViewer(page);
   await expect(viewer).toHaveAttribute('data-source', 'glb');
 
-  await page.goBack();
   await page.getByRole('button', { name: 'Убрать свою модель' }).click();
   await expect(upload.getByTestId('model-current')).toContainText('Своей модели нет');
 });
@@ -193,9 +193,18 @@ test('игры калькулятора FPS: менеджер добавляет
   await form.getByTestId('game-save').click();
   await expect(page.getByText('Игра сохранена')).toBeVisible();
   await expect(page).toHaveURL(/\/games\/[0-9a-f-]{36}$/);
+  const editUrl = page.url();
 
   await page.goto('/ru/fps');
   await expect(page.locator(`[data-testid="fps-row"][data-game="${slug}"]`)).toBeVisible();
+
+  // Уборка: тестовая игра не должна оставаться в калькуляторе (база живёт между прогонами)
+  await page.goto(editUrl);
+  await page.getByTestId('game-active').click();
+  await page.getByTestId('game-save').click();
+  await expect(page.getByText('Игра сохранена')).toBeVisible();
+  await page.goto('/ru/fps');
+  await expect(page.locator(`[data-testid="fps-row"][data-game="${slug}"]`)).toHaveCount(0);
 });
 
 test('MCP: админ создаёт ключ, внешний клиент работает по scopes, отзыв ключа — 401', async ({
@@ -291,7 +300,7 @@ test('Telegram: подписка на заказ по ссылке через в
   const shopper = await browser.newPage();
   await fillCart(shopper, { [await pickProduct(request, 'NVMe')]: 1 });
   await checkout(shopper, { phone: uniquePhone(), method: 'cod' });
-  const number = /orders\/(RC-\d{4}-\d{6})/.exec(shopper.url())![1]!;
+  await expect(shopper).toHaveURL(/orders\/RC-\d{4}-\d{6}/);
 
   // Кнопка открывает t.me/<бот>?start=<токен> — перехватываем адрес вместо перехода
   await shopper.evaluate(() => {

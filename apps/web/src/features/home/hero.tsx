@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { OpenChatButton } from '@/features/chat/open-chat-button';
 import { Link } from '@/i18n/navigation';
 import { HeroVideo } from './hero-video';
 
@@ -31,10 +32,10 @@ export function Hero() {
         <span className="absolute top-[80%] left-0 h-px w-1/5 animate-speed-line bg-linear-to-r from-transparent via-white/30 to-transparent [animation-delay:2s]" />
       </div>
 
-      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] px-4 pt-16 pb-20 sm:px-6 md:pt-24 lg:px-8 lg:pb-28">
+      {/* Высота с запасом под видео: на широких экранах — почти весь первый экран, но не выше 700 px */}
+      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] content-center px-4 pt-16 pb-20 sm:px-6 md:min-h-[560px] md:pt-20 lg:min-h-[min(640px,calc(100svh-4rem))] lg:px-8 lg:pb-24">
         <div className="animate-fade-up space-y-7">
-          <p className="inline-flex items-center gap-3 label-caps text-brand-bright">
-            <span aria-hidden="true" className="h-px w-10 bg-brand-bright shadow-glow-sm" />
+          <p className="inline-flex rounded-full border border-brand/40 bg-brand/10 px-4 py-1.5 label-caps text-brand-bright shadow-glow-sm backdrop-blur-sm">
             {t('eyebrow')}
           </p>
           <h1 className="font-display text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
@@ -45,14 +46,12 @@ export function Hero() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Button asChild size="lg">
-              <Link href="/configurator">
+              <Link href="/catalog">
                 {t('ctaPrimary')}
                 <ArrowRightIcon />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline">
-              <Link href="/catalog">{t('ctaSecondary')}</Link>
-            </Button>
+            <OpenChatButton>{t('ctaSecondary')}</OpenChatButton>
           </div>
         </div>
       </div>

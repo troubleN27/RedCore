@@ -102,5 +102,13 @@
     "sizeLod1": 96572,
     "triangles": 55566,
     "trianglesLod1": 25654
+  },
+  "cooler_air": {
+    "lod0": "/models/cooler_air.glb",
+    "lod1": "/models/cooler_air-lod1.glb",
+    "sizeLod0": 215936,
+    "sizeLod1": 70152,
+    "triangles": 39984,
+    "trianglesLod1": 12030
   }
 }

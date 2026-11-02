@@ -1,3 +1,4 @@
+import type { PromoAppliesTo } from '@redcore/domain';
 import {
   bigint,
   boolean,
@@ -65,7 +66,7 @@ export const promoCodes = pgTable(
     perUserLimit: integer(),
     usedCount: integer().notNull().default(0),
     /** Ограничение по типам товаров; пусто — на весь заказ */
-    appliesTo: jsonb().$type<{ componentTypes?: string[] }>(),
+    appliesTo: jsonb().$type<PromoAppliesTo>(),
     description: jsonb().$type<LocalizedText>(),
     isActive: boolean().notNull().default(true),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),

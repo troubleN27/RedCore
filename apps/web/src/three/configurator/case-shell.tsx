@@ -2,9 +2,10 @@
 
 import type { ModelSpec } from '@redcore/domain';
 import { useFrame } from '@react-three/fiber';
-import { useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import type { PartMaterials } from '../materials';
+import { GlbPart } from './glb-part';
 
 const T = 0.004;
 
@@ -47,19 +48,40 @@ export function CaseShell({
   const baseOpacity = spec.glass ? 0.2 : 1;
   useEffect(() => () => panelMaterial.dispose(), [panelMaterial]);
 
+  const glass = useRef<THREE.Mesh[]>([]);
+  const collectGlass = useCallback(
+    (object: THREE.Object3D) => {
+      // Боковое стекло — прозрачные сетки со стороны зрителя (+Z); передняя сетка и верх остаются
+      const found: THREE.Mesh[] = [];
+      object.traverse((node) => {
+        if (!(node instanceof THREE.Mesh) || !(node.material as THREE.Material).transparent) return;
+        const center = new THREE.Box3().setFromObject(node).getCenter(new THREE.Vector3());
+        if (center.z > w / 4) found.push(node);
+      });
+      glass.current = found;
+    },
+    [w],
+  );
   useFrame((state, delta) => {
     const target = panelOff ? 1 : 0;
     const p = THREE.MathUtils.damp(progress.current, target, 7, instant ? 10 : delta);
     progress.current = Math.abs(p - target) < 0.002 ? target : p;
+    // Стекло скачанной модели корпуса исчезает, когда панель почти снята. Сетки three.js —
+    // изменяемые объекты сцены, их видимость меняется каждый кадр, как и у панели выше
+    // eslint-disable-next-line react-hooks/immutability
+    for (const glassMesh of glass.current) glassMesh.visible = progress.current < 0.5;
     const mesh = panel.current;
-    if (!mesh) return;
+    if (!mesh) {
+      if (progress.current !== target) state.invalidate();
+      return;
+    }
     mesh.position.z = w / 2 - 0.0015 + progress.current * 0.32;
     (mesh.material as THREE.Material).opacity = baseOpacity * (1 - progress.current);
     mesh.visible = progress.current < 0.99;
     if (progress.current !== target) state.invalidate();
   });
 
-  return (
+  const procedural = (
     <group>
       {/* Поддон платы — задняя стенка со стороны, противоположной стеклу */}
       <mesh position={[0, 0, -w / 2 + T / 2]} material={m.body} receiveShadow>
@@ -108,5 +130,16 @@ export function CaseShell({
         <cylinderGeometry args={[0.006, 0.006, 0.003, 24]} />
       </mesh>
     </group>
+  );
+
+  // Скачанная модель корпуса: стекло (прозрачные материалы) прячется, когда панель снята
+  return (
+    <GlbPart
+      glbKey={spec.glbKey}
+      size={spec.size}
+      m={m}
+      fallback={procedural}
+      onObject={collectGlass}
+    />
   );
 }

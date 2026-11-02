@@ -15,14 +15,15 @@ import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import { PriceTag } from '@/components/brand/price-tag';
 import { ProductArt } from '@/components/brand/product-art';
+import { hasProductPhoto, productPhotoUrl } from '@/components/brand/product-photos';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Breadcrumbs, breadcrumbJsonLd } from '@/features/catalog/breadcrumbs';
+import { groupOfCategory } from '@/features/catalog/groups';
 import { AddToCartButton, CompareButton, FavoriteButton } from '@/features/catalog/product-actions';
 import { ProductGrid } from '@/features/catalog/product-grid';
 import { formatSpecs } from '@/features/product/spec-format';
 import { ReviewForm, Stars } from '@/features/product/reviews';
-import { ProductViewer } from '@/features/product/product-viewer';
 import { SpecTable } from '@/features/product/spec-table';
 import { Link } from '@/i18n/navigation';
 import { absoluteUrl, jsonLdScript, localizedAlternates } from '@/lib/seo';
@@ -57,7 +58,14 @@ export async function generateMetadata({
       product.seoDescription ??
       t('metaDescription', { name, description: product.shortDescription, price }),
     alternates: localizedAlternates(locale, `/p/${slug}`),
-    openGraph: { type: 'website', title: name, description: product.shortDescription },
+    openGraph: {
+      type: 'website',
+      title: name,
+      description: product.shortDescription,
+      ...(hasProductPhoto(slug) && {
+        images: [{ url: productPhotoUrl(slug), width: 1200, height: 900, alt: name }],
+      }),
+    },
   };
 }
 
@@ -85,6 +93,11 @@ export default async function ProductPage({ params }: PageProps<'/[locale]/p/[sl
   const similar = getSimilarProducts(snapshot, summary);
   const categoryNames = new Map(snapshot.categories.map((c) => [c.componentType, c.name]));
   const fullName = `${product.brand} ${product.name}`;
+  const group = groupOfCategory(product.category.slug, snapshot.categories);
+  const groupCrumb =
+    group && group.categories.length > 1
+      ? { label: tc(`groups.${group.key}.name`), href: `/catalog/group/${group.key}` }
+      : null;
   const url = absoluteUrl(`/${locale}/p/${slug}`);
 
   const jsonLd = [
@@ -93,6 +106,7 @@ export default async function ProductPage({ params }: PageProps<'/[locale]/p/[sl
       '@type': 'Product',
       name: fullName,
       sku: product.sku,
+      ...(hasProductPhoto(product.slug) && { image: absoluteUrl(productPhotoUrl(product.slug)) }),
       description: product.shortDescription,
       brand: { '@type': 'Brand', name: product.brand },
       category: product.category.name,
@@ -109,6 +123,9 @@ export default async function ProductPage({ params }: PageProps<'/[locale]/p/[sl
     },
     breadcrumbJsonLd([
       { name: tc('home'), url: absoluteUrl(`/${locale}`) },
+      ...(groupCrumb
+        ? [{ name: groupCrumb.label, url: absoluteUrl(`/${locale}${groupCrumb.href}`) }]
+        : []),
       {
         name: product.category.name,
         url: absoluteUrl(`/${locale}/catalog/${product.category.slug}`),
@@ -125,23 +142,21 @@ export default async function ProductPage({ params }: PageProps<'/[locale]/p/[sl
         <Breadcrumbs
           items={[
             { label: tc('title'), href: '/catalog' },
+            ...(groupCrumb ? [groupCrumb] : []),
             { label: product.category.name, href: `/catalog/${product.category.slug}` },
             { label: product.name },
           ]}
         />
 
         <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
-          <ProductViewer
-            product={{ componentType: product.componentType, specs: product.specs }}
-            customUrl={product.model3d?.customUrl ?? null}
-            poster={
-              <ProductArt
-                type={product.componentType}
-                brand={product.brand}
-                size="lg"
-                className="h-full w-full rounded-none border-0"
-              />
-            }
+          <ProductArt
+            type={product.componentType}
+            brand={product.brand}
+            slug={product.slug}
+            alt={fullName}
+            size="lg"
+            priority
+            className="self-start rounded-2xl border-graphite-800 shadow-panel"
           />
 
           <div className="space-y-6">

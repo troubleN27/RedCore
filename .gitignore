@@ -35,3 +35,6 @@ next-server.log
 
 # Исходники видео для hero — на сайт идут только обработанные hero.mp4, hero-mobile.mp4 и hero-poster-blur.webp
 apps/web/public/videos/Gaming_PC_*
+
+# Исходные фото пользователя — на сайт идут только обработанные (products/, banners/, promos/, about/)
+apps/web/public/photos/

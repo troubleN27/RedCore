@@ -166,7 +166,8 @@ export const gameInputSchema = z.object({
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   name: z.string().trim().min(1).max(120),
   steamAppId: z.number().int().positive().nullable(),
-  coverUrl: z.url().nullable(),
+  // Ссылка на CDN или своя обложка с сайта (`/games/<slug>.jpg`)
+  coverUrl: z.union([z.url(), z.string().regex(/^\/[\w\-./]+$/)]).nullable(),
   hue: z.number().int().min(0).max(360),
   profile: z.enum(['aaa', 'competitive']),
   cpuAlpha: z.number().min(0.3).max(1.2),

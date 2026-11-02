@@ -29,6 +29,27 @@ test.describe('корзина и оформление', () => {
     await expect(page.getByTestId('order-totals')).toContainText('Скидка по промокоду');
   });
 
+  test('акция с главной: промокод комплекта требует процессор и плату', async ({
+    page,
+    request,
+  }) => {
+    await page.goto('/ru');
+    await expect(page.getByRole('heading', { name: 'Скидки и акции' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Скопировать промокод RYZENROG' })).toBeVisible();
+    const cpu = await pickProduct(request, 'Ryzen 7');
+    const board = await pickProduct(request, 'B850');
+    await fillCart(page, { [cpu]: 1 });
+    await page.goto('/ru/cart');
+    await page.getByLabel('Промокод').fill('ryzenrog');
+    await page.getByTestId('promo-apply').click();
+    await expect(page.getByTestId('promo-error')).toHaveText(/Условия акции не выполнены/);
+    await fillCart(page, { [cpu]: 1, [board]: 1 });
+    await page.goto('/ru/cart');
+    await page.getByLabel('Промокод').fill('RYZENROG');
+    await page.getByTestId('promo-apply').click();
+    await expect(page.getByTestId('promo-applied')).toContainText('RYZENROG');
+  });
+
   test('гость: самовывоз и оплата при получении', async ({ page, request }) => {
     await fillCart(page, { [await pickProduct(request, 'NVMe')]: 1 });
     await checkout(page, { phone: uniquePhone(), method: 'cod' });

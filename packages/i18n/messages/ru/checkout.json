@@ -35,8 +35,8 @@
   },
   "payment": {
     "card": "Картой онлайн",
-    "cardHint": "Visa, Mastercard · защищённая форма Stripe (тестовый режим)",
-    "cardMockHint": "Демо-оплата: деньги не списываются",
+    "cardHint": "Visa, Mastercard · защищённая форма Stripe",
+    "cardMockHint": "Visa, Mastercard · защищённая оплата картой",
     "cardDisabled": "Оплата картой сейчас недоступна",
     "cod": "При получении",
     "codHint": "Наличными, Uzcard или Humo — курьеру или в магазине",

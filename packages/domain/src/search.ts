@@ -56,6 +56,20 @@ export const categorySynonyms: Record<string, string[]> = {
   headset: ['наушники', 'гарнитура', 'quloqchin', 'headset'],
   mousepad: ['коврик', 'gilamcha', 'mousepad'],
   webcam: ['вебкамера', 'камера', 'kamera', 'webcam'],
+  laptop: [
+    'ноутбук',
+    'ноутбуки',
+    'ноут',
+    'макбук',
+    'noutbuk',
+    'noutbuklar',
+    'laptop',
+    'notebook',
+    'macbook',
+  ],
+  monitor_arm: ['кронштейн', 'кронштейны', 'держатель', 'kronshteyn', 'arm'],
+  chair: ['кресло', 'кресла', 'стул', 'kreslo', 'stul', 'chair'],
+  desk: ['стол', 'столы', 'stol', 'desk'],
   prebuilt: ['готовый', 'сборка', 'компьютер', 'пк', 'kompyuter', 'tayyor'],
 };
 

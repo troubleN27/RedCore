@@ -2,10 +2,10 @@ import { getDb } from '@redcore/db';
 import { formatPrice, isLocale, locales } from '@redcore/i18n';
 import { getMessages } from '@redcore/i18n/messages';
 import { loadZones } from '@redcore/services';
-import { InfoIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { TextBody } from '@/features/help/text-body';
 import { Link } from '@/i18n/navigation';
 import { localizedAlternates } from '@/lib/seo';
 import { cn } from '@/lib/utils';
@@ -37,28 +37,6 @@ export async function generateMetadata({
     description: t(`${topic}.intro`),
     alternates: localizedAlternates(locale, `/help/${topic}`),
   };
-}
-
-/** Абзацы через перевод строки; строки с «— » — пункты списка. */
-function Body({ text }: { text: string }) {
-  const lines = text.split('\n');
-  const items = lines.filter((line) => line.startsWith('— '));
-  if (items.length === lines.length) {
-    return (
-      <ul className="list-disc space-y-1.5 pl-5 text-steel-300">
-        {items.map((line) => (
-          <li key={line}>{line.slice(2)}</li>
-        ))}
-      </ul>
-    );
-  }
-  return (
-    <div className="space-y-2 text-steel-300">
-      {lines.map((line) => (
-        <p key={line}>{line}</p>
-      ))}
-    </div>
-  );
 }
 
 async function Zones({ locale }: { locale: 'ru' | 'uz' }) {
@@ -135,24 +113,19 @@ export default async function HelpPage({ params }: PageProps<'/[locale]/help/[to
         <header className="space-y-3">
           <h1 className="font-display text-3xl font-bold tracking-tight">{t(`${topic}.title`)}</h1>
           <p className="text-lg text-steel-300">{t(`${topic}.intro`)}</p>
-          <p className="flex items-start gap-2 rounded-md border border-info/30 bg-info/5 px-3 py-2 text-xs text-steel-300">
-            <InfoIcon className="mt-0.5 size-4 shrink-0 text-info" />
-            {t('page.demo')}
-          </p>
         </header>
 
         {sections.map((section) => (
           <section key={section.title} className="space-y-3">
             <h2 className="text-lg font-semibold">{section.title}</h2>
-            <Body text={section.body} />
+            <TextBody text={section.body} />
           </section>
         ))}
 
         {topic === 'delivery' && <Zones locale={locale} />}
 
-        <footer className="space-y-1 border-t border-graphite-800 pt-6 text-sm text-steel-400">
+        <footer className="border-t border-graphite-800 pt-6 text-sm text-steel-400">
           <p>{t('page.contacts')}</p>
-          <p className="text-xs">{t('page.updated')}</p>
         </footer>
       </article>
     </div>

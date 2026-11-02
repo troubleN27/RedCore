@@ -10,7 +10,10 @@ export interface ProductSeed<T extends ComponentType = ComponentType> {
   brand: string;
   /** Модель без бренда: «Ryzen 7 9800X3D» */
   name: string;
-  /** Розничная цена в долларах — пересчитывается в сумы по курсу seed */
+  /**
+   * Цена в долларах — пересчитывается в сумы по курсу seed, если товара нет
+   * в `market-prices.ts` (цены магазинов Ташкента)
+   */
   usd: number;
   /** Цена до скидки в долларах, если товар со скидкой */
   compareAtUsd?: number;
@@ -20,6 +23,8 @@ export interface ProductSeed<T extends ComponentType = ComponentType> {
   perfKey?: string;
   warrantyMonths?: number;
   featured?: boolean;
+  /** Раздел, если у типа их несколько (офисные мониторы, ноутбуки для работы) */
+  category?: string;
 }
 
 export function products<T extends ComponentType>(

@@ -18,6 +18,7 @@
 | WD Green 1TB | MG990 | CC BY 4.0 | https://sketchfab.com/3d-models/e9244f56e0724dd097570e29bae4b7c6 | прорежение до 20000 треугольников, LOD1, текстуры WebP, meshopt-сжатие, масштаб в метрах, замена материалов |
 | PSU Power Supply Unit | Groovex | CC BY 4.0 | https://sketchfab.com/3d-models/69ccd1be3a77497cb2acc9e39e7c52b3 | прорежение до 12000 треугольников, LOD1, текстуры WebP, meshopt-сжатие, масштаб в метрах, замена материалов |
 | Lian Li UNI FAN SL120 RGB Black | DIEKO | CC BY 4.0 | https://sketchfab.com/3d-models/5abd0d8e89ea4241b7216f4b6d5a2ca4 | прорежение до 4600 треугольников, LOD1, текстуры WebP, meshopt-сжатие, масштаб в метрах, замена материалов |
+| Cooler Master CPU Cooler | BlenderFace1 | CC BY 4.0 | https://sketchfab.com/3d-models/e54651982f524644a2144b52a6b36e89 | прорежение до 40000 треугольников, LOD1, текстуры WebP, meshopt-сжатие, масштаб в метрах, замена материалов |
 | Fractal Design Meshify C | MUSHROOM_BUILDS | CC BY 4.0 | https://sketchfab.com/3d-models/a46526af2ac84fa098edc3f01c012450 | прорежение до 60000 треугольников, LOD1, текстуры WebP, meshopt-сжатие, масштаб в метрах, замена материалов |
 | Inter (PDF и OG-картинки) | Rasmus Andersson | SIL Open Font License 1.1 | https://github.com/rsms/inter | без изменений, файлы WOFF из пакета inter-ui |
 | Unbounded (заголовки) | NaN Studio | SIL Open Font License 1.1 | https://fonts.google.com/specimen/Unbounded | без изменений, подключается через next/font |

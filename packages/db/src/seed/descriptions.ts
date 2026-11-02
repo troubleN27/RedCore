@@ -300,6 +300,96 @@ function webcam(p: CatalogProduct<'webcam'>, l: Locale) {
       ]);
 }
 
+const laptopOs: Record<string, Dict> = {
+  windows: { ru: 'Windows 11', uz: 'Windows 11' },
+  macos: { ru: 'macOS', uz: 'macOS' },
+  none: { ru: 'без ОС', uz: 'OT siz' },
+};
+
+function laptop(p: CatalogProduct<'laptop'>, l: Locale) {
+  const s = p.specs;
+  const screen = `${n(s.screenInch, l, 1)}″ ${s.resolution.width}×${s.resolution.height} ${s.panel} ${s.refreshHz} ${l === 'ru' ? 'Гц' : 'Hz'}`;
+  return join([
+    s.cpu,
+    s.gpu,
+    `${s.ramGb} ${l === 'ru' ? 'ГБ' : 'GB'} RAM`,
+    `SSD ${capacity(s.storageGb, l)}`,
+    screen,
+    `${n(s.weightKg, l, 2)} ${l === 'ru' ? 'кг' : 'kg'}`,
+    laptopOs[s.os]![l],
+  ]);
+}
+
+const armMount: Record<string, Dict> = {
+  clamp: { ru: 'струбцина', uz: 'qisqich' },
+  grommet: { ru: 'крепление через отверстие', uz: 'teshik orqali mahkamlash' },
+  'clamp-grommet': { ru: 'струбцина или отверстие', uz: 'qisqich yoki teshik' },
+  wall: { ru: 'на стену', uz: 'devorga' },
+};
+
+function monitorArm(p: CatalogProduct<'monitor_arm'>, l: Locale) {
+  const s = p.specs;
+  return l === 'ru'
+    ? join([
+        s.monitors === 1 ? 'на 1 монитор' : `на ${s.monitors} монитора`,
+        `до ${s.maxSizeInch}″`,
+        `до ${n(s.maxLoadKg, l, 1)} кг на монитор`,
+        armMount[s.mount]!.ru,
+        s.gasSpring && 'газлифт',
+      ])
+    : join([
+        `${s.monitors} ta monitor uchun`,
+        `${s.maxSizeInch}″ gacha`,
+        `har monitorga ${n(s.maxLoadKg, l, 1)} kg gacha`,
+        armMount[s.mount]!.uz,
+        s.gasSpring && 'gazlift',
+      ]);
+}
+
+const chairMaterial: Record<string, Dict> = {
+  'eco-leather': { ru: 'экокожа', uz: 'ekoteri' },
+  leather: { ru: 'натуральная кожа', uz: 'tabiiy teri' },
+  fabric: { ru: 'ткань', uz: 'mato' },
+  mesh: { ru: 'сетка', uz: 'toʻr' },
+};
+
+function chair(p: CatalogProduct<'chair'>, l: Locale) {
+  const s = p.specs;
+  return l === 'ru'
+    ? join([
+        chairMaterial[s.material]!.ru,
+        `подлокотники ${s.armrests.toUpperCase()}`,
+        `наклон до ${s.reclineDeg}°`,
+        `нагрузка до ${s.maxLoadKg} кг`,
+        s.lumbar && 'поясничная поддержка',
+        s.footrest && 'подставка для ног',
+      ])
+    : join([
+        chairMaterial[s.material]!.uz,
+        `${s.armrests.toUpperCase()} tirsaklik`,
+        `${s.reclineDeg}° gacha egilish`,
+        `${s.maxLoadKg} kg gacha yuk`,
+        s.lumbar && 'bel tayanchi',
+        s.footrest && 'oyoq tayanchi',
+      ]);
+}
+
+const deskHeight: Record<string, Dict> = {
+  fixed: { ru: 'фиксированная высота', uz: 'qatʼiy balandlik' },
+  manual: { ru: 'регулировка высоты', uz: 'balandlikni sozlash' },
+  electric: { ru: 'электропривод высоты', uz: 'elektr balandlik sozlagichi' },
+};
+
+function desk(p: CatalogProduct<'desk'>, l: Locale) {
+  const s = p.specs;
+  const mm = l === 'ru' ? 'мм' : 'mm';
+  return join([
+    `${s.widthMm}×${s.depthMm} ${mm}`,
+    deskHeight[s.heightAdjust]![l],
+    s.rgb && (l === 'ru' ? 'RGB-подсветка' : 'RGB yoritish'),
+  ]);
+}
+
 /** Описание готовой сборки собирается из её компонентов. */
 export function describePrebuilt(components: AnyCatalogProduct[], l: Locale): string {
   const pick = (type: string) => components.find((c) => c.componentType === type);
@@ -350,6 +440,14 @@ export function describe(product: AnyCatalogProduct, locale: Locale): string {
       return mousepad(product, locale);
     case 'webcam':
       return webcam(product, locale);
+    case 'laptop':
+      return laptop(product, locale);
+    case 'monitor_arm':
+      return monitorArm(product, locale);
+    case 'chair':
+      return chair(product, locale);
+    case 'desk':
+      return desk(product, locale);
     case 'prebuilt':
       return '';
   }

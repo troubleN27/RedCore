@@ -7,7 +7,8 @@ import { deliveryZones, promoCodes, services } from './data/commerce';
 import { demoReviews } from './data/reviews';
 import { customerPassword, demoUsers, staffPassword } from './data/users';
 import { hashPassword } from '@better-auth/utils/password';
-import { games as gameSeeds, steamCover } from './data/games';
+import { games as gameSeeds } from './data/games';
+import { insertGames } from './games';
 import { cpuPerf, gpuPerf } from './data/perf';
 import { seedRate } from './pricing';
 
@@ -209,56 +210,7 @@ export async function seedDatabase(db: SeedDb, rate = seedRate()): Promise<SeedS
       });
 
     // ── Игры калькулятора FPS ──
-    // Только добавление: коэффициенты и замеры, исправленные в консоли или калибровкой, seed не затирает
-    const gameRows = await tx
-      .insert(schema.games)
-      .values(
-        gameSeeds.map((g) => ({
-          slug: g.slug,
-          name: g.name,
-          steamAppId: g.steamAppId,
-          coverUrl: steamCover(g.steamAppId),
-          hue: g.hue,
-          profile: g.profile,
-          cpuAlpha: g.cpuAlpha,
-          vendorBias: g.vendorBias,
-          ramMinGb: g.ramMinGb,
-          ramRecGb: g.ramRecGb,
-          supports: g.supports,
-          thresholds: g.thresholds,
-          lowRatio: g.lowRatio,
-          fpsCap: g.fpsCap,
-          sort: g.sort,
-        })),
-      )
-      .onConflictDoNothing({ target: schema.games.slug })
-      .returning({ id: schema.games.id, slug: schema.games.slug });
-    const newGames = new Map(gameRows.map((row) => [row.slug, row.id]));
-    const fresh = gameSeeds.filter((g) => newGames.has(g.slug));
-    if (fresh.length > 0) {
-      await tx.insert(schema.gameBenchmarks).values(
-        fresh.flatMap((g) =>
-          (['1080p', '1440p', '2160p'] as const).flatMap((resolution) =>
-            (['low', 'medium', 'high', 'ultra'] as const).map((preset) => ({
-              gameId: newGames.get(g.slug)!,
-              resolution,
-              preset,
-              refFpsGpu: g.gpuFps[resolution][preset],
-              vramReqGb: g.vramGb[resolution][preset],
-            })),
-          ),
-        ),
-      );
-      await tx.insert(schema.gameCpuCaps).values(
-        fresh.flatMap((g) =>
-          (['low', 'medium', 'high', 'ultra'] as const).map((preset) => ({
-            gameId: newGames.get(g.slug)!,
-            preset,
-            refFpsCpu: g.cpuFps[preset],
-          })),
-        ),
-      );
-    }
+    await insertGames(tx);
 
     // ── Товары ──
     const productRows = await tx

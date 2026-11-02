@@ -1,9 +1,6 @@
 {
   "title": "Katalog",
   "subtitle": "Moslik tekshiruvi bilan butlovchi qismlar, periferiya va tayyor kompyuterlar.",
-  "components": "Butlovchi qismlar",
-  "peripherals": "Periferiya",
-  "prebuilt": "Tayyor kompyuterlar",
   "fromPrice": "{price} dan",
   "productCount": "{count, plural, other {# ta mahsulot}}",
   "found": "Topildi: {count, plural, other {# ta mahsulot}}",
@@ -39,5 +36,42 @@
   "home": "Bosh sahifa",
   "metaCategory": "{name} — Toshkentda {price} dan sotib olish | RedCore",
   "metaCategoryDescription": "{name} mavjud: moslik tekshiruvi, Oʻzbekiston boʻylab yetkazib berish va kafolat bilan {count, plural, other {# ta mahsulot}}.",
-  "productsHeading": "Mahsulotlar"
+  "productsHeading": "Mahsulotlar",
+  "groups": {
+    "components": {
+      "name": "Butlovchi qismlar",
+      "description": "Kompyuter yigʻish uchun hamma narsa: protsessorlar, videokartalar, platalar, xotira, xotira qurilmalari, quvvat va sovutish."
+    },
+    "monitors": {
+      "name": "Monitorlar",
+      "description": "Oʻyin va ofis monitorlari, qulay ish joyi uchun kronshteynlar."
+    },
+    "peripherals": {
+      "name": "Periferiya",
+      "description": "Klaviaturalar, sichqonchalar, garnituralar, gilamchalar va veb-kameralar."
+    },
+    "laptops": {
+      "name": "Noutbuklar",
+      "description": "Oʻyin noutbuklari hamda ish va oʻqish uchun noutbuklar."
+    },
+    "furniture": {
+      "name": "Geymer mebeli",
+      "description": "Uzoq oʻyin seanslari va ish uchun oʻyin kreslolari va stollari."
+    },
+    "prebuilt": {
+      "name": "Tayyor kompyuterlar",
+      "description": "RedCore tomonidan yigʻilgan va sinovdan oʻtgan kompyuterlar."
+    }
+  },
+  "viewAll": "Barchasini koʻrish",
+  "menuLabel": "Katalog boʻlimlari",
+  "allCatalog": "Butun katalog",
+  "popularInGroup": "«{name}» boʻlimida mashhur",
+  "showMore": "Yana {count}",
+  "showLess": "Yigʻish",
+  "activeFilters": "Tanlangan filtrlar",
+  "removeFilter": "«{label}» filtrini olib tashlash",
+  "resetAll": "Hammasini tozalash",
+  "rangeChip": "{label}: {range}",
+  "openGroup": "«{name}» boʻlimini ochish"
 }

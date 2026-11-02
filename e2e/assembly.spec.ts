@@ -8,7 +8,7 @@ function assembly(page: Page) {
 
 /** Совместимая сборка: в каждом шаге — первая деталь из списка «только совместимые». */
 async function fillBuild(page: Page) {
-  await page.goto('/ru/configurator');
+  await page.goto('/ru/configurator?demo=0');
   await page.evaluate(() => localStorage.removeItem('redcore-configurator'));
   await page.reload();
   await expect(page.getByTestId('configurator')).toHaveAttribute('data-hydrated', 'true', {
@@ -78,23 +78,26 @@ test.describe('3D-сборка в конфигураторе', () => {
     const elapsed = await swapGpu(page);
     expect(elapsed).toBeLessThan(300);
 
-    for (const mode of ['panel', 'exploded', 'focus', 'normal']) {
+    for (const mode of ['panel', 'exploded', 'normal']) {
       await scene.getByTestId(`scene-mode-${mode}`).click();
       await expect(scene).toHaveAttribute('data-mode', mode);
     }
-    await scene.getByTestId('scene-quality').selectOption('low');
-    await expect(scene).toHaveAttribute('data-quality', 'low');
-
     const download = page.waitForEvent('download');
     await scene.getByTestId('scene-snapshot').click();
     expect((await download).suggestedFilename()).toBe('redcore-build.png');
+
+    // Сброс сборки — с подтверждением; после него кнопка пропадает
+    page.once('dialog', (dialog) => dialog.accept());
+    await scene.getByTestId('scene-reset').click();
+    await expect(scene.getByTestId('scene-reset')).toHaveCount(0);
     expect(errors).toEqual([]);
   });
 
   test('50 замен деталей не копят геометрии и текстуры в GPU', async ({ page }) => {
+    // Скачанные модели в программном WebGL headless-браузера рисуются заметно дольше схематичных
+    test.setTimeout(300_000);
     await fillBuild(page);
     const scene = await openScene(page);
-    await scene.getByTestId('scene-quality').selectOption('low');
     await page.getByTestId('step-gpu').click();
     await scene.scrollIntoViewIfNeeded();
 

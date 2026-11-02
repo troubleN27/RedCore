@@ -1,13 +1,17 @@
 import { isLocale } from '@redcore/i18n';
-import { getFeaturedProducts, getPrebuilts } from '@redcore/services';
-import { ArrowRightIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { CategoryTile } from '@/features/catalog/category-tile';
+import { CatalogMosaic } from '@/features/catalog/catalog-mosaic';
 import { ProductGrid } from '@/features/catalog/product-grid';
-import { Features } from '@/features/home/features';
+import { AboutTeaser } from '@/features/home/about-teaser';
+import { getBestsellers } from '@/features/home/bestsellers';
+import { BannerMosaic } from '@/features/home/banner-mosaic';
+import { ConfiguratorShowcase } from '@/features/home/configurator-showcase';
 import { Hero } from '@/features/home/hero';
-import { Link } from '@/i18n/navigation';
+import { HomeReviews } from '@/features/home/home-reviews';
+import { Promotions } from '@/features/home/promotions';
+import { homeSection, SectionHeader } from '@/features/home/section-header';
+import { cn } from '@/lib/utils';
 import { getChipNames, getSnapshot } from '@/server/catalog';
 
 export const revalidate = 300;
@@ -20,54 +24,38 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
     getChipNames(),
     getTranslations({ locale, namespace: 'shop.home' }),
   ]);
-  const prebuilts = getPrebuilts(snapshot);
 
   return (
     <>
       <Hero />
-      <Features />
-      <section className="mx-auto mt-16 max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
-            {t('categoriesTitle')}
-          </h2>
-          <Link
-            href="/catalog"
-            className="inline-flex items-center gap-1 text-sm text-brand-bright hover:underline"
-          >
-            {t('allCatalog')}
-            <ArrowRightIcon className="size-4" />
-          </Link>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {snapshot.categories
-            .filter((c) => c.kind === 'component')
-            .map((category) => (
-              <CategoryTile key={category.slug} category={category} />
-            ))}
-        </div>
+      <section className={cn(homeSection, 'space-y-6')}>
+        <SectionHeader
+          title={t('categoriesTitle')}
+          subtitle={t('categoriesSubtitle')}
+          link={{ href: '/catalog', label: t('allCatalog') }}
+        />
+        <CatalogMosaic snapshot={snapshot} />
       </section>
-      <section className="mx-auto mt-16 max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
-        <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
-          {t('featuredTitle')}
-        </h2>
-        <ProductGrid products={getFeaturedProducts(snapshot, 8)} chipNames={chipNames} />
+      <section className={cn(homeSection, 'space-y-6')}>
+        <SectionHeader
+          title={t('featuredTitle')}
+          link={{ href: '/catalog', label: t('allCatalog') }}
+        />
+        <ProductGrid
+          products={getBestsellers(snapshot)}
+          chipNames={chipNames}
+          reveal
+          scrollOnMobile
+        />
       </section>
-      <section className="mx-auto mt-16 max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
-            {t('prebuiltTitle')}
-          </h2>
-          <Link
-            href="/prebuilt"
-            className="inline-flex items-center gap-1 text-sm text-brand-bright hover:underline"
-          >
-            {t('allPrebuilt')}
-            <ArrowRightIcon className="size-4" />
-          </Link>
-        </div>
-        <ProductGrid products={prebuilts.slice(0, 4)} chipNames={chipNames} priorityCount={0} />
+      <ConfiguratorShowcase />
+      <section className={cn(homeSection, 'space-y-6')}>
+        <SectionHeader title={t('bannersTitle')} link={{ href: '/new', label: t('allNew') }} />
+        <BannerMosaic />
       </section>
+      <Promotions />
+      <AboutTeaser />
+      <HomeReviews locale={locale} />
     </>
   );
 }

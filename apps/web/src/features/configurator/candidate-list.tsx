@@ -224,6 +224,7 @@ export function CandidateList({
                   <ProductArt
                     type={product.componentType}
                     brand={product.brand}
+                    slug={product.slug}
                     size="sm"
                     className="w-16 shrink-0"
                   />

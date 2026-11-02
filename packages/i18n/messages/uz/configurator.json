@@ -48,8 +48,6 @@
     "remove": "Olib tashlash",
     "increase": "Yana bittasini qoʻshish",
     "decrease": "Bittasini olib tashlash",
-    "clear": "Tozalash",
-    "clearConfirm": "Yigʻma tozalansinmi? Tanlangan qismlar oʻchiriladi.",
     "save": "Saqlash va ulashish",
     "saved": "Saqlandi",
     "saving": "Saqlanmoqda…",
@@ -112,32 +110,20 @@
   },
   "scene": {
     "title": "3D-yigʻma",
-    "hint": "Sahna yigʻmangizni takrorlaydi: detalni tanlang — u oʻz joyiga oʻrnatiladi. Sichqoncha yoki barmoq bilan aylantiring.",
     "show": "3D ni koʻrsatish",
-    "hide": "3D ni yashirish",
     "loading": "3D sahna yigʻilmoqda…",
     "unsupported": "Bu qurilmada 3D mavjud emas: WebGL qoʻllab-quvvatlanmaydi.",
     "lost": "Videokarta 3D sahnani qayta yukladi — tiklanmoqda…",
-    "schematic": "Detallar xususiyatlari boʻyicha sxematik modellar",
     "modes": {
       "label": "Koʻrinish rejimi",
       "normal": "Oddiy",
       "panel": "Panelsiz",
-      "exploded": "Ajratish",
-      "focus": "Ajratib koʻrsatish"
-    },
-    "overview": "Umumiy koʻrinish",
-    "rgb": "RGB yorugʻlik",
-    "rgbColor": "Yorugʻlik rangi",
-    "quality": "Sifat",
-    "qualities": {
-      "high": "Yuqori",
-      "medium": "Oʻrta",
-      "low": "Past"
+      "exploded": "Ajratish"
     },
     "snapshot": "PNG surat",
     "snapshotDone": "Yigʻma surati saqlandi",
-    "defaultCase": "Korpus tanlanmagan — shartli mid-tower koʻrsatilgan",
-    "outOfCase": "Korpusga sigʻmaydigan detallar qizil chiziq bilan belgilangan"
+    "outOfCase": "Korpusga sigʻmaydigan detallar qizil chiziq bilan belgilangan",
+    "reset": "Yigʻmani tozalash",
+    "resetConfirm": "Yigʻma tozalansinmi? Tanlangan barcha qismlar oʻchiriladi."
   }
 }

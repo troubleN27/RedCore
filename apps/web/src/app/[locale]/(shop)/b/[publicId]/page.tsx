@@ -98,6 +98,7 @@ export default async function SharedBuildPage({ params }: PageProps<'/[locale]/b
                 <ProductArt
                   type={line.product.componentType}
                   brand={line.product.brand}
+                  slug={line.product.slug}
                   size="sm"
                   className="w-16 shrink-0"
                 />

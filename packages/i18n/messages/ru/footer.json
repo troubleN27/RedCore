@@ -1,13 +1,32 @@
 {
+  "company": "REDCORE",
+  "about": "О нас",
+  "contacts": "Контакты",
+  "why": "Почему RedCore?",
+  "offer": "Публичная оферта",
+  "privacy": "Политика конфиденциальности",
   "shop": "Магазин",
   "help": "Помощь",
   "delivery": "Доставка",
   "payment": "Оплата",
   "warranty": "Гарантия",
   "returns": "Возврат",
-  "contacts": "Контакты",
+  "faq": "FAQ",
+  "phonesTitle": "Телефоны и адреса",
+  "phones": {
+    "sales": "Отдел продаж",
+    "service": "Сервисный центр",
+    "orders": "Поддержка заказов"
+  },
+  "showroom": "Шоурум",
+  "showroomAddress": "Ташкент, Мирабадский район",
   "address": "Ташкент, Узбекистан",
   "hours": "Ежедневно с 10:00 до 20:00",
   "rights": "© {year} RedCore. Все права защищены.",
-  "demo": "Демонстрационный проект: оплата работает в тестовом режиме Stripe."
+  "socialTitle": "Мы в соцсетях",
+  "social": {
+    "instagram": "RedCore в Instagram",
+    "youtube": "RedCore на YouTube",
+    "telegram": "RedCore в Telegram"
+  }
 }

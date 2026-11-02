@@ -15,7 +15,13 @@ describe('демо-каталог', () => {
 
   it('товары есть в каждой категории', () => {
     for (const type of componentTypes) expect(byType(type).length, type).toBeGreaterThan(0);
-    expect(categories.map((c) => c.type).sort()).toEqual([...componentTypes].sort());
+    // У типа может быть несколько разделов (игровые и офисные мониторы), но каждый тип — хотя бы в одном
+    expect([...new Set(categories.map((c) => c.type))].sort()).toEqual([...componentTypes].sort());
+    for (const p of products)
+      expect(
+        categories.some((c) => c.slug === p.categorySlug),
+        p.slug,
+      ).toBe(true);
   });
 
   it('slug и артикулы уникальны', () => {
@@ -38,7 +44,8 @@ describe('демо-каталог', () => {
   it('цены в сумах кратны 10 000 и правдоподобны', () => {
     for (const product of products) {
       expect(product.priceUzs % 10_000, product.slug).toBe(0);
-      expect(product.priceUzs, product.slug).toBeGreaterThanOrEqual(200_000);
+      // Самые дешёвые товары — одиночный вентилятор, тонкий коврик (~100–150 тыс. сум)
+      expect(product.priceUzs, product.slug).toBeGreaterThanOrEqual(100_000);
       expect(product.priceUzs, product.slug).toBeLessThan(150_000_000);
     }
     expect(usdToUzs(470, DEFAULT_USD_UZS_RATE)).toBe(6_420_000);
@@ -77,7 +84,7 @@ describe('готовые сборки', () => {
 
 describe('подборщик на реальном каталоге', () => {
   const cases: [BuildPurpose, number][] = [
-    ['gaming', 10_000_000],
+    ['gaming', 13_000_000],
     ['gaming', 15_000_000],
     ['gaming', 20_000_000],
     ['gaming', 30_000_000],

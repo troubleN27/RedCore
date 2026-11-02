@@ -88,6 +88,39 @@ describe('computeQuote', () => {
     expect(onlyCpu.promo).toEqual({ code: 'REDCORE10', applied: false, error: 'not_applicable' });
   });
 
+  it('промокод на комплект: нужны все категории из условия', () => {
+    const board = { productId: 'mb', componentType: 'motherboard', priceUzs: 3_000_000, qty: 1 };
+    const kit = promo({
+      appliesTo: {
+        componentTypes: ['cpu', 'motherboard'],
+        requiresComponentTypes: ['cpu', 'motherboard'],
+      },
+    });
+    const full = computeQuote({ lines: [cpu, board, mouse], zone: pickup, promo: kit });
+    expect(full.promo).toEqual({ code: 'REDCORE10', applied: true });
+    expect(full.discountUzs).toBe(Math.floor((6_420_000 + 3_000_000) * 0.1));
+    expect(full.lineDiscounts[2]).toBe(0);
+    const onlyCpu = computeQuote({ lines: [cpu, mouse], zone: pickup, promo: kit });
+    expect(onlyCpu.promo).toEqual({ code: 'REDCORE10', applied: false, error: 'requires_items' });
+    expect(onlyCpu.discountUzs).toBe(0);
+  });
+
+  it('подарок при покупке: скидка на коврик только вместе с мышью', () => {
+    const pad = { productId: 'pad', componentType: 'mousepad', priceUzs: 500_000, qty: 1 };
+    const gift = promo({
+      value: 100,
+      maxDiscountUzs: 1_000_000,
+      appliesTo: { componentTypes: ['mousepad'], requiresComponentTypes: ['mouse'] },
+    });
+    const withMouse = computeQuote({ lines: [mouse, pad], zone: pickup, promo: gift });
+    expect(withMouse.discountUzs).toBe(500_000);
+    expect(withMouse.lineDiscounts).toEqual([0, 500_000]);
+    const padOnly = computeQuote({ lines: [pad], zone: pickup, promo: gift });
+    expect(padOnly.promo).toEqual({ code: 'REDCORE10', applied: false, error: 'requires_items' });
+    const mouseOnly = computeQuote({ lines: [mouse], zone: pickup, promo: gift });
+    expect(mouseOnly.promo).toEqual({ code: 'REDCORE10', applied: false, error: 'not_applicable' });
+  });
+
   it('фиксированная скидка не больше суммы', () => {
     const q = computeQuote({
       lines: [{ ...cpu, priceUzs: 100_000 }],

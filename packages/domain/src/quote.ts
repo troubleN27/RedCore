@@ -33,8 +33,18 @@ export interface QuotePromo {
   usageLimit: number | null;
   perUserLimit: number | null;
   usedCount: number;
-  appliesTo: { componentTypes?: string[] } | null;
+  appliesTo: PromoAppliesTo | null;
   isActive: boolean;
+}
+
+/**
+ * componentTypes — на какие категории даётся скидка (пусто — на весь заказ);
+ * requiresComponentTypes — категории, каждая из которых должна быть в заказе
+ * («комплект процессор + плата», «коврик в подарок к мыши»).
+ */
+export interface PromoAppliesTo {
+  componentTypes?: string[];
+  requiresComponentTypes?: string[];
 }
 
 export type PromoError =
@@ -45,7 +55,8 @@ export type PromoError =
   | 'min_order'
   | 'usage_limit'
   | 'per_user_limit'
-  | 'not_applicable';
+  | 'not_applicable'
+  | 'requires_items';
 
 export interface QuoteInput {
   lines: QuoteLine[];
@@ -116,7 +127,12 @@ export function computeQuote({
       !types || types.length === 0 || types.includes(line.componentType) ? lineTotals[i]! : 0,
     );
     const eligibleSubtotal = eligible.reduce((a, b) => a + b, 0);
-    const error = validatePromo(promo, eligibleSubtotal, subtotalUzs, promoUsedByCustomer, now);
+    const required = promo.appliesTo?.requiresComponentTypes ?? [];
+    const error =
+      validatePromo(promo, eligibleSubtotal, subtotalUzs, promoUsedByCustomer, now) ??
+      (required.every((type) => lines.some((line) => line.componentType === type))
+        ? null
+        : 'requires_items');
     if (error) promoResult = { code: promo.code, applied: false, error };
     else {
       discountUzs = promoDiscount(promo, eligibleSubtotal);

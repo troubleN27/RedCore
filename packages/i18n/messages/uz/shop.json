@@ -1,6 +1,6 @@
 {
   "search": {
-    "placeholder": "Qidiruv: RTX 5070, Ryzen 7, DDR5…",
+    "placeholder": "Qidirish…",
     "label": "Katalog boʻyicha qidiruv",
     "open": "Qidiruvni ochish",
     "products": "Mahsulotlar",
@@ -32,12 +32,17 @@
     "title": "RedCore tayyor kompyuterlari",
     "subtitle": "Tekshirilgan qismlardan yigʻmalar: moslik, sovutish va quvvat bloki zaxira bilan tanlangan. Har birini konfiguratorda ochib, oʻzgartirish mumkin."
   },
+  "newPage": {
+    "title": "Yangiliklar",
+    "subtitle": "Soʻnggi avlod texnikasi: RTX 50 va Radeon RX 9000 videokartalari, Ryzen 9000 va Core Ultra protsessorlari, yangi chipsetli platalar va OLED monitorlar."
+  },
   "home": {
-    "categoriesTitle": "Toifalar",
+    "categoriesTitle": "Katalog",
+    "bannersTitle": "Yangiliklar va brendlar",
     "featuredTitle": "Eng koʻp sotilganlar",
-    "prebuiltTitle": "Tayyor kompyuterlar",
     "allCatalog": "Butun katalog",
-    "allPrebuilt": "Barcha yigʻmalar"
+    "allNew": "Barcha yangiliklar",
+    "categoriesSubtitle": "Butlovchi qismlar, periferiya va tayyor kompyuterlar — boʻlimni tanlang"
   },
   "header": {
     "cart": "Savat",

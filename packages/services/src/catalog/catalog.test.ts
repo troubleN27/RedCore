@@ -30,7 +30,8 @@ afterAll(async () => {
 
 describe('снимок каталога', () => {
   it('категории с переводами и счётчиками', () => {
-    expect(ru.categories).toHaveLength(16);
+    // Включая разделы мониторов, ноутбуков и мебели (у монитора и ноутбука их по два)
+    expect(ru.categories).toHaveLength(22);
     const gpu = ru.categories.find((c) => c.slug === 'gpu')!;
     expect(gpu.name).toBe('Видеокарты');
     expect(uz.categories.find((c) => c.slug === 'gpu')!.name).toBe('Videokartalar');
@@ -107,8 +108,26 @@ describe('страница категории', () => {
     expect(page.items).toHaveLength(4);
   });
 
+  it('цена и производитель есть в каждом разделе и фильтруют товары', () => {
+    const all = listCategoryPage(ru, 'gpu', {})!;
+    expect(all.facets.map((f) => f.key).slice(0, 2)).toEqual(['price', 'brand']);
+    const asus = listCategoryPage(ru, 'gpu', { brand: 'ASUS', price: '-20000000' })!;
+    expect(asus.total).toBeGreaterThan(0);
+    expect(asus.total).toBeLessThan(all.total);
+    for (const item of asus.items) {
+      expect(item.brand).toBe('ASUS');
+      expect(item.priceUzs).toBeLessThanOrEqual(20_000_000);
+    }
+  });
+
+  it('разрешение монитора фильтруется как «2560x1440»', () => {
+    const qhd = listCategoryPage(ru, 'monitors', { resolution: '2560x1440' })!;
+    expect(qhd.total).toBeGreaterThan(0);
+    expect(qhd.facets.find((f) => f.key === 'resolution')!.values!.length).toBeGreaterThan(1);
+  });
+
   it('неизвестная категория — null', () => {
-    expect(listCategoryPage(ru, 'laptops', {})).toBeNull();
+    expect(listCategoryPage(ru, 'toasters', {})).toBeNull();
   });
 
   it('URL ⇄ состояние фильтров', () => {
