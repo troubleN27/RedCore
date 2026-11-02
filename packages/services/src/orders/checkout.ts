@@ -201,7 +201,8 @@ export async function quoteCart(
   const found: { product: ProductSummary; qty: number }[] = [];
   for (const item of items) {
     const product = snapshot.bySlug.get(item.slug);
-    if (!product || product.componentType === 'prebuilt') missing.push(item.slug);
+    // Готовый ПК — обычная позиция: своя цена и свой остаток (заказ резервирует именно его)
+    if (!product) missing.push(item.slug);
     else found.push({ product, qty: item.qty });
   }
 

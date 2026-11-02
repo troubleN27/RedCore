@@ -50,6 +50,18 @@ test.describe('корзина и оформление', () => {
     await expect(page.getByTestId('promo-applied')).toContainText('RYZENROG');
   });
 
+  test('готовый ПК: кнопка на карточке кладёт его в корзину, заказ оформляется', async ({
+    page,
+  }) => {
+    await page.goto('/ru/p/redcore-start');
+    await page.getByRole('button', { name: 'В корзину' }).first().click();
+    await page.goto('/ru/cart');
+    await expect(page.getByTestId('cart-line')).toHaveCount(1);
+    await expect(page.getByTestId('cart-line')).toContainText('RedCore Start');
+    await checkout(page, { phone: uniquePhone(), method: 'cod' });
+    await expect(orderPage(page)).toHaveAttribute('data-status', 'created');
+  });
+
   test('гость: самовывоз и оплата при получении', async ({ page, request }) => {
     await fillCart(page, { [await pickProduct(request, 'NVMe')]: 1 });
     await checkout(page, { phone: uniquePhone(), method: 'cod' });

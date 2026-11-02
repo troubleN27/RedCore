@@ -125,6 +125,14 @@ describe('расчёт корзины', () => {
     expect(expired.quote.promo).toMatchObject({ applied: false, error: 'expired' });
   });
 
+  it('готовый ПК считается в корзине как обычный товар', async () => {
+    const prebuilt = ru.products.find((p) => p.componentType === 'prebuilt')!;
+    const q = await quoteCart(db, ru, { items: [{ slug: prebuilt.slug, qty: 1 }] });
+    expect(q.missing).toEqual([]);
+    expect(q.lines.map((l) => l.product.slug)).toEqual([prebuilt.slug]);
+    expect(q.quote.subtotalUzs).toBe(prebuilt.priceUzs);
+  });
+
   it('без процессора и платы сборку не предлагаем; неизвестные товары отмечаются', async () => {
     const q = await quoteCart(db, ru, {
       items: [
