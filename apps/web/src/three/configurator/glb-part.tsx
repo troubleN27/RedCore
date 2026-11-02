@@ -109,8 +109,8 @@ function FittedGlb({
 }
 
 /**
- * Скачанная модель детали в габарите `size` (оси корпуса). Пока модель грузится или если её
- * нет, показывается `fallback` — процедурная модель.
+ * Скачанная модель детали в габарите `size` (оси корпуса). Если модели нет или она не
+ * загрузилась, показывается `fallback` — процедурная модель.
  */
 export function GlbPart({
   glbKey,
@@ -129,7 +129,8 @@ export function GlbPart({
   if (!built || !glbKey) return <>{fallback}</>;
   return (
     <GlbBoundary fallback={fallback}>
-      <Suspense fallback={fallback}>
+      {/* Пока модель грузится — пусто, а не схематичная заглушка (она мелькала перед настоящей) */}
+      <Suspense fallback={null}>
         <FittedGlb url={built.lod0} fitKey={glbKey} size={size} m={m} onObject={onObject} />
       </Suspense>
     </GlbBoundary>

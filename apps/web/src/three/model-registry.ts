@@ -17,6 +17,11 @@ const models = registry as Record<string, BuiltModel>;
 /** Все собранные модели (LOD0) — сцена сборки загружает их заранее, разом. */
 export const allModelUrls = Object.values(models).map((m) => m.lod0);
 
+/** Начать загрузку всех моделей сборки параллельно — до того, как сцена их запросит. */
+export function preloadAllModels(preload: (url: string) => void): void {
+  for (const url of allModelUrls) preload(url);
+}
+
 export function builtModel(key: string | null | undefined): BuiltModel | null {
   return key ? (models[key] ?? null) : null;
 }

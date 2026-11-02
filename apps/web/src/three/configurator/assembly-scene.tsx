@@ -13,7 +13,7 @@ import { Bloom, EffectComposer } from '@react-three/postprocessing';
 import { Suspense, useCallback, useEffect, useRef, type ReactNode, type RefObject } from 'react';
 import * as THREE from 'three';
 import { useMaterialLibrary, type Quality } from '../materials';
-import { allModelUrls } from '../model-registry';
+import { allModelUrls, preloadAllModels } from '../model-registry';
 import { lowerQuality, qualitySettings } from '../quality';
 import { Studio } from '../studio';
 import { AssemblyParts, Ghost, type ViewMode } from './assembly-parts';
@@ -60,15 +60,35 @@ export interface AssemblySceneProps {
   onReady?: () => void;
 }
 
+/** Загрузка одной модели в кэш (по своему адресу — тем же ключом её читают детали сборки). */
+// Модуль сцены грузится, когда блок появляется в экране: сразу запускаем все загрузки разом
+preloadAllModels((url) => useGLTF.preload(url, true, true));
+
+function WarmModel({ url }: { url: string }) {
+  useGLTF(url, true, true);
+  return null;
+}
+
+function Ready({ onReady }: { onReady?: () => void }) {
+  useEffect(() => onReady?.(), [onReady]);
+  return null;
+}
+
 /**
  * Ждёт загрузки всех скачанных моделей и только потом показывает сборку: иначе на несколько
- * секунд появлялась схематичная сборка, а затем детали подменялись настоящими. Заодно при
- * замене детали её модель уже в кэше — сцена не «мигает».
+ * секунд появлялась схематичная сборка, а затем детали подменялись настоящими. Модели
+ * кэшируются по одной — под тем же ключом, что читает деталь; при замене детали сцена не «мигает».
  */
 function ModelsReady({ children, onReady }: { children: ReactNode; onReady?: () => void }) {
-  useGLTF(allModelUrls, true, true);
-  useEffect(() => onReady?.(), [onReady]);
-  return <>{children}</>;
+  return (
+    <Suspense fallback={null}>
+      {allModelUrls.map((url) => (
+        <WarmModel key={url} url={url} />
+      ))}
+      <Ready onReady={onReady} />
+      {children}
+    </Suspense>
+  );
 }
 
 // Обзор — со стороны стекла и чуть спереди; крупные планы — почти в лоб стеклу
@@ -258,11 +278,9 @@ export default function AssemblyScene(props: AssemblySceneProps) {
       {/* Свет со стороны стекла: без него плата в тени стенок корпуса */}
       <directionalLight position={[0.6, 0.8, 2.2]} intensity={2} />
       <Studio front />
-      <Suspense fallback={null}>
-        <ModelsReady onReady={props.onReady}>
-          <Assembly {...props} />
-        </ModelsReady>
-      </Suspense>
+      <ModelsReady onReady={props.onReady}>
+        <Assembly {...props} />
+      </ModelsReady>
       <CameraRig
         layout={props.layout}
         cameraSlot={props.cameraSlot}
