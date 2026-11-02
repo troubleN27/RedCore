@@ -163,7 +163,11 @@ export function CartView() {
                       <PlusIcon />
                     </Button>
                   </div>
-                  <PriceTag amount={line.totalUzs} size="sm" className="w-32 justify-end" />
+                  <PriceTag
+                    amount={line.totalUzs}
+                    size="sm"
+                    className="min-w-32 shrink-0 justify-end whitespace-nowrap"
+                  />
                   <Button
                     type="button"
                     variant="ghost"
